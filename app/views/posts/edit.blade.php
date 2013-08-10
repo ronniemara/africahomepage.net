@@ -21,6 +21,10 @@
 		</li>
 
 		<li>
+			{{ Form::hidden('users_id', Auth::user()->id) }}
+		</li>
+
+		<li>
 			{{ Form::submit('Update', array('class' => 'btn btn-info')) }}
 			{{ link_to_route('posts.show', 'Cancel', $post->id, array('class' => 'btn')) }}
 		</li>

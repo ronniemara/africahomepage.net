@@ -2,4 +2,10 @@
 
 @section('content')
 	<h1>Hello</h1>
-@endsection
+@if(Auth::check())
+<div class="header">
+Welcome back, {{ Auth::user()->username }}!<br />
+{{ HTML::link('logout', 'Logout') }}
+</div>
+@endif
+@stop

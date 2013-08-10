@@ -11,10 +11,21 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('home');
-});
+Route::get('/','PostsController@index');
+
 
 
 Route::resource('posts', 'PostsController');
+
+
+
+Route::get('login', 'LoginController@getLogin');
+Route::get('register', 'LoginController@getRegister');
+Route::post('register', 'LoginController@postRegister');
+Route::post('login', 'LoginController@postLogin');
+Route::get('logout', 'LoginController@logout');
+
+
+
+
+

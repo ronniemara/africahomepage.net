@@ -7,4 +7,10 @@ class Post extends Ardent {
 		'url' => 'required',
 		'karma' => 'required'
 	);
-}
+	
+    public function user()
+    {
+	return $this->belongsTo('User');	
+    }
+
+   }

@@ -57,7 +57,7 @@ return array(
 			'host'      => '127.0.0.1',
 			'database'  => 'hackernews',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'l1fe1sg00d',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
