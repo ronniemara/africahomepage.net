@@ -21,9 +21,32 @@ class PostsController extends BaseController {
      */
     public function index()
     {
-        $posts = $this->post->all();
+	    $posts = $this->post->all();
 
-        return  View::make('posts.index', compact('posts'));
+	    // print_r($posts); die();
+	    foreach($posts as $post)
+	    {
+		    $age_in_hours = Carbon::now()->diffInHours($post->created_at);
+
+		    $karma = $post->karma;	 
+		   $post->rank = $this->calculate_score($karma, $age_in_hours);
+	    }
+	    $posts = $posts->sortBy(function($post)
+	    {
+		$post->rank;	    
+	    });
+
+	    $posts =$posts->values();
+	    print_r($posts); 
+	    // usort($posts, array($this, 'post_sorter'));
+
+
+   	// $posts = $posts->sortBy(function($post)
+	// <!-- { -->
+		        // return $post->rank;
+	    // <!-- }); -->
+
+	    return  View::make('posts.index', compact('posts'));
     }
 
     /**
@@ -128,4 +151,16 @@ class PostsController extends BaseController {
         return Redirect::route('posts.index');
     }
 
+    public function calculate_score($karma, $age_in_hours)
+    {
+
+	    return ($karma - 1) / pow(($age_in_hours + 2), 1.8);
+    }
+public function post_sorter($a, $b) 
+	    {
+		    if ($a['rank'] == $b['rank']) {
+			            return 0;
+				        }
+		        return ($a['rank'] < $b['rank']) ? -1 : 1;
+    }
 }

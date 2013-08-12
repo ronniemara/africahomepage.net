@@ -13,13 +13,13 @@ Welcome back, {{ Auth::user()->username }}!<br />
 
 <p>{{ link_to_route('posts.create', 'Add new post') }}</p>
 
-@if ($posts->count())
+@if (!empty($posts))
 	<h2>Recent Posts</h2>
  
-@foreach ($posts as $post)
+@foreach ($posts as $k => $v)
  
-   <h3>{{ HTML::link('posts/'.$post->id, $post->title) }}</h3>
-	<p>{{ $post->user->username }}
+   <h3> {{ $k . "." . HTML::link('posts/'.$v['id'], $v['title']) }}</h3>
+	<p>{{ $v->user->username }}
 @endforeach       
 @endif
  
