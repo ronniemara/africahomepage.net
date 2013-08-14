@@ -23,7 +23,6 @@ class PostsController extends BaseController {
     {
 	    $posts = $this->post->all();
 
-	    // print_r($posts); die();
 	    foreach($posts as $post)
 	    {
 		    $age_in_hours = Carbon::now()->diffInHours($post->created_at);
@@ -37,14 +36,6 @@ class PostsController extends BaseController {
 	    });
 
 	    $posts =$posts->values();
-	    print_r($posts); 
-	    // usort($posts, array($this, 'post_sorter'));
-
-
-   	// $posts = $posts->sortBy(function($post)
-	// <!-- { -->
-		        // return $post->rank;
-	    // <!-- }); -->
 
 	    return  View::make('posts.index', compact('posts'));
     }

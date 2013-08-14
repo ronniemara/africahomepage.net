@@ -13,4 +13,9 @@ class Post extends Ardent {
 	return $this->belongsTo('User');	
     }
 
-   }
+    public function comments()
+    {
+    	return $this->hasMany('Comment'); 	 
+    }
+
+}
