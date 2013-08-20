@@ -2,13 +2,6 @@
 
 @section('content')
 
-	<h1>Hello</h1>
-@if(Auth::check())
-<div class="header">
-Welcome back, {{ Auth::user()->username }}!<br />
-{{ HTML::link('logout', 'Logout') }}
-</div>
-@endif
 <h1>All Posts</h1>
 
 <p>{{ link_to_route('posts.create', 'Add new post') }}</p>
@@ -18,10 +11,10 @@ Welcome back, {{ Auth::user()->username }}!<br />
  
 @foreach ($posts as $k => $v)
  
-   <h3> {{ $k+1 . "." . HTML::link($v->url, $v->title) }}</h3>
+   <h4> {{ $k+1 . ". " . HTML::link($v->url, $v->title) }}</h4>
 	<p> Posted by: {{ HTML::link('users/'.$v->user->username, $v->user->username) }}
 	
-<small>{{ HTML::link('posts/'.$v->id, 'Comments') }}. {{ $v->comments->count() }}</small> 
+<small>{{ HTML::link('$v->url . #disqus_thread', 'Comments') }} </small> 
 	</p>
 @endforeach       
 @endif

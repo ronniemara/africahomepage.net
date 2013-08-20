@@ -25,40 +25,27 @@
 <hr />
  
 <h3 id="comments">Comments</h3>
- 
-@foreach ($post->comments as $comment)
- 
-   <p>{{ HTML::link($comment->website, $comment->name) }} said "{{ $comment->message}}"</p>
-    
-@endforeach
- 
-<h3>Write a comment</h3>
- 
-{{ Form::open() }}
 
 
-	<ul>
-		<li>
-			{{ Form::label('website', 'Website:') }}
-			{{ Form::text('website') }}
-		</li>
+ <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'nkrumahsvision'; // required: replace example with your forum shortname
 
-		<li>
-			{{ Form::label('email', 'Email:') }}
-			{{ Form::text('email') }}
-		</li>
+	        /* * * DON'T EDIT BELOW THIS LINE * * */
+	        (function() {
+			            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+				                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+						        })();
+	    </script>
+		        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+			    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+			        
 
-		<li>
-			{{ Form::label('comment', 'Comment:') }}
-			{{ Form::input('comment', 'comment') }}
-		</li>
 
-		<li>
-			{{ Form::submit('Submit', array('class' => 'btn')) }}
-		</li>
-	</ul>
 
-{{ Form::close() }}
+
 
 
 

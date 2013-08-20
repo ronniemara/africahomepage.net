@@ -1,0 +1,12 @@
+a:hover{
+text-decoration:none;
+}
+
+a:visited{
+color: #1BD3E0;
+}
+
+
+ad-box-sidebar.ul, li, ul li a{
+list-style: none;
+}

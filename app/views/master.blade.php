@@ -13,7 +13,6 @@
     </style>
     <link href="/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
     <link href="/css/mystyle.css" rel="stylesheet" media="screen">
-	<link href="/css/youtubecarousel.css" rel="stylesheet" media="screen">
 
 </head>
 <body>
@@ -43,25 +42,15 @@
                 <div class="nav-collapse collapse" >
 
 
-                    <ul class="nav navbox"">
-                        <li class="active"><a href="/">Home</a></li>
-                        <li class="divider-vertical"></li>
-                        <li><a href="/economy">Economy</a></li>
-                        <li class="divider-vertical"></li>
-                        <li><a href="/elections">Elections</a></li>
-                        <li class="divider-vertical"></li>
-                        <li><a href="/sports">Sports</a></li>
-                        <li class="divider-vertical"></li>
-                        <li><a href="/AU">African Union Events</a></li>
-                        <li class="divider-vertical"></li>
-                        <li><a href="/arts">Arts</a></li>
+                    <ul class="nav navbox pull-right">
+		<!-- <li><a href="/arts">Arts</a></li>
                         <li class="divider-vertical"></li>
                         <li><a href="/science">Science and Technology</a></li>
                         <li class="divider-vertical"></li>
-                        <li><a href="/history">History</a></li>
-                        
+		<li><a href="/history">History</a></li>
+	<li class="divider-vertical"></li>	  -->
+        
 
-                    </ul>
 
                     
                 </div><!-- end of nav-collapse collapse-->
@@ -82,38 +71,16 @@
 
         
         <div class="row">
-            <div class="span2 side-column">
-                <div class="column">
-                    <h2>Column</h2>
-                    <h4>Africa Rising?</h4>
-                </div>
-                <div class="most-read">
-                    Most read
-                </div>
-            </div><!-- end side-column -->
 
-            <div class="span7 main-content-area">
-                
+            <div class="span9 main-content-area container">
                     @yield('content')
-                
             </div><!-- end main-content-area -->
 
             <aside class="span3 sidebar">
                 
 
-                <div class="sidebar-widget">
-                    
-                    <form class="form-search">
-                        <h4>Search</h4>
-                        <input type="text" class="input-medium search-query">
-
-                    </form>
-                    
-
-                </div>
 
                 
-
                 <div class="sidebar-widget">
                     <h4>Connect with Us</h4>
 
@@ -124,15 +91,9 @@
                 </div>
 
                 <div class="sidebar-widget clearfix">
-                    Ad box X 2
-                    <ul class="ad-box-sidebar">
-                        <li class='small-ad'><a><img class="img" src="http://lorempixel.com/60/60" class="img-rounded"></a></li>
-                        <li class='small-ad'><a><img class="img" src="http://lorempixel.com/60/60" class="img-rounded"></a></li>
-                    </ul>
-                </div>
+                    Advertisement
 
-                <div class="sidebar-widget">
-                    
+                   
                     <figure><img src="http://lorempixel.com/140/140" class="img-rounded"></figure>
                 </div>
                     
@@ -143,7 +104,6 @@
             
 
             </div><!-- row -->
-            <div id="yt_container" class="videos"></div><!-- end of yt-container -->
     </div><!-- main area -->
     
                 
@@ -157,6 +117,20 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/jquery.youtubecarousel.js"></script>
+<script src="/js/jquery.youtubecarousel.js"></script>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nkrumahsvision'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function () {
+		        var s = document.createElement('script'); s.async = true;
+			        s.type = 'text/javascript';
+			        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+				        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+				    }());
+        </script>
+		    
+
 </body>
 </html>

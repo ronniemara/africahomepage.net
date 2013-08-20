@@ -116,7 +116,7 @@ return array(
 		'LaravelBook\Ardent\Providers\ArdentServiceProvider',
 		'Toddish\Verify\VerifyServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
-
+		'Petersuhm\Commentable\CommentableServiceProvider',
 	),
 
 	/*
@@ -183,6 +183,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Carbon'	  => 'Carbon\Carbon',
+		'Comment' => 'Petersuhm\Commentable\Comment',
 	),
 
 );
