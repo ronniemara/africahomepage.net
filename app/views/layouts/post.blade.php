@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Nkrumah&#39;s Vision</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- Bootstrap -->
+		<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="/css/font-awesome.min.css" rel="stylesheet" media="screen">
+		<style>
+			body {
+				padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+			}
+		</style>
+		<link href="/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+		<link href="/css/mystyle.css" rel="stylesheet" media="screen">
+		{{ HTML::script('//underscorejs.org/underscore.js') }}
+		{{ HTML::script('//code.jquery.com/jquery.js') }}
+			<script>
+			if (typeof jQuery == 'undefined') {
+				    document.write(unescape("%3Cscript src='/js/jquery-1.10.2.js' type='text/javascript'%3E%3C/script%3E"));
+			}
+			</script>
+		{{ HTML::script('//backbonejs.org/backbone-min.js') }}
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/post_script.js" ></script>
+                <script src="/js/delete_script.js"></script>
+		{{ HTML::script('js/app.js') }}
+
+	</head>
+	<body>
+		<!--HEADER -->
+
+		<header>
+		<div class="container">
+			<div class="logo">
+				<div class="row">
+					<div class="span6">	
+						<a class="brand" href="#">
+						<h1>
+					<img src="{{ asset('img/nkrumah.png') }}"alt="logo">Nkrumah&#39;s Vision
+					</h1>
+					</a>		
+					</div>					
+
+					<div class="span6 hidden-phone">
+						<figure class="brand top-ad-box"><img src="http://lorempixel.com/400/90"></figure>
+					</div>
+				</div> <!-- end of row -->
+			</div> <!-- end of logo container -->
+			<div class="navbar">
+				<div class="navbar-inner">
+					<div class="nav-collapse collapse" >
+						<ul class="nav navbox pull-right">
+							<!-- <li><a href="/arts">Arts</a></li>
+							<li class="divider-vertical"></li>
+							<li><a href="/science">Science and Technology</a></li>
+							<li class="divider-vertical"></li>
+							<li><a href="/history">History</a></li>
+							<li class="divider-vertical"></li>	  -->
+							@if (Auth::check())
+							<li>
+							<a href=#>Welcome back {{ Auth::user()->username }}!</a>
+							</li>
+							<li><a href="/logout">Logout</a></li>
+							@else
+							<li><a href="/login">Login</a></li>
+							@endif
+						</div><!-- end of nav-collapse collapse-->
+					</div>
+				</div> <!-- end navbar inner container -->
+			</div>
+		</header> <!-- end header -->
+			<!-- MAIN BODY -->
+			<div class="container main-area">
+				@if (Session::has('message'))
+					<div class="flash alert">
+						<p>{{ Session::get('message') }}</p>
+					</div>
+				@endif
+				<div class="row-fluid">
+					<div class="span9 main-content-area container">
+						@yield('content')
+					</div><!-- end main-content-area -->
+					<aside class="span3 sidebar">
+						<div class="sidebar-widget">
+							<h4>Connect with Us</h4>
+							<a href="https://twitter.com/nkrumahsvision" ><i style="color:black;" class="icon-twitter icon-2x"></i> </a>
+							<a href="https://plus.google.com/nkrumahsvision" ><i style="color:black;" class="icon-google-plus icon-2x"></i> </a>
+							<a href="https://facebook.com/nkrumahsvision" ><i style="color:black;" class="icon-facebook icon-2x"></i> </a>
+						</div>
+						<div class="sidebar-widget clearfix">
+							Advertisement
+							<figure>
+								<img src="http://lorempixel.com/140/140" class="img-rounded">
+							</figure>
+						</div>
+					</aside><!-- end of aside -->
+				</div><!-- row -->
+			</div><!-- main area -->
+			<footer>
+				<div class="container">
+					<p style="color: white;">&copy; 2013 Black Mirror Media</p>
+				</div>
+			</footer> <!-- end footer div -->
+		</body>
+</html>

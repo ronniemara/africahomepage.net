@@ -34,7 +34,7 @@ class LoginController extends BaseController {
 
 			} else {
 
-				return Redirect::to('login');
+				return Redirect::to('login')->withErrors('The email address or the password is incorrect.');
 			}
 		}
 	}
@@ -48,7 +48,7 @@ class LoginController extends BaseController {
 	{
 		$input = Input::all();
 
-		$rules = array('username' => 'required|unique:users', 'email' => 'required|unique:users|email', 'password' => 'required');
+		$rules = array('username' => 'required|unique:users', 'email' => 'required|unique:users|email', 'password' => 'required', 'password' => 'same:password2');
 
 		$v = Validator::make($input, $rules);
 

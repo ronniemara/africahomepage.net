@@ -1,59 +1,65 @@
-@extends('layouts.default')
+@extends('layouts.post')
 
 @section('content')
-
-{{ HTML::link('posts', 'Return to posts') }}
-
-<h2>{{ $post->title }}</h2>
-
-
-<p>
-   <strong>Posted: </strong>
-@if($post->created_at->diffInHours()<25)
-
-{{ $post->created_at->diffInHours() }} hours ago
-
-@else
-
-{{ $post->created_at->diffInDays() }} days ago
-
-@endif
-
-   by {{ $post->user->username }}
-</p>
- 
-<hr />
- 
-<h3 id="comments">Comments</h3>
-
-
- <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'nkrumahsvision'; // required: replace example with your forum shortname
-
-	        /* * * DON'T EDIT BELOW THIS LINE * * */
-	        (function() {
-			            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				                dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-				                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-						        })();
-	    </script>
-		        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-			    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-			        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div class="wrapper">
+	<div class="return_to_home">
+	{{ HTML::link('/','Return to home') }}
+	</div>
+	<div class="post">
+		<h4>{{ $post->title }}</h4>
+		<p>
+			<strong>Posted by:</strong>
+				{{ $post->user->username }}
+			<em>
+				@if($post->created_at->diffInHours()<25)
+					{{ $post->created_at->diffInHours() }} hours ago
+				@else
+					{{ $post->created_at->diffInDays() }} days ago
+				@endif
+			</em>
+		</p>	
+	</div>
+	<div class="comment-wrapper">
+		<h4 id="comments">Comments</h4> 
+			<div class="comment-insert">
+				<h3 class="user"> Add a comment, Ronald Marangwanda</h3>
+					<div class="comment-insert-container">
+						<textarea id="comment-post-text" class="comment-insert-text">
+						</textarea>
+					<input type="hidden" id="userId" value="1" />	
+					<input type="hidden" id="postId" value="2" />	
+					</div>
+					<div id="comment-post-btn" class="comment-post-btn-wrapper">Post</div>
+			</div>
+			<div class="comments-list">
+				<ul class="comment-holder-ul">
+				
+				@foreach ($comments as $key => $comment)
+					<li class="comment-holder" id={{ $comment->id }} >
+						<div class="user-pic">
+							{{ HTML::image('img/photo.png','null', array('class' => 'user-img-pic')) }}						
+						</div>
+						<div class="comment-box">
+							<h3 class="username-field">
+								{{ $comment->username }}  							
+							</h3>
+							<div class="comment-text">
+						{{ $comment->message }}	
+							</div>
+						</div>
+						@if (Auth::check() && Auth::user()->username == $comment->username )
+						<div class="comment-buttons-holder">
+						<ul>
+							<li id={{ $comment->id }} class="delete-btn">X
+							</li>
+						</ul>
+						</div>
+						@endif
+					</li>
+				@endforeach
+					
+				</ul>
+			</div>
+	</div>
+</div> 
+@stop

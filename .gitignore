@@ -5,3 +5,7 @@ composer.lock
 .DS_Store
 *.swo
 *.swp
+/nbproject/private/
+.project
+.settings/
+nbproject/

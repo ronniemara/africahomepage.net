@@ -81,9 +81,19 @@ class PostsController extends BaseController {
      */
     public function show($id)
     {
-        $post = $this->post->findOrFail($id);
-
-        return View::make('posts.show', compact('post'));
+	$post = $this->post->findOrFail($id);
+	// $comments = array( 'a', 'b', 'c', 'd', 'e');
+	$comments = $post->comments->sortBy(function($comment)
+    {
+    	return $comment->created_at;
+    })->reverse();
+	foreach ($comments as $comment)
+	{
+		$comment->username = User::find($comment->user_id)->username;
+	
+	}
+	// var_dump($comments); die();
+	return View::make('posts.show', compact('post','comments'));
     }
 
     /**
@@ -153,5 +163,9 @@ public function post_sorter($a, $b)
 			            return 0;
 				        }
 		        return ($a['rank'] < $b['rank']) ? -1 : 1;
+	    }
+    public function saveComment()
+    {
+
     }
 }

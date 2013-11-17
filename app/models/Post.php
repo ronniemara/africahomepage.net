@@ -1,6 +1,7 @@
 <?php
 
-class Post extends Ardent {
+
+class Post extends Eloquent {
     protected $guarded = array();
 
     public static $rules = array(
@@ -15,7 +16,8 @@ class Post extends Ardent {
 
     public function comments()
     {
-    	return $this->hasMany('Comment'); 	 
-    }
-
+        return $this->hasMany('Comment');
+    } 	 
 }
+
+

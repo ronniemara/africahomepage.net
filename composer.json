@@ -6,8 +6,7 @@
 		"laravel/framework": "4.0.*",
 		"toddish/verify": "~1",
 		"way/generators": "dev-master",
-		"laravelbook/ardent": "dev-master",
-		"petersuhm/commentable": "dev-master"
+		"laravelbook/ardent": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

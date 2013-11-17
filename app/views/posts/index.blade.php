@@ -1,4 +1,4 @@
-@extends('master')
+@extends('layouts.master')
 
 @section('content')
 
@@ -14,7 +14,7 @@
    <h4> {{ $k+1 . ". " . HTML::link($v->url, $v->title) }}</h4>
 	<p> Posted by: {{ HTML::link('users/'.$v->user->username, $v->user->username) }}
 	
-<small>{{ HTML::link('$v->url . #disqus_thread', 'Comments') }} </small> 
+<small>{{ HTML::link('posts/'.$v->id, $v->comments->count().'Comments') }} </small> 
 	</p>
 @endforeach       
 @endif
