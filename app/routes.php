@@ -28,6 +28,7 @@ Route::post('login', 'LoginController@postLogin');
 Route::get('logout', 'LoginController@logout');
 
 
+Route::get('activate', 'LoginController@getActivate');
 
 
 

@@ -25,10 +25,10 @@ return array(
 	| Here you may provide the host address of the SMTP server used by your
 	| applications. A default option is provided that is compatible with
 	| the Postmark mail service, which will provide reliable delivery.
-	|
+	| 'smtp.mailgun.org'
 	*/
 
-	'host' => 'smtp.mailgun.org',
+	'host' => 'smtp.gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -38,10 +38,10 @@ return array(
 	| This is the SMTP port used by your application to delivery e-mails to
 	| users of your application. Like the host we have set this value to
 	| stay compatible with the Postmark e-mail application by default.
-	|
+	|587
 	*/
 
-	'port' => 587,
+	'port' => 465,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'admin@nkrumahsvision.com', 'name' => 'admin'),
+	'from' => array('address' => 'ronald.marangwanda@gmail.com', 'name' => null),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return array(
 	|
 	*/
 
-	'encryption' => 'tls',
+	'encryption' => 'ssl',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => null,
+	'username' => 'ronald.marangwanda@gmail.com',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' => null,
+	'password' =>  'lknwtonygayggfnw',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -119,6 +119,6 @@ return array(
 	|
 	*/
 
-	'pretend' => true,
+	'pretend' => false,
 
 );

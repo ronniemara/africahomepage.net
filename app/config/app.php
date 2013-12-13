@@ -116,6 +116,7 @@ return array(
 		'LaravelBook\Ardent\Providers\ArdentServiceProvider',
 		'Toddish\Verify\VerifyServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
+		'Cartalyst\Sentry\SentryServiceProvider',
 	),
 
 	/*
@@ -182,6 +183,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Carbon'	  => 'Carbon\Carbon',
+		'Sentry' 	  => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
 	),
 
 );

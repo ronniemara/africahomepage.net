@@ -2,6 +2,10 @@
 
 class LoginController extends BaseController {
 	
+	public function __construct() 
+	{
+		}
+
 	public function getLogin()
 	{
 		return View::make('login.index');
@@ -23,19 +27,25 @@ class LoginController extends BaseController {
 
 			return Redirect::to('login')->withErrors($v);
 
-		} else { 
+		} else 
+		{ 
 
-			$credentials = array('email' => $input['email'], 'password' => $input['password']);
+	 		$credentials = array( 'email' => $input['email'], 'password' => $input['password']);
 
-			if(Auth::attempt($credentials))
-			{
+    			$user = Sentry::findByCredentials($credentials);
 
-				return Redirect::to('/');
-
-			} else {
-
-				return Redirect::to('login')->withErrors('The email address or the password is incorrect.');
+			    // Log the user in
+			    Sentry::login($user, false);
+		}	 
+				if ($user)
+				{
+					return Redirect::route('/');
+				}
 			}
+			catch(\Exception $e)
+			{
+				return Redirect::route('login')->withErrors(array('message' => $e->getMessage()));
+			}	
 		}
 	}
 
@@ -53,17 +63,38 @@ class LoginController extends BaseController {
 		$v = Validator::make($input, $rules);
 
 		if($v->passes())
-		{
+		{       
+			//getting the input from the user
 			$password = $input['password'];
 			$password = Hash::make($password);
+			//create token for confirming account
+			$token = bin2hex(openssl_random_pseudo_bytes(16));
 
+			//instatiate user, assign input values to user object and save user in database	
 			$user = new User();
 			$user->username = $input['username'];
 			$user->email = $input['email'];
 			$user->password = $password;
+			$user->token = $token;
 			$user->save();
 
-			return Redirect::to('login');
+			//process data for using to send email to new user to confirm account
+
+			 $email_data = array(
+				'username' => $user->username,
+				'email' => 'ronald.marangwanda@gmail.com'
+				//$user->email
+    );
+	
+			$view_data = array(
+				'token' => $token
+			);			
+		//send email to new user with activation link
+		 Mail::send('emails.auth.welcome', $view_data, function($message) use ($email_data)
+		{
+			$message->to($email_data['email'], $email_data['username'])->subject('Welcome');  
+		});
+			return Redirect::to('login')->with('message','Activation email sent');
 
 		} else {
 
@@ -75,8 +106,43 @@ class LoginController extends BaseController {
 
 	public function logout()
 	{
-		Auth::logout();
+		Sentry::logout();
 		return Redirect::to('/');
+	}
+
+	public function getActivate()
+	{
+		$token = Input::get('x');
+		
+		$count = User::where('token','=', $token)->count(); 
+		if($count <= 1)
+		{
+				if($count = 0)
+				{
+					return Redirect::to('login')->with('message', 'Account not activated, plase register and activate your account');
+				}
+				else
+				{
+					//convert active from false to true
+				$user_id = User::where('token', '=', $token)->pluck('id');
+				$user = User::find($user_id);
+				$user->active = true;
+				$user->save();
+
+				// redirect to login page with flash
+				return Redirect::to('login')->with('message', 'Account is now active');
+				}
+		}
+		else
+		{
+				throw new Exception;
+				return Redirect::to('login')->with('message', 'Account not activated, plase register and activate your account');
+		}
+
+			
+	}
+
+			
 	}
 
 
@@ -85,8 +151,6 @@ class LoginController extends BaseController {
 
 
 
-
-}
 
 
 

@@ -10,6 +10,13 @@
 						{{ implode('', $errors->all('<li class="error">:message</li>')) }}
 					</div>
 				@endif
+				@if(Session::has('message'))
+				
+					<div class="alert alert-success">
+						<a href="#" class="close" data-dismiss="alert">&times;</a>
+						<li class="error">{{ Session::get('message') }}</li> 
+					</div>
+				@endif
 				<ul>
 					<li> 
 						{{ Form::label('email', 'Email') }}
