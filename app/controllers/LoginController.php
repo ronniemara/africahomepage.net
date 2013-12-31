@@ -16,37 +16,54 @@ class LoginController extends BaseController {
 
 	public function postLogin()
 	{
-		$input = Input::all();
-
-		$rules = array('email' => 'required', 'password' => 'required');
-
-		$v = Validator::make($input, $rules);
-
-		if($v->fails())
+		
+		try
 		{
+		    // set login credentials
+			$credentials = array(
+		    	'email'    => Input::get('email'),
+		    	'password' => Input::get('password'),
+		    	);
 
-			return Redirect::to('login')->withErrors($v);
+			// authenticate
+		    $currentUser = Sentry::authenticate($credentials, false);
+		    //put first and last name in session
+		    Session::put('currentUserName', $currentUser->first_name . " ". $currentUser->last_name);
+		    //redirect to homepage
+		    return Redirect::to('/'); 
 
-		} else 
-		{ 
-
-	 		$credentials = array( 'email' => $input['email'], 'password' => $input['password']);
-
-    			$user = Sentry::findByCredentials($credentials);
-
-			    // Log the user in
-			    Sentry::login($user, false);
-		}	 
-				if ($user)
-				{
-					return Redirect::route('/');
-				}
-			}
-			catch(\Exception $e)
-			{
-				return Redirect::route('login')->withErrors(array('message' => $e->getMessage()));
-			}	
 		}
+		catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
+		{
+		    return Redirect::to('login')->withError('Login field is required');
+		}
+		catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
+		{
+		    return Redirect::to('login')->withErrors('Password field is required.');
+		}
+		catch (Cartalyst\Sentry\Users\WrongPasswordException $e)
+		{
+		    return Redirect::to('login')->withErrors('Incorrect login/password');
+		}
+		catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
+		{
+		    return Redirect::to('login')->withErrors('User was not found.');
+		}
+		catch (Cartalyst\Sentry\Users\UserNotActivatedException $e)
+		{
+		    return Redirect::to('login')->withErrors('User is not activated.');
+		}
+
+		// The following is only required if throttle is enabled
+		catch (Cartalyst\Sentry\Throttling\UserSuspendedException $e)
+		{
+		    return Redirect::to('login')->withErrors('User is suspended.');
+		}
+		catch (Cartalyst\Sentry\Throttling\UserBannedException $e)
+		{
+		    return Redirect::to('login')->withErrors('User is banned.');
+		}
+
 	}
 
 	public function getRegister()
@@ -56,89 +73,80 @@ class LoginController extends BaseController {
 
 	public function postRegister()
 	{
-		$input = Input::all();
+		try{
+				$user = Sentry::createUser(
+									array(
+										'email' => Input::get('email'),
+										'password' => Input::get('password'),
+										'first_name' => Input::get('first_name'),
+										'last_name' => Input::get('last_name'),
+										)
+									);
+			} catch (Exception $e)
+			{
+				return $e->getMessage();
+			}
 
-		$rules = array('username' => 'required|unique:users', 'email' => 'required|unique:users|email', 'password' => 'required', 'password' => 'same:password2');
-
-		$v = Validator::make($input, $rules);
-
-		if($v->passes())
-		{       
-			//getting the input from the user
-			$password = $input['password'];
-			$password = Hash::make($password);
-			//create token for confirming account
-			$token = bin2hex(openssl_random_pseudo_bytes(16));
-
-			//instatiate user, assign input values to user object and save user in database	
-			$user = new User();
-			$user->username = $input['username'];
-			$user->email = $input['email'];
-			$user->password = $password;
-			$user->token = $token;
-			$user->save();
+			//add user to private group
+			$user->addGroup(Sentry::findGroupByName('private'));
 
 			//process data for using to send email to new user to confirm account
 
 			 $email_data = array(
-				'username' => $user->username,
+				'first_name' => $user->first_name,
 				'email' => 'ronald.marangwanda@gmail.com'
 				//$user->email
     );
-	
+			//get activation code
+			 $activationCode = $user->getActivationCode();	
+			
+			 //pass activation code to view
 			$view_data = array(
-				'token' => $token
+				'activationCode' => $activationCode
 			);			
 		//send email to new user with activation link
 		 Mail::send('emails.auth.welcome', $view_data, function($message) use ($email_data)
 		{
-			$message->to($email_data['email'], $email_data['username'])->subject('Welcome');  
+			$message->to($email_data['email'], $email_data['first_name'])->subject('Welcome');  
 		});
 			return Redirect::to('login')->with('message','Activation email sent');
 
-		} else {
-
-			return Redirect::to('register')->withInput()->withErrors($v);
-
-		}
 	}
 
 
 	public function logout()
 	{
 		Sentry::logout();
+		Session::forget('currentUserName');
 		return Redirect::to('/');
 	}
 
 	public function getActivate()
 	{
-		$token = Input::get('x');
+		$activationCode = Input::get('x');
+
+		//find user using activation code
+		$user = Sentry::findUserByActivationCode($activationCode);
+
+		//attempt to activate user
+		try
+		{
+			if($user->attemptActivation($activationCode))
+			{
+				return Redirect::to('login')->with('message', 'Account activated!');
+			}
+			else
+			{
+				throw new Exception("Error Processing Request", 1);
+				
+			}
+			
+		} 
+		catch (Exception $e)
+		{
+			return Redirect::to('login')->withErrors($e->getMessage());
+		}
 		
-		$count = User::where('token','=', $token)->count(); 
-		if($count <= 1)
-		{
-				if($count = 0)
-				{
-					return Redirect::to('login')->with('message', 'Account not activated, plase register and activate your account');
-				}
-				else
-				{
-					//convert active from false to true
-				$user_id = User::where('token', '=', $token)->pluck('id');
-				$user = User::find($user_id);
-				$user->active = true;
-				$user->save();
-
-				// redirect to login page with flash
-				return Redirect::to('login')->with('message', 'Account is now active');
-				}
-		}
-		else
-		{
-				throw new Exception;
-				return Redirect::to('login')->with('message', 'Account not activated, plase register and activate your account');
-		}
-
 			
 	}
 

@@ -7,11 +7,15 @@ class PostsController extends BaseController {
      *
      * @var Post
      */
-    protected $post;
+    protected $post = null;
 
-    public function __construct(Post $post)
+    //user repository
+    protected $user = null;
+
+    public function __construct(Post $post, User $user )
     {
         $this->post = $post;
+        $this->user = $user;
     }
 
     /**
@@ -22,13 +26,21 @@ class PostsController extends BaseController {
     public function index()
     {
 	    $posts = $this->post->all();
+        
 
 	    foreach($posts as $post)
 	    {
-		    $age_in_hours = Carbon::now()->diffInHours($post->created_at);
+		    //Time elapsed since post created
+            $age_in_hours = Carbon::now()->diffInHours($post->created_at);
 
-		    $karma = $post->karma;	 
-		   $post->rank = $this->calculate_score($karma, $age_in_hours);
+	        //setting the rank of the post when displaying all posts
+            $post->rank = $this->calculate_score($post->karma, $age_in_hours);
+
+            //setting post->first_name  and post->last name properties
+            $user = Sentry::findUserById(3);
+            $post->first_name = $user->first_name;
+            $post->last_name = $user->last_name;
+            
 	    }
 	    $posts = $posts->sortBy(function($post)
 	    {
@@ -82,6 +94,9 @@ class PostsController extends BaseController {
     public function show($id)
     {
 	$post = $this->post->findOrFail($id);
+    $createdBy = Sentry::findUserById($post->user_id);
+    $post->createdBy = $createdBy->first_name . " " . $createdBy->last_name;
+    
 	// $comments = array( 'a', 'b', 'c', 'd', 'e');
 	$comments = $post->comments->sortBy(function($comment)
     {
@@ -89,10 +104,12 @@ class PostsController extends BaseController {
     })->reverse();
 	foreach ($comments as $comment)
 	{
-		$comment->username = User::find($comment->user_id)->username;
+		$user = Sentry::findUserById($comment->user_id);
+        $comment->createdBy = $user->first_name . " " .$user->last_name;
+        
 	
 	}
-	// var_dump($comments); die();
+	//var_dump($comments); die();
 	return View::make('posts.show', compact('post','comments'));
     }
 

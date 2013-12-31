@@ -2,15 +2,21 @@
 class CommentsController extends BaseController
 {
 	/**
-     * Post Repository
+     * Comment Repository
      *
-     * @var Post
+     * @var $comment
      */
     protected $comment;
+
+    /*
+    *User repository
+    */
+    protected $user;
 
     public function __construct(Comment $comment)
     {
         $this->comment = $comment;
+        
     }
 
     /**
@@ -20,11 +26,11 @@ class CommentsController extends BaseController
      */
     public function index()
     {
-	    $posts = $this->comment->all();
+	    //$comments = $this->comment->all();
 
 
-
-	    // return  View::make('posts.index', compact('posts'));
+        return View::make('comments.index');
+        //$comments;
     }
 
 
@@ -43,8 +49,12 @@ class CommentsController extends BaseController
         // if ($validation->passes())
         // {
 	    $comment = $this->comment->create($input);
-	    $comment->username = User::find($comment->user_id)->username;
-	    
+       
+	    //set comment->createdBy
+        $user = Sentry::findUserById($comment->user_id);
+        
+        $comment->createdBy = $user->first_name . " " . $user->last_name;
+
 	    return $comment;
 	    			
         // }
@@ -63,8 +73,8 @@ class CommentsController extends BaseController
      */
     public function show($id)
     {
-        $post = $this->post->findOrFail($id);
-        return View::make('posts.show', compact('post'));
+        $comment = $this->comment->findOrFail($id);
+        return View::make('comments.show', compact('comment'));
     }
 
     /**
@@ -75,14 +85,14 @@ class CommentsController extends BaseController
      */
     public function edit($id)
     {
-        $post = $this->post->find($id);
+        $comment = $this->comment->find($id);
 
         if (is_null($post))
         {
-            return Redirect::route('posts.index');
+            return Redirect::route('comments.index');
         }
 
-        return View::make('posts.edit', compact('post'));
+        return View::make('comments.edit', compact('comment'));
     }
 
     /**
@@ -94,7 +104,7 @@ class CommentsController extends BaseController
     public function update($id)
     {
         $input = array_except(Input::all(), '_method');
-        $validation = Validator::make($input, Post::$rules);
+        $validation = Validator::make($input, $comment::$rules);
 
         if ($validation->passes())
         {

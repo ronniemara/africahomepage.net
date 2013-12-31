@@ -2,14 +2,17 @@
 
 @section('content')
 
-	<h1>Login</h1>
-		{{ Form::open(array('url' => 'login')) }}
+	<h5> If you are not yet registered, please {{ HTML::link('register', 'Register', array('class' => 'btn btn-primary')) }} </h5>
+	<h3>Login</h3>
+		{{ Form::open(array('url' => 'login', 'role' =>'form')) }}
+
 				@if($errors->any())
-					<div class="alert alert-error">
+					<div class="alert alert-warning">
 						<a href="#" class="close" data-dismiss="alert">&times;</a>
 						{{ implode('', $errors->all('<li class="error">:message</li>')) }}
 					</div>
 				@endif
+
 				@if(Session::has('message'))
 				
 					<div class="alert alert-success">
@@ -17,20 +20,19 @@
 						<li class="error">{{ Session::get('message') }}</li> 
 					</div>
 				@endif
-				<ul>
-					<li> 
-						{{ Form::label('email', 'Email') }}
-						{{ Form::text('email', '', array('placeholder' => 'Email')) }}
-					</li>
-					<li>
-						{{ Form::label('password', 'Password') }}
-						{{ Form::password('password', array('placeholder' => 'Password')) }}
-					</li>
-					<li>
-						{{ Form::submit('Submit', array('class' =>'btn')) }}
-					</li>
-				</ul>
-			{{ HTML::link('register', 'Register', array('class' => 'btn btn-primary')) }}
+						<div class="form-group">
+							{{ Form::label('email', 'Email') }}
+							{{ Form::text('email', '', array('placeholder' => 'Email', 'class' => 'form-control')) }}
+						</div>
+						<div class="form-group">
+							{{ Form::label('password', 'Password') }}
+							{{ Form::password('password', array('placeholder' => 'Password', 'class' => 'form-control')) }}
+						</div>
+				
+						<button type="submit" class="btn btn-default">Submit</button>
+						
+				
+			
 		{{ Form::close()  }}
 
 @stop

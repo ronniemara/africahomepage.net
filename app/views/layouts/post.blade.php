@@ -29,60 +29,51 @@
 
 	</head>
 	<body>
+
 		<!--HEADER -->
 
 		<header>
 		<div class="container">
-			<div class="logo">
-				<div class="row">
-					<div class="span6">	
-						<a class="brand" href="#">
-						<h1>
-					<img src="{{ asset('img/nkrumah.png') }}"alt="logo">Nkrumah&#39;s Vision
-					</h1>
-					</a>		
-					</div>					
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  			<!-- Brand and toggle get grouped for better mobile display -->
+  				<div class="navbar-header">
+    				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	      				<span class="sr-only">Toggle navigation</span>
+	      				<span class="icon-bar"></span>
+	      				<span class="icon-bar"></span>
+	      				<span class="icon-bar"></span>
+    				</button>
+    				<a class="navbar-brand" href="#">Nkrumahs Vision</a>
+  				</div>
 
-					<div class="span6 hidden-phone">
-						<figure class="brand top-ad-box"><img src="http://lorempixel.com/400/90"></figure>
-					</div>
-				</div> <!-- end of row -->
-			</div> <!-- end of logo container -->
-			<div class="navbar">
-				<div class="navbar-inner">
-					<div class="nav-collapse collapse" >
-						<ul class="nav navbox pull-right">
-							<!-- <li><a href="/arts">Arts</a></li>
-							<li class="divider-vertical"></li>
-							<li><a href="/science">Science and Technology</a></li>
-							<li class="divider-vertical"></li>
-							<li><a href="/history">History</a></li>
-							<li class="divider-vertical"></li>	  -->
-							@if (Auth::check())
-							<li>
-							<a href=#>Welcome back {{ Auth::user()->username }}!</a>
-							</li>
-							<li><a href="/logout">Logout</a></li>
-							@else
-							<li><a href="/login">Login</a></li>
-							@endif
-						</div><!-- end of nav-collapse collapse-->
-					</div>
-				</div> <!-- end navbar inner container -->
-			</div>
-		</header> <!-- end header -->
-			<!-- MAIN BODY -->
+  			<!-- Collect the nav links, forms, and other content for toggling -->
+  				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    				<ul class="nav navbar-nav">
+					      <li class="active"><a href="#">Link</a></li>
+					
+					
+					</ul>
+    				
+    				
+      							@if (Sentry::check())
+      							<p class="navbar-text">Signed in as {{ Session::get('currentUserName') }}</p>
+								<a href="/logout">Logout</a>
+								@else
+									<a href="/login"><button class="navabar-btn">Login</button></a>
+								@endif
+      					
+    				
+  				</div><!-- /.navbar-collapse -->
+			</nav>
+		</header> 
+		
+		<!-- MAIN BODY -->
 			<div class="container main-area">
-				@if (Session::has('message'))
-					<div class="flash alert">
-						<p>{{ Session::get('message') }}</p>
-					</div>
-				@endif
-				<div class="row-fluid">
-					<div class="span9 main-content-area container">
+				<div class="row">
+					<div class="col-md-9 main-content-area container">
 						@yield('content')
 					</div><!-- end main-content-area -->
-					<aside class="span3 sidebar">
+					<aside class="col-md-3 sidebar">
 						<div class="sidebar-widget">
 							<h4>Connect with Us</h4>
 							<a href="https://twitter.com/nkrumahsvision" ><i style="color:black;" class="icon-twitter icon-2x"></i> </a>

@@ -1,13 +1,17 @@
-body{
-background: red;}
-
-.logo{
-background: #fff;
-
+html{
+	background:url('../img/africa-safari-41.jpg') no-repeat center center fixed;-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size: cover;
 }
+body{
+	background: transparent;
+}
+.logo{
+border: 1px solid #000 ;
+}
+
 .main-area{
 background: #fff;
-margin-top: -20px;
+margin-top: 150px;
+min-height: 600px;
 }
 
 .main-content-area{
@@ -208,7 +212,7 @@ color: #1BD3E0;
 }
 
 
-ad-box-sidebar.ul, li, ul li a{
+.ad-box-sidebar.ul, li, ul li a{
 list-style: none;
 } 
 

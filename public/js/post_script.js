@@ -41,7 +41,8 @@ function comment_post_btn_click()
 					var jsonData = jqXHR.responseText;
 		// var jsonParse = jQuery.parseJSON(data.responseText);	
 					comment_insert( jQuery.parseJSON(jsonData) ); 
-					console.log( "ResponseText: " + jsonData   ); 
+					//console.log( "ResponseText: " + jsonData   );
+					console.log(jqXHR); 
 				}
 		      );
 
@@ -64,7 +65,7 @@ function comment_insert( data )
 			t += '<li class="comment-holder id="' + data.id + '">';
 			t += '<div class="user-pic"></div>';
 			t += '<div class="comment-box">';
-			t += '<h3 class="username-field">' + data.username + '</h3>';
+			t += '<h3 class="username-field">' + data.createdBy + '</h3>';
 			t += '<div class="comment-text">' + data.message + '</div>';
 			t += '</div>';
 			t += '<div class="comment-buttons-holder">';
