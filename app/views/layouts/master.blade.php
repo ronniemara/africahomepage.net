@@ -51,9 +51,9 @@
     				<ul class="nav navbar-nav navbar-right">
       							@if (Sentry::check())
       							<p class="navbar-text">Signed in as {{ Session::get('currentUserName') }}</p>
-								<li><a href="/logout">Logout</a></li>
+								<li class="login"><a href="/logout">Logout</a></li>
 								@else
-									<li class="active"><a href="/login">Login</a></li>
+									<li class="active login"><a href="/login">Login</a></li>
 								@endif
       					
     				</ul>

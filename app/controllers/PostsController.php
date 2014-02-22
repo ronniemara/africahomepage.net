@@ -9,13 +9,10 @@ class PostsController extends BaseController {
      */
     protected $post = null;
 
-    //user repository
-    protected $user = null;
-
-    public function __construct(Post $post, User $user )
+    
+    public function __construct(Post $post)
     {
         $this->post = $post;
-        $this->user = $user;
     }
 
     /**
@@ -25,31 +22,31 @@ class PostsController extends BaseController {
      */
     public function index()
     {
-	    $posts = $this->post->all();
-        
+     $posts = $this->post->all();
 
-	    foreach($posts as $post)
-	    {
-		    //Time elapsed since post created
+
+         foreach($posts as $post)
+         {
+    		    //Time elapsed since post created
             $age_in_hours = Carbon::now()->diffInHours($post->created_at);
 
-	        //setting the rank of the post when displaying all posts
+    	        //setting the rank of the post when displaying all posts
             $post->rank = $this->calculate_score($post->karma, $age_in_hours);
 
-            //setting post->first_name  and post->last name properties
+                //setting post->first_name  and post->last name properties
             $user = Sentry::findUserById(3);
             $post->first_name = $user->first_name;
             $post->last_name = $user->last_name;
-            
-	    }
-	    $posts = $posts->sortBy(function($post)
-	    {
-		$post->rank;	    
-	    });
 
-	    $posts =$posts->values();
+         }
+        $posts = $posts->sortBy(function($post)
+        {
+          $post->rank;	    
+        });
 
-	    return  View::make('posts.index', compact('posts'));
+        $posts =$posts->values();
+
+        return  View::make('posts.index', compact('posts'));
     }
 
     /**
@@ -80,9 +77,9 @@ class PostsController extends BaseController {
         }
 
         return Redirect::route('posts.create')
-            ->withInput()
-            ->withErrors($validation)
-            ->with('message', 'There were validation errors.');
+        ->withInput()
+        ->withErrors($validation)
+        ->with('message', 'There were validation errors.');
     }
 
     /**
@@ -93,24 +90,22 @@ class PostsController extends BaseController {
      */
     public function show($id)
     {
-	$post = $this->post->findOrFail($id);
-    $createdBy = Sentry::findUserById($post->user_id);
-    $post->createdBy = $createdBy->first_name . " " . $createdBy->last_name;
-    
-	// $comments = array( 'a', 'b', 'c', 'd', 'e');
-	$comments = $post->comments->sortBy(function($comment)
-    {
-    	return $comment->created_at;
-    })->reverse();
-	foreach ($comments as $comment)
-	{
-		$user = Sentry::findUserById($comment->user_id);
-        $comment->createdBy = $user->first_name . " " .$user->last_name;
-        
-	
-	}
-	//var_dump($comments); die();
-	return View::make('posts.show', compact('post','comments'));
+         $post = $this->post->findOrFail($id);
+         $createdBy = Sentry::findUserById($post->user_id);
+         $post->createdBy = $createdBy->first_name . " " . $createdBy->last_name;
+
+
+        $comments = $post->comments->sortBy(function($comment)
+        {
+            return $comment->created_at;
+        })->reverse();
+        foreach ($comments as $comment)
+        {
+          $user = Sentry::findUserById($comment->user_id);
+          $comment->createdBy = $user->first_name . " " .$user->last_name;
+        }
+
+        return View::make('posts.show', compact('post','comments'));
     }
 
     /**
@@ -151,9 +146,9 @@ class PostsController extends BaseController {
         }
 
         return Redirect::route('posts.edit', $id)
-            ->withInput()
-            ->withErrors($validation)
-            ->with('message', 'There were validation errors.');
+        ->withInput()
+        ->withErrors($validation)
+        ->with('message', 'There were validation errors.');
     }
 
     /**
@@ -169,20 +164,21 @@ class PostsController extends BaseController {
         return Redirect::route('posts.index');
     }
 
+    //calculate rank
     public function calculate_score($karma, $age_in_hours)
     {
 
-	    return ($karma - 1) / pow(($age_in_hours + 2), 1.8);
+     return ($karma - 1) / pow(($age_in_hours + 2), 1.8);
     }
-public function post_sorter($a, $b) 
-	    {
-		    if ($a['rank'] == $b['rank']) {
-			            return 0;
-				        }
-		        return ($a['rank'] < $b['rank']) ? -1 : 1;
-	    }
-    public function saveComment()
-    {
 
+    //sort posts using rank
+    public function post_sorter($a, $b) 
+    {
+        if ($a['rank'] == $b['rank']) 
+        {
+        return 0;
+        }
+        return ($a['rank'] < $b['rank']) ? -1 : 1;
     }
+
 }

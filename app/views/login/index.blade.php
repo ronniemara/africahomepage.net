@@ -6,6 +6,12 @@
 	<h3>Login</h3>
 		{{ Form::open(array('url' => 'login', 'role' =>'form')) }}
 
+
+<?php
+
+?>
+
+
 				@if($errors->any())
 					<div class="alert alert-warning">
 						<a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -27,6 +33,9 @@
 						<div class="form-group">
 							{{ Form::label('password', 'Password') }}
 							{{ Form::password('password', array('placeholder' => 'Password', 'class' => 'form-control')) }}
+						</div>
+						<div class="form-group">
+						{{	Form::captcha() }}
 						</div>
 				
 						<button type="submit" class="btn btn-default">Submit</button>

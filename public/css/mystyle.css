@@ -216,8 +216,18 @@ color: #1BD3E0;
 list-style: none;
 } 
 
-} 
-
 .post{
 border: 1px solid #000;
+}
+
+.login{
+    margin-right: 20px;
+}
+
+.title-line{
+    margin-left: -60px;
+}
+
+.votes{
+    padding-top: 15px;
 }

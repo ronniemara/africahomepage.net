@@ -8,7 +8,7 @@
 		<h2>Activate Account</h2>
 
 		<div>
-			To active your account <a href='http://depot.local/activate?x={{ $activationCode }}'>Click this link</a>
+			To active your account <a href='http://depot.local/users/activate?x={{ $activationCode }}'>Click this link</a>
 		</div>
 	</body>
 </html>

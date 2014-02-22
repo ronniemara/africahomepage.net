@@ -63,6 +63,7 @@ return array(
 	),
 	"unique"           => "The :attribute has already been taken.",
 	"url"              => "The :attribute format is invalid.",
+	"recaptcha" 	=> 'The :attribute field is not correct.',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -88,6 +89,12 @@ return array(
 	|
 	*/
 
-	'attributes' => array(),
+	'attributes' => array(
+	'password' => 'Password',
+	'password2' => 'Confirm Password',
+	'email' => 'Email',
+	'email2' => 'Confirm Email',
+	'recaptcha_response_field' => 'recaptcha response'
+	),
 
 );

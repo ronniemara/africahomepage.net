@@ -2,10 +2,22 @@
 
 class LoginController extends BaseController {
 	
-	public function __construct() 
-	{
-		}
+	
+/**
+     * Instantiate a new LoginController instance.
+     */
+    public function __construct()
+    {
 
+        $this->beforeFilter('csrf', array('on' => array('postLogin','postRegister')));
+
+    }
+
+
+
+	/*
+	*Get the login page
+	*/
 	public function getLogin()
 	{
 		return View::make('login.index');
@@ -13,10 +25,19 @@ class LoginController extends BaseController {
 	}
 
 
-
+	/**
+	 * [postLogin description]
+	 * @return [type] [description]
+	 */
 	public function postLogin()
 	{
-		
+		$rules = array('recaptcha_response_field' => 'required|recaptcha');		
+		$validator = Validator::make(Input::all(), $rules);
+
+		if ($validator->fails())
+		{
+			return Redirect::to('/login')->withErrors($validator);
+		}
 		try
 		{
 		    // set login credentials
@@ -65,91 +86,19 @@ class LoginController extends BaseController {
 		}
 
 	}
+	
 
-	public function getRegister()
-	{
-		return View::make('login.register');
-	}
-
-	public function postRegister()
-	{
-		try{
-				$user = Sentry::createUser(
-									array(
-										'email' => Input::get('email'),
-										'password' => Input::get('password'),
-										'first_name' => Input::get('first_name'),
-										'last_name' => Input::get('last_name'),
-										)
-									);
-			} catch (Exception $e)
-			{
-				return $e->getMessage();
-			}
-
-			//add user to private group
-			$user->addGroup(Sentry::findGroupByName('private'));
-
-			//process data for using to send email to new user to confirm account
-
-			 $email_data = array(
-				'first_name' => $user->first_name,
-				'email' => 'ronald.marangwanda@gmail.com'
-				//$user->email
-    );
-			//get activation code
-			 $activationCode = $user->getActivationCode();	
-			
-			 //pass activation code to view
-			$view_data = array(
-				'activationCode' => $activationCode
-			);			
-		//send email to new user with activation link
-		 Mail::send('emails.auth.welcome', $view_data, function($message) use ($email_data)
-		{
-			$message->to($email_data['email'], $email_data['first_name'])->subject('Welcome');  
-		});
-			return Redirect::to('login')->with('message','Activation email sent');
-
-	}
-
-
+	/**
+	 * [logout description]
+	 * @return [type] [description]
+	 */
 	public function logout()
 	{
 		Sentry::logout();
 		Session::forget('currentUserName');
 		return Redirect::to('/');
 	}
-
-	public function getActivate()
-	{
-		$activationCode = Input::get('x');
-
-		//find user using activation code
-		$user = Sentry::findUserByActivationCode($activationCode);
-
-		//attempt to activate user
-		try
-		{
-			if($user->attemptActivation($activationCode))
-			{
-				return Redirect::to('login')->with('message', 'Account activated!');
-			}
-			else
-			{
-				throw new Exception("Error Processing Request", 1);
-				
-			}
-			
-		} 
-		catch (Exception $e)
-		{
-			return Redirect::to('login')->withErrors($e->getMessage());
-		}
-		
-			
-	}
-
+	
 			
 	}
 

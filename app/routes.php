@@ -22,20 +22,20 @@ Route::resource('comments', 'CommentsController');
 
 //users resource
 Route::resource('users', 'UsersController');
+//user activation routes
+Route::get('users/activate', 'UsersController@getActivate');
 
 
 //login routes
 Route::get('login', 'LoginController@getLogin');
 Route::post('login', 'LoginController@postLogin');
-
-//user registration routes
-Route::get('register', 'LoginController@getRegister');
-Route::post('register', 'LoginController@postRegister');
-Route::get('activate', 'LoginController@getActivate');
-
-
 //logout route
 Route::get('logout', 'LoginController@logout');
+
+
+
+
+
 
 
 
