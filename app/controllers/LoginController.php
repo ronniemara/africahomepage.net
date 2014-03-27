@@ -31,13 +31,13 @@ class LoginController extends BaseController {
 	 */
 	public function postLogin()
 	{
-		$rules = array('recaptcha_response_field' => 'required|recaptcha');		
-		$validator = Validator::make(Input::all(), $rules);
+		//$rules = array('recaptcha_response_field' => 'required|recaptcha');		
+		//$validator = Validator::make(Input::all(), $rules);
 
-		if ($validator->fails())
-		{
-			return Redirect::to('/login')->withErrors($validator);
-		}
+		//if ($validator->fails())
+		//{
+		//	return Redirect::to('/login')->withErrors($validator);
+		//}
 		try
 		{
 		    // set login credentials

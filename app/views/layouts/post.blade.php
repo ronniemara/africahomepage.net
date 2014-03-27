@@ -23,8 +23,9 @@
 			</script>
 		{{ HTML::script('//backbonejs.org/backbone-min.js') }}
 		<script src="/js/bootstrap.min.js"></script>
-		<script src="/js/post_script.js" ></script>
-                <script src="/js/delete_script.js"></script>
+		<script src="/js/comment_post_script.js" ></script>
+                <script src="/js/comment_delete_script.js"></script>
+                <script src="/js/post_vote_script.js"></script>
 		{{ HTML::script('js/app.js') }}
 
 	</head>

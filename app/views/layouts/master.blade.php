@@ -14,17 +14,19 @@
 		</style>
 		<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="/css/mystyle.css" rel="stylesheet" media="screen">
-		{{ HTML::script('//underscorejs.org/underscore.js') }}
+                <script src="/js/jquery-1.10.2.js"></script>
+		<!--{{ HTML::script('//underscorejs.org/underscore.js') }}
 		{{ HTML::script('//code.jquery.com/jquery.js') }}
-			<script>
-			if (typeof jQuery == 'undefined') {
-				    document.write(unescape("%3Cscript src='/js/jquery-1.10.2.js' type='text/javascript'%3E%3C/script%3E"));
-			}
-			</script>
-		{{ HTML::script('//backbonejs.org/backbone-min.js') }}
+                <script>
+                if (typeof jQuery == 'undefined') {
+                            document.write(unescape("%3Cscript src='/js/jquery-1.10.2.js' type='text/javascript'%3E%3C/script%3E"));
+                }
+                </script>
+		{{ HTML::script('//backbonejs.org/backbone-min.js') }} -->
 		<script src="/js/bootstrap.min.js"></script>
-		<script src="/js/post_script.js" ></script>
-                <script src="/js/delete_script.js"></script>
+		<script src="/js/comment_post_script.js" ></script>
+                <script src="/js/comment_delete_script.js"></script>
+                <script src="/js/post_vote_script.js"></script>
 		{{ HTML::script('js/app.js') }}
 
 	</head>

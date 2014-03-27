@@ -21,7 +21,14 @@
 					{{ $post->created_at->diffInDays() }} days ago
 				@endif
 			</em>
-		</p>	
+		</p>
+                <p class="votes-paragraph">
+                    <a href="#"> <i class="icon-arrow-up post-vote-up" id={{ $post->id }} </i></a>
+                    
+                    120 votes 
+                    <a href="#"><i class="icon-arrow-down post-vote-down" id={{ $post->id }}></i></a>
+                </p>
+                
 	</div>
 	<div class="comment-wrapper">
 		<h4 id="comments">Comments</h4>
@@ -31,8 +38,8 @@
 						<div class="comment-insert-container">
 							<textarea id="comment-post-text" class="comment-insert-text">
 							</textarea>
-						<input type="hidden" id="userId" value={{ Sentry::getId() }} />	
-						<input type="hidden" id="postId" value={{ $post->id }} />	
+						<input type="hidden" id="userId" value= {{ Sentry::getId() }} />	
+						<input type="hidden" id="postId" value= {{ $post->id }} />	
 						</div>
 						<div id="comment-post-btn" class="comment-post-btn-wrapper">Post</div>
 				</div>
@@ -56,6 +63,12 @@
 							<div class="comment-text">
 						{{ $comment->message }}	
 							</div>
+                                                        <p class="votes-paragraph">
+                                                            <a href="#"><i class="icon-arrow-up comment-vote-up" id={{ $comment->id }}></i></a>
+                                                            
+                                                            120 votes 
+                                                            <a href="#"><i class="icon-arrow-down comment-vote-down" id={{ $comment->id }}></i></a>
+                                                        </p>
 						</div>
 						@if (Sentry::check() && Sentry::getId() == $comment->user_id )
 						<div class="comment-buttons-holder">

@@ -235,5 +235,16 @@ class UsersController extends BaseController {
             return Redirect('/users')->withError('User was not found.');
         }   
     }
+    
+    public function isLoggedIn()
+    {
+        if(Sentry::check()){
+           return json_encode(true); 
+        }
+        else
+            {
+                return json_encode(false);
+            }
+    }
 
 }

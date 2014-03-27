@@ -23,8 +23,9 @@ Route::resource('comments', 'CommentsController');
 //users resource
 Route::resource('users', 'UsersController');
 //user activation routes
-Route::get('users/activate', 'UsersController@getActivate');
-
+Route::get('activate', 'UsersController@getActivate');
+//user is logged in?
+Route::get('check-user', 'UsersController@isLoggedIn');
 
 //login routes
 Route::get('login', 'LoginController@getLogin');
@@ -32,6 +33,8 @@ Route::post('login', 'LoginController@postLogin');
 //logout route
 Route::get('logout', 'LoginController@logout');
 
+Route::post('vote-up', 'VotesController@upvote');
+Route::post('vote-down', 'VotesController@downvote');
 
 
 

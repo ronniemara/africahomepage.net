@@ -1,103 +1,69 @@
-$(document).ready( function()
+$( document ).ready( function()
 {
-   $(".post-vote-up").click( function(event)
+   $(".number-of-votes").on("votedOn",function( e, voteType )
    {
-       $.getJSON("/check-user", function( data )
-        {
-          
-           if ( data === true )
-           {   
-               var _votableId = event.target.id;
-               var _votableType = "Post";
-               $.post("/vote-up",
-                {
-                  votable_id: _votableId,
-                  votable_type: _votableType
-                }).done(function( data )
-                {
-                    console.log( data);
-                }).fail();
+       var _whatIsVotedOn = null;
+       var _votedUpOrDown = null;
+        console.log(e);
+       if ( voteType.indexOf("post") !== -1){
+           _whatIsVotedOn = "Post";
+       }
+       else if ( voteType.indexOf("comment") !== -1)
+           {
+               _whatIsVotedOn = "Comment";
            }
-           else
-            {
-                if ($(".main-content-area").children().index(".alert-warning") !== -1) 
-                {
-                    // it's a child
-                    return;
-                }
-                else
-                {
-                  $(".main-content-area").prepend(
-                       "<div class='alert alert-warning alert-dismissable'>" +
-                       "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>" + "&times;" +"</button>" +
-                       "<strong>" + "Please note!" +"</strong>" +" You need to be logged in, in order to vote on posts."
-                       +"</div>" );
+
+       if ( voteType.indexOf("up") !== -1){
+           _votedUpOrDown = "up";
+       }
+       else if ( voteType.indexOf("down") !== -1)
+           {
+               _votedUpOrDown = "down";
+           }
+   });
+   
+   $(".votes-paragraph").on('click', 'a',function(event){
+                isLoggedIn();
+               event.preventDefault();
+               var voteType = $(this).attr('class');
+               $(this).parent().find(".number-of-votes").trigger("votedOn", [voteType]);
+            
+           
+    });
+           
+           
+    function isLoggedIn() 
+    {     
+            $.getJSON("/check-user", function( data )
+           {
+             if ( data === true )
+             {
+                 return;
+             }
+             else
+             {
+                 
+                 if ($(".main-content-area").children().index(".alert-warning") !== -1) 
+                 {
+                     // it's a child
+                     return false;
                  }
-            }
-               
-        });
-   });
-   
-   $(".comment-vote-up").click(function()
-   {
-       $.get("/users/check", function( data)
-        {
-          if (data === true)
-           {
-               var _votableId = $( '#commentVotableId' ).val();
-               var _votableType = $( '#commentVotableType' ).val();
-               $.post("/votes-up",
-                {
-                  votable_id: _votableId,
-                  votable_type: _votableType
-                }).done().fail();
-           }
-           else
-               {
-                   console.log('not signed in'); 
-               }
-        });
-   }); 
-   
-   $(".post-vote-down").click(function()
-   {
-       $.get("/users/check", function( data)
-        {
-          if (data === true)
-           {
-               var _votableId = $( '#postVotableId' ).val();
-               var _votableType = $( '#postVotableType' ).val();
-               $.post("/votes-down",
-                {
-                  votable_id: _votableId,
-                  votable_type: _votableType
-                }).done().fail();
-           }
-           else
-               {
-                   console.log('not signed in');
-               }
-        });
-   });
-   
-   $(".comment-vote-down").click(function()
-   {
-       $.get("/users/check", function( data)
-        {
-          if (data === true)
-           {
-               var _votableId = $( '#commentVotableId' ).val();
-               var _votableType = $( '#commentVotableType' ).val();
-               $.post("/votes-down",
-                {
-                  votable_id: _votableId,
-                  votable_type: _votableType
-                }).done().fail();
-           }
-           else
-               {
-                   console.log('not signed in');
-               }
-        });
-   }); 
+                 else
+                 {
+                   $(".main-content-area").prepend(
+                        "<div class='alert alert-warning alert-dismissable'>" +
+                        "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>" + "&times;" +"</button>" +
+                        "<strong>" + "Please note!" +"</strong>" +" You need to be logged in, in order to vote on posts."
+                        +"</div>" );
+                 return false;
+                  }
+             }
+             });
+
+    }
+        
 });
+   
+   
+   
+  

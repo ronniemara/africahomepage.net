@@ -16,7 +16,7 @@ function comment_post_btn_click()
 	var _userId = $( '#userId' ).val();
 	var _postId = $( '#postId' ).val();
 
-	if( _comment.length > 0 && _userId != null )
+	if( _comment.length > 0 && _userId !== null )
 	{
 	//proceed with ajax call
 	$( '.comment-insert-container' ).css('border', '1px solid #e1e1e1');
@@ -30,20 +30,18 @@ function comment_post_btn_click()
 
 		}
    				
-	      ).fail(
-		      function( )
-		      		{
-					console.log( "Error" ); 
-				}
-		      ).done(
-		      function( data, textStatus, jqXHR )
-		      		{
+	      ).fail( function()
+		      	{
+				console.log( "Error" ); 
+			}
+              ).done( function( data, textStatus, jqXHR )
+		      	{
 					var jsonData = jqXHR.responseText;
 		// var jsonParse = jQuery.parseJSON(data.responseText);	
 					comment_insert( jQuery.parseJSON(jsonData) ); 
 					//console.log( "ResponseText: " + jsonData   );
 					console.log(jqXHR); 
-				}
+			}
 		      );
 
 	console.log( _comment + " userid:" + _userId );
