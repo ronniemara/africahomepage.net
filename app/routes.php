@@ -35,6 +35,7 @@ Route::get('logout', 'LoginController@logout');
 
 Route::post('vote-up', 'VotesController@upvote');
 Route::post('vote-down', 'VotesController@downvote');
+Route::get('getvotes', 'VotesController@getvotes');
 
 
 

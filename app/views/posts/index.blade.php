@@ -19,9 +19,9 @@
                                         </small> 
                                     </p>
                                     <p class="votes-paragraph">
-                                        <a href="#" class="post-vote-up"> <i class="icon-arrow-up"></i></a>
-                                        <span class="number-of-votes"></span> votes
-                                        <a href="#" class="post-vote-down"><i class="icon-arrow-down"></i></a>
+                                        <a href="#" class="post-vote-up" id={{$v->id}}> <i class="icon-arrow-up"></i></a>
+                                        <span class="number-of-votes" id={{$v->id}}></span> votes
+                                        <a href="#" class="post-vote-down" id={{$v->id}}><i class="icon-arrow-down"></i></a>
                                     </p>
                     
                             </li>

@@ -12,8 +12,8 @@ class VotesController extends BaseController {
     }
 
     public function upvote() {
-        $votable_id = Input::get('votable_id');
-        $votable_type = Input::get('votable_type');
+        $votable_id = Input::get('itemId');
+        $votable_type = Input::get('whatIsWhatVotedOn');
         $voted_already = $this->vote->where('votable_id', '=', $votable_id)->where('votable_type', '=', $votable_type)->first();
         if ($voted_already == null)
         {
@@ -39,5 +39,15 @@ class VotesController extends BaseController {
         $vote->count = $vote->count - 1;
         $vote->save();
     }
-
+    
+    public function getvotes()
+    {
+        $votable_id = Input::get('votable_id');
+        $votable_type = Input::get('votable_type');
+        $row = $this->vote->where('votable_id', '=', $votable_id)->where('votable_type', '=', $votable_type)->first();
+        $count = $row->count;
+        return json_encode($count);
+    }
+            
+            
 }

@@ -14,7 +14,7 @@
 		</style>
 		<link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link href="/css/mystyle.css" rel="stylesheet" media="screen">
-                <script src="/js/jquery-1.10.2.js"></script>
+                <script src="/js/jquery-1.11.0.js" type="text/javascript"></script>
 		<!--{{ HTML::script('//underscorejs.org/underscore.js') }}
 		{{ HTML::script('//code.jquery.com/jquery.js') }}
                 <script>
@@ -23,11 +23,11 @@
                 }
                 </script>
 		{{ HTML::script('//backbonejs.org/backbone-min.js') }} -->
-		<script src="/js/bootstrap.min.js"></script>
-		<script src="/js/comment_post_script.js" ></script>
-                <script src="/js/comment_delete_script.js"></script>
-                <script src="/js/post_vote_script.js"></script>
-		{{ HTML::script('js/app.js') }}
+                <script src="/js/bootstrap.min.js" type="text/javascript"></script>
+                <script src="/js/comment_post_script.js" type="text/javascript" ></script>
+                <script src="/js/comment_delete_script.js" type="text/javascript"></script>
+                <script src="/js/post_vote_script.js" type="text/javascript"></script>
+		{{ HTML::script('/js/app.js') }}
 
 	</head>
 	<body>
