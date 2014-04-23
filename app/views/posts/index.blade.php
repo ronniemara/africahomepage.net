@@ -13,11 +13,12 @@
                                 {{ HTML::link($v->url, $v->title) }}
                                     <p> 
                                         Posted by: {{ $v->first_name ." ".$v->last_name}}
-
+                                    </p>
+                                     <p> 
                                         <small>
                                             {{ HTML::link('posts/'.$v->id, $v->comments->count().'Comments') }}
                                         </small> 
-                                    </p>
+                                   </p>
                                     <p class="votes-paragraph">
                                         <a href="#" class="post-vote-up" id={{$v->id}}> <i class="icon-arrow-up"></i></a>
                                         <span class="number-of-votes" id={{$v->id}}></span> votes

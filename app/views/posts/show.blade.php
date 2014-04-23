@@ -1,35 +1,29 @@
 @extends('layouts.master')
 
 @section('content')
-<div>
-	
-</div>
-
-
 <div class="wrapper">
 	
-	<div class="post">
-		<h3><strong>{{ $post->title }}</strong></h3>
-		<p>
-			<strong>Posted by:</strong>
-				{{ $post->createdBy }}
-				
-			<em>
-				@if($post->created_at->diffInHours()<25)
-					{{ $post->created_at->diffInHours() }} hours ago
-				@else
-					{{ $post->created_at->diffInDays() }} days ago
-				@endif
-			</em>
-		</p>
-                <p class="votes-paragraph">
-                    <a href="#"> <i class="icon-arrow-up post-vote-up" id={{ $post->id }} </i></a>
-                    
-                    120 votes 
-                    <a href="#"><i class="icon-arrow-down post-vote-down" id={{ $post->id }}></i></a>
-                </p>
-                
-	</div>
+    <div class="post">
+            <h3><strong>{{ $post->title }}</strong></h3>
+            <p>
+                    <strong>Posted by:</strong>
+                            {{ $post->createdBy }}
+
+                    <em>
+                            @if($post->created_at->diffInHours()<25)
+                                    {{ $post->created_at->diffInHours() }} hours ago
+                            @else
+                                    {{ $post->created_at->diffInDays() }} days ago
+                            @endif
+                    </em>
+            </p>
+            <p class="votes-paragraph">
+                <a href="#" class="post-vote-up" id={{$post->id}}> <i class="icon-arrow-up"></i></a>
+                <span class="number-of-votes" id={{$post->id}}></span> votes
+                <a href="#" class="post-vote-down" id={{$post->id}}><i class="icon-arrow-down"></i></a>
+            </p>
+
+    </div>
 	<div class="comment-wrapper">
 		<h4 id="comments">Comments</h4>
 			@if(Sentry::check()) 
@@ -58,16 +52,15 @@
 						</div>
 						<div class="comment-box">
 							<h3 class="username-field">
-								{{ $comment->createdBy }}  							
+                                                            {{ $comment->createdBy }}  							
 							</h3>
 							<div class="comment-text">
-						{{ $comment->message }}	
+                                                            {{ $comment->message }}	
 							</div>
                                                         <p class="votes-paragraph">
-                                                            <a href="#"><i class="icon-arrow-up comment-vote-up" id={{ $comment->id }}></i></a>
-                                                            
-                                                            120 votes 
-                                                            <a href="#"><i class="icon-arrow-down comment-vote-down" id={{ $comment->id }}></i></a>
+                                                            <a href="#" class="comment-vote-up" id={{$comment->id}}> <i class="icon-arrow-up"></i></a>
+                                                            <span class="number-of-votes" id={{$comment->id}}></span> votes
+                                                            <a href="#" class="comment-vote-down" id={{$comment->id}}><i class="icon-arrow-down"></i></a>
                                                         </p>
 						</div>
 						@if (Sentry::check() && Sentry::getId() == $comment->user_id )
