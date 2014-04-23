@@ -17,59 +17,54 @@ $( document ).ready( function()
             $.get("getvotes", {"votable_id" : _anchorId ,"votable_type" : _Slice}).done(function(data){
                 //
                 _elem.find("span").append(data);
-//var _numVotes = data;
-                 //var _what = _elem.find("span");
-               //console.log(_numVotes);
-                 //      _what.append(_numVotes);
                 });
               
     });
    
-    function capitaliseFirstLetter(string)
-{
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-   
+	function capitaliseFirstLetter(string)
+	{
+	    return string.charAt(0).toUpperCase() + string.slice(1);
+	}
     
-    
-    $(".number-of-votes").on("votedOn",function( e, voteType, _Id, event )
+	$(".number-of-votes").on("votedOn",function( e, voteType, _Id, event )
         {
-   var _whatIsVotedOn = null;
-   var _votedUpOrDown = null;
-   var _itemId        = _Id;
-    console.log(event);
-   if ( voteType.indexOf("post") !== -1){
-       _whatIsVotedOn = "Post";
-   }
-   else if ( voteType.indexOf("comment") !== -1)
-       {
-           _whatIsVotedOn = "Comment";
-       }
+	   var _whatIsVotedOn = null;
+	   var _votedUpOrDown = null;
+	   var _itemId        = _Id;
+	   if ( voteType.indexOf("post") !== -1){
+	       _whatIsVotedOn = "Post";
+	   }
+	   else if ( voteType.indexOf("comment") !== -1)
+	   {
+	     _whatIsVotedOn = "Comment";
+	   }
 
-   if ( voteType.indexOf("up") !== -1){
-       _votedUpOrDown = "up";
-   }
-   else if ( voteType.indexOf("down") !== -1)
-       {
-           _votedUpOrDown = "down";
-       }
-
-       
-       $.post("/vote-up", { whatIsWhatVotedOn: _whatIsVotedOn, votedUpOrDown: _votedUpOrDown, itemId: _itemId}).done(function(data,status,jqXHR){
-        var data =jQuery.parseJSON(jqXHR.responseText);
-        var str1 = "#";
-        var str2 = data.votable_id;
-        var str3 = ".number-of-votes";
-       var _selector = str1.concat(str2,str3);
-           $(_selector).text(data.count);   
-       });
-});
+	   if ( voteType.indexOf("up") !== -1){
+	       _votedUpOrDown = "up";
+	   }
+	   else if ( voteType.indexOf("down") !== -1)
+	   {
+	    _votedUpOrDown = "down";
+	   }
+	       
+        $.post("/vote-up",
+	      { whatIsWhatVotedOn: _whatIsVotedOn, votedUpOrDown: _votedUpOrDown, itemId: _itemId}
+	     ).done(function(data,status,jqXHR)
+		     {
+			var data =jQuery.parseJSON(jqXHR.responseText);
+			var str1 = "#";
+			var str2 = data.votable_id;
+			var str3 = ".number-of-votes";
+			var _selector = str1.concat(str2,str3);
+			   $(_selector).text(data.count);   
+		      });
+		   });
 
      $(".votes-paragraph").on('click', 'a',function(event)
      {
          var _loggedIn = new Boolean();
-       $.getJSON("/check-user", function( data )
-       {
+       	 $.getJSON("/check-user", function( data )
+       	               {
 
          _loggedIn = data;
 
