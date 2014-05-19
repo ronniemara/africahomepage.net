@@ -239,11 +239,11 @@ class UsersController extends BaseController {
     public function isLoggedIn()
     {
         if(Sentry::check()){
-           return json_encode(true); 
+		 return json_encode(true);
         }
         else
             {
-                return json_encode(false);
+		    return json_encode(false);
             }
     }
 

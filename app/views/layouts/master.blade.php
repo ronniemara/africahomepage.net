@@ -32,35 +32,35 @@
 	</head>
 	<body>
 		<!--HEADER -->
-
 		<header>
-		<div class="container">
-			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-  			<!-- Brand and toggle get grouped for better mobile display -->
-  				<div class="navbar-header">
-    				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-	      				<span class="sr-only">Toggle navigation</span>
-	      				<span class="icon-bar"></span>
-	      				<span class="icon-bar"></span>
-	      				<span class="icon-bar"></span>
-    				</button>
-    				<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Nkrumahs Vision</a>
-  				</div>
+			<div class="mylogo">
+				<div class="container">
+					<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+					<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="/"><span class="glyphicon glyphicon-home"></span> Nkrumahs Vision</a>
+						</div>
 
-  			<!-- Collect the nav links, forms, and other content for toggling -->
-  				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-    				   				
-    				<ul class="nav navbar-nav navbar-right">
-      							@if (Sentry::check())
-      							<p class="navbar-text">Signed in as {{ Session::get('currentUserName') }}</p>
+					<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">		   				
+							<ul class="nav navbar-nav navbar-right">
+								@if (Sentry::check())
+								<p class="navbar-text">Signed in as {{ Session::get('currentUserName') }}</p>
 								<li class="login"><a href="/logout">Logout</a></li>
 								@else
-									<li class="active login"><a href="/login">Login</a></li>
-								@endif
-      					
-    				</ul>
-  				</div><!-- /.navbar-collapse -->
-			</nav>
+								<li class="active login"><a href="/login">Login</a></li>
+								@endif      					
+							</ul>
+						</div><!-- /.navbar-collapse -->
+					</nav>
+				</div><!-- end of container -->
+			</div><!-- end of mylogo -->
 		</header> <!-- end header -->
 			<!-- MAIN BODY -->
 			<div class="container main-area">
@@ -70,7 +70,7 @@
 					</div><!-- end main-content-area -->
 					<aside class="col-md-3 sidebar">
 						<div class="sidebar-widget">
-							<h4>Connect with Us</h4>
+							<h1>Connect with Us</h1>
 							<a href="https://twitter.com/nkrumahsvision" ><i style="color:black;" class="icon-twitter icon-2x"></i> </a>
 							<a href="https://plus.google.com/nkrumahsvision" ><i style="color:black;" class="icon-google-plus icon-2x"></i> </a>
 							<a href="https://facebook.com/nkrumahsvision" ><i style="color:black;" class="icon-facebook icon-2x"></i> </a>
@@ -84,12 +84,12 @@
 					</aside><!-- end of aside -->
 				</div><!-- row -->
 			</div><!-- main area -->
-			<footer>
-				<div class="container">
-					<p style="color: white;">&copy; 2013 Black Mirror Media</p>
-				</div>
-			</footer> <!-- end footer div -->
-		</body>
+		<footer>
+			<div class="container">
+				<p style="color: white;">&copy; 2013 Black Mirror Media</p>
+			</div>
+		</footer> <!-- end footer div -->
+	</body>
 
 </html>
 
