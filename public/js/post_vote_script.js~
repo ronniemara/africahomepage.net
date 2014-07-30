@@ -35,7 +35,7 @@ $( document ).ready( function()
 		 ).done(function(data)
         		{
                			//
-             		_elem.find("span.number-of-votes").text(parseInt(data,10));
+             		_elem.find("span").text(parseInt(data,10));
         		});
     });
    

@@ -39,7 +39,7 @@ class LoginController extends BaseController {
                     // authenticate
                 $currentUser = Sentry::authenticate($credentials, false);
                 //put first and last name in session
-                Session::put('currentUserName', $currentUser->username);
+                Session::put('currentUserName', $currentUser->first_name . " ". $currentUser->last_name);
                 //redirect to homepage
                 return Redirect::to('/'); 
             }

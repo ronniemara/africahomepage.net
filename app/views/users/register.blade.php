@@ -10,13 +10,17 @@
 				{{ implode('', $errors->all('<li class="error">:message</li>')) }}
 			</div>
 			@endif
-			<div class="form-group"> 
+            			<div class="form-group"> 
 					{{ Form::label('first_name', 'First Name') }}
 					{{ Form::text('first_name', '', array('placeholder' => 'First Name', 'class'=> 'form-control')) }}
 				</div>
 				<div class="form-group">
 					{{ Form::label('last_name', 'Last Name') }}
 					{{ Form::text('last_name', '', array('placeholder' => 'Last Name','class'=> 'form-control')) }}
+				</div>
+                                <div class="form-group">
+					{{ Form::label('user_name', 'Username') }}
+					{{ Form::text('user_name', '', array('placeholder' => 'Username','class'=> 'form-control')) }}
 				</div>
 				<div class="form-group"> 
 					{{ Form::label('email', 'Email') }}

@@ -15,11 +15,6 @@
                                        <h5 class="post-author"> Posted by: {{ $v->first_name ." ".$v->last_name}}</h5>
 				       <div class="comments-and-votes container">
 						<div class="row">
-							
-							<div class="comments-div col-md-1">
-								<span class="icon-bubble"></span>
-								<small>{{ HTML::link('posts/'.$v->id, " ".$v->comments->count()) }}</small>
-							</div> 
 							<div class="votes-div col-md-10">
                                                             <a href="#" class="post-vote-up" id={{$v->id}}>
                                                                 <span class="icon-point-up"></span>
@@ -29,8 +24,9 @@
                                                                 <span class="icon-point-down"></span>
                                                             </a>
 							</div>
-
-						
+							<div class="comments-div col-md-1">
+								<span class="icon-bubble"></span><small>{{ HTML::link('posts/'.$v->id, " ".$v->comments->count()) }}</small>
+							</div> 
 						</div>
 					</div>
                                     </div>

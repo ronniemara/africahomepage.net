@@ -5,6 +5,8 @@ class UsersController extends BaseController {
    
    protected $post;
    protected $comment;
+   
+   
 
     public function __construct(Post $post, Comment $comment)
     {
@@ -241,32 +243,29 @@ class UsersController extends BaseController {
             }
     }
 
-	public function getResetPasswordEmail()
+	
+	public function getResetPassword()
 	{
-		return View::make('users.reset_code');
+		return View::make('users.reset_password');
 	}
 
-	public function sendResetPasswordEmail()
+	public function sendResetCode()
 	{
 		$email = Input::get('email');		
 		try
 		{
 		    // Find the user using the user email address
 		    $user = Sentry::findUserByLogin($email);
-                    
-                    $user_data['email'] = $user->email;
-                    
-                    $user_data['first_name'] = $user->first_name;
 
 		    // Get the password reset code
-                    $resetCode = array('resetCode' => $user->getResetPasswordCode());
+		    $resetCode = $user->getResetPasswordCode();
 
 		    // Now you can send this code to your user via email for example.
 			try
 			{
-				Mail::send('emails.auth.reminder', $resetCode, function($message) use ($user_data)
+				Mail::send('emails.auth.reminder', $resetCode, function($message) use ($user)
                                 {
-                                    $message->to($user_data['email'], $user_data['first_name'])->subject('Reset Password for HomepageAfrica.com');  
+                                    $message->to($user->email, $user->first_name)->subject('Reset Password for HomepageAfrica.com');  
                                 }
 				);
 				return Redirect::to('login')->with('message','Password reset email sent');
@@ -280,72 +279,11 @@ class UsersController extends BaseController {
 		{
 		 	return Redirect::to('login')->with('message', 'User was not found.');
 		}
+
+
+
+
+
 	}
-        
-        public function getResetPasswordPage() 
-        {
-            $resetCode = Input::get('y');
-            return View::make('users.new_password',  compact('resetCode'));
-        }
-        
-        public function newPassword()
-        {
-                $rules = array('password' => 'min:8|same:password-repeat');
-		$validator = Validator::make(Input::all(), $rules);
 
-		if ($validator->fails())
-		{
-			return Redirect::to('/login')->withErrors($validator);
-		}
-                $email      =   Input::get('email');
-                $code       =   Input::get('code');
-                $password   =   Input::get('password');
-                 
-                try
-            {
-                // Find the user using the user email
-                $user = Sentry::findUserByLogin($email);
-                $user_data['email'] = $user->email;
-                $user_data['first_name'] = $user->first_name;
-                $htmlData = array('username'=> $user->username);
-                
-                // Check if the reset password code is valid
-                if ($user->checkResetPasswordCode($code))
-                {
-                    // Attempt to reset the user password
-                    if ($user->attemptResetPassword($code, $password))
-                    {
-                        //Now you can send this confirmation to your user via email.
-                        try
-			{
-				Mail::send('emails.auth.password', $htmlData, function($message) use ($user_data)
-                                {
-                                    $message->to($user_data['email'], $user_data['first_name'])->subject('Password Changed for HomepageAfrica.com');  
-                                }
-				);
-
-			} catch (Exception $e)
-			{
-				return Redirect::to('login')->withErrors($e->getMessage());
-			}			
-                        // Password reset passed
-                        return Redirect::to('login')->with('message', 'Password changed');
-                    }
-                    else
-                    {
-                        // Password reset failed
-                        return Redirect::to('login')->withErrors('Password reset failed.');
-                    }
-                }
-                else
-                {
-                    // The provided password reset code is Invalid
-                    return Redirect::to('login')->withErrors('Password reset failed.');
-                }
-            }
-            catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-            {
-                return Redirect::to('login')->withErrors('User was not found.');
-            }
-        }
 }
