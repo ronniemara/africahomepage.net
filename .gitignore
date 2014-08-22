@@ -9,3 +9,9 @@ composer.lock
 .project
 .settings/
 nbproject/
+/access-logs
+/mail
+/objects
+/perl5
+/ssl
+
