@@ -58,7 +58,14 @@ class VotesController extends BaseController {
         $votable_id = Input::get('votable_id');
         $votable_type = Input::get('votable_type');
         $row = $this->vote->where('votable_id', '=', $votable_id)->where('votable_type', '=', $votable_type)->first();
+        if($row != null)
+        {
         $count = intval($row->count);
+        }
+        else
+        {
+            $count = 0;
+        }
         return json_encode($count);
     }
             

@@ -3,23 +3,24 @@
 @section('content')
 <div class="wrapper">	
 	<div class="post">
-	    <h3><strong>{{ $post->title }}</strong></h3>
+	    <h3><strong>{{ HTML::link($post->url, $post->title) }}</strong></h3>
 	    <p>
 		    <strong>Posted by:</strong>
 			    {{ $post->createdBy }}
-		    <em>
-			    @if($post->created_at->diffInHours()<25)
-				    {{ $post->created_at->diffInHours() }} hours ago
-			    @else
-				    {{ $post->created_at->diffInDays() }} days ago
-			    @endif
-		    </em>
+		    <em>{{ $post->time_ago }}</em>
 	    </p>
-	    <p class="votes-paragraph">
-		<a href="#" class="post-vote-up" id={{$post->id}}> <i class="icon-arrow-up"></i></a>
+	    <div class="votes-div">
+                <a href="#" class="post-vote-up" id={{$post->id}}>
+                    <span class="icon-point-up"></span>
+                </a>
+                    <span class="number-of-votes" id={{$post->id}}></span> votes
+                <a href="#" class="post-vote-down" id={{$post->id}}>
+                    <span class="icon-point-down"></span>
+                </a>            
+                               		<!--<a href="#" class="post-vote-up" id={{$post->id}}> <i class="icon-arrow-up"></i></a>
 		<span class="number-of-votes" id={{$post->id}}></span> votes
-		<a href="#" class="post-vote-down" id={{$post->id}}><i class="icon-arrow-down"></i></a>
-	    </p>
+		<a href="#" class="post-vote-down" id={{$post->id}}><i class="icon-arrow-down"></i></a> -->
+	    </div>
 	</div>
 	<div class="comment-wrapper">
 		<h4 id="comments">Comments</h4>

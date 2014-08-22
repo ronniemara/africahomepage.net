@@ -55,9 +55,12 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => '127.0.0.1',
+			//'database'  => 'africah3_main',
+			//'username'  => 'africah3',
+			//'password'  => 'Zim#1892!',
 			'database'  => 'hackernews',
 			'username'  => 'root',
-			'password'  => 'l1fe1sg00d',
+			'password' => 'l1fe1sg00d',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

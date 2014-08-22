@@ -6,16 +6,15 @@
 
 	<h3>{{ link_to_route('posts.create', 'Add new post') }}</h3>
 
-	@if ($posts->count())
+	@if ($postsValues->count())
 		<ol class="posts-ol">
-                @foreach ($posts as $k => $v)
+                @foreach ($postsValues as $k => $v)
                             <li>
                                     <div class="post">
 				       <h4 class="post-title"> {{ HTML::link($v->url, $v->title) }}</h4>
-                                       <h5 class="post-author"> Posted by: {{ $v->first_name ." ".$v->last_name}}</h5>
+                                       <h5 class="post-author"> Posted by: <strong>{{ $v->username }}</strong> <i>{{" " . $v->time_ago}}</i></h5>					
 				       <div class="comments-and-votes container">
-						<div class="row">
-							
+						<div class="row">							
 							<div class="comments-div col-md-1">
 								<span class="icon-bubble"></span>
 								<small>{{ HTML::link('posts/'.$v->id, " ".$v->comments->count()) }}</small>
@@ -28,9 +27,7 @@
                                                             <a href="#" class="post-vote-down" id={{$v->id}}>
                                                                 <span class="icon-point-down"></span>
                                                             </a>
-							</div>
-
-						
+							</div>						
 						</div>
 					</div>
                                     </div>

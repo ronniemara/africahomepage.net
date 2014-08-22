@@ -8,11 +8,14 @@ class PostsController extends BaseController {
      * @var Post
      */
     protected $post = null;
+    protected $votes = null;
 
     
-    public function __construct(Post $post)
+    public function __construct(Post $post, Vote $votes)
     {
-        $this->post = $post;
+        $this->post = $post;    
+        $this->votes = $votes;
+        
     }
 
     /**
@@ -29,24 +32,34 @@ class PostsController extends BaseController {
          {
     		    //Time elapsed since post created
             $age_in_hours = Carbon::now()->diffInHours($post->created_at);
+            $post->time_ago = Carbon::createfromTimeStamp(strtotime($post->created_at))->diffForHumans(); 
+            
+            //number of votes for post
+            $VoteObject = $this->post->find($post->id)->votes->first();            
+            
+             $numberOfVotes = (int) $VoteObject->count;     
+             
+            
 
     	        //setting the rank of the post when displaying all posts
-            $post->rank = $this->calculate_score($post->karma, $age_in_hours);
+            $post->rank = $this->calculate_score($numberOfVotes, $age_in_hours);
+           
 
                 //setting post->first_name  and post->last name properties
-            $user = Sentry::findUserById(3);
-            $post->first_name = $user->first_name;
-            $post->last_name = $user->last_name;
+            $user = Sentry::findUserById($post->user_id);
+            $post->username = $user->username;
+            
 
          }
-        $posts = $posts->sortBy(function($post)
-        {
-          $post->rank;	    
-        });
+         
+         $sortPosts = $posts->sortBy(function($post)
+                        { 
+                            return $post->rank;        
+                        })->reverse();
+       
+        $postsValues = $sortPosts->values();
 
-        $posts =$posts->values();
-
-        return  View::make('posts.index', compact('posts'));
+        return  View::make('posts.index', compact('postsValues'));
     }
 
     /**
@@ -70,7 +83,9 @@ class PostsController extends BaseController {
         $validation = Validator::make($input, Post::$rules);
 
         if ($validation->passes())
-        {
+        {	
+		$user = Sentry::getUser();			
+		$input['user_id'] = $user->id;	
             $this->post->create($input);
 
             return Redirect::route('posts.index');
@@ -92,7 +107,8 @@ class PostsController extends BaseController {
     {
          $post = $this->post->findOrFail($id);
          $createdBy = Sentry::findUserById($post->user_id);
-         $post->createdBy = $createdBy->first_name . " " . $createdBy->last_name;
+         $post->createdBy = $createdBy->username;
+         $post->time_ago = Carbon::createfromTimeStamp(strtotime($post->created_at))->diffForHumans(); 
 
 
         $comments = $post->comments->sortBy(function($comment)
@@ -102,7 +118,7 @@ class PostsController extends BaseController {
         foreach ($comments as $comment)
         {
           $user = Sentry::findUserById($comment->user_id);
-          $comment->createdBy = $user->first_name . " " .$user->last_name;
+          $comment->createdBy = $user->username;
         }
 
         return View::make('posts.show', compact('post','comments'));
@@ -167,18 +183,9 @@ class PostsController extends BaseController {
     //calculate rank
     public function calculate_score($karma, $age_in_hours)
     {
-
-     return ($karma - 1) / pow(($age_in_hours + 2), 1.8);
+     return (float)($karma - 1) / pow(($age_in_hours + 2), 1.8);
     }
 
-    //sort posts using rank
-    public function post_sorter($a, $b) 
-    {
-        if ($a['rank'] == $b['rank']) 
-        {
-        return 0;
-        }
-        return ($a['rank'] < $b['rank']) ? -1 : 1;
-    }
+}  
 
-}
+

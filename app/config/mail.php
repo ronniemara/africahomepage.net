@@ -28,7 +28,7 @@ return array(
 	| 'smtp.mailgun.org'
 	*/
 
-	'host' => 'smtp.gmail.com',
+	'host' => 'mail.africahomepage.net',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return array(
 	|587
 	*/
 
-	'port' => 465,
+	'port' => 26,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'ronald.marangwanda@gmail.com', 'name' => null),
+	'from' => array('address' => 'webmaster@africahomepage.net', 'name' => null),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return array(
 	|
 	*/
 
-	'encryption' => 'ssl',
+	'encryption' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'ronald.marangwanda@gmail.com',
+	'username' => 'webmaster@africahomepage.net',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +93,7 @@ return array(
 	|
 	*/
 
-	'password' =>  'lknwtonygayggfnw',
+	'password' =>  'Julyisa4791!',
 
 	/*
 	|--------------------------------------------------------------------------

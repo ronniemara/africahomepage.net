@@ -1,0 +1,42 @@
+--- 
+files: 
+  certificate: 
+    www_africahomepage_net_c5d56_594c1_1437955199_f4b374137ec8cd1125d820c73e97f07a: 
+      created: '1406380887'
+      domains: 
+        - www.africahomepage.net
+        - africahomepage.net
+      friendly_name: www.africahomepage.net and africahomepage.net
+      id: www_africahomepage_net_c5d56_594c1_1437955199_f4b374137ec8cd1125d820c73e97f07a
+      is_self_signed: 0
+      issuer.commonName: PositiveSSL CA 2
+      issuer.organizationName: COMODO CA Limited
+      modulus: c5d5637e0411a1ad46e6c2ef68b6c51daff4f0074c6ad37d5f864d362a6dcb64d47d6169daf1389a252543fd3c216570703f8c07f98e39240d50429aaf2f9ecb9a227c87faad03b8342e9a942cb89b72d4652ebcb351b662792e3cb2a099c5940a2ff8435079b2b56092da9efcc2f7787a5c214f80ed57cae3ced7d52c9c5c58ff30f59228c92508690c99123e7bf2db08f72cea4f34467da81f7d38ac5c6649f1ea5a0e5481bff6215004830ddb84c727c557345cee30a24c5abd9eb79b276f212fdc935295602dbf4527f41cdb95bfe3cae2f9e509e362205eb0cab29bb9219b48bcb98f4c2a83380cbce08da817fc3e3db073e2be43126dc94b0802a594c1
+      modulus_length: 2048
+      not_after: '1437955199'
+      not_before: '1406332800'
+      subject.commonName: www.africahomepage.net
+  key: 
+    c5d56_594c1_064a315d567cdd37ba58715e2fbea6da: 
+      created: '1406380888'
+      friendly_name: 2,048 bits, created 7/26/14 1:21 PM UTC
+      id: c5d56_594c1_064a315d567cdd37ba58715e2fbea6da
+      modulus: c5d5637e0411a1ad46e6c2ef68b6c51daff4f0074c6ad37d5f864d362a6dcb64d47d6169daf1389a252543fd3c216570703f8c07f98e39240d50429aaf2f9ecb9a227c87faad03b8342e9a942cb89b72d4652ebcb351b662792e3cb2a099c5940a2ff8435079b2b56092da9efcc2f7787a5c214f80ed57cae3ced7d52c9c5c58ff30f59228c92508690c99123e7bf2db08f72cea4f34467da81f7d38ac5c6649f1ea5a0e5481bff6215004830ddb84c727c557345cee30a24c5abd9eb79b276f212fdc935295602dbf4527f41cdb95bfe3cae2f9e509e362205eb0cab29bb9219b48bcb98f4c2a83380cbce08da817fc3e3db073e2be43126dc94b0802a594c1
+      modulus_length: 2048
+indexes: 
+  certificate: 
+    modulus: 
+      c5d5637e0411a1ad46e6c2ef68b6c51daff4f0074c6ad37d5f864d362a6dcb64d47d6169daf1389a252543fd3c216570703f8c07f98e39240d50429aaf2f9ecb9a227c87faad03b8342e9a942cb89b72d4652ebcb351b662792e3cb2a099c5940a2ff8435079b2b56092da9efcc2f7787a5c214f80ed57cae3ced7d52c9c5c58ff30f59228c92508690c99123e7bf2db08f72cea4f34467da81f7d38ac5c6649f1ea5a0e5481bff6215004830ddb84c727c557345cee30a24c5abd9eb79b276f212fdc935295602dbf4527f41cdb95bfe3cae2f9e509e362205eb0cab29bb9219b48bcb98f4c2a83380cbce08da817fc3e3db073e2be43126dc94b0802a594c1: 
+        www_africahomepage_net_c5d56_594c1_1437955199_f4b374137ec8cd1125d820c73e97f07a: ~
+    subject.commonName: 
+      www.africahomepage.net: 
+        www_africahomepage_net_c5d56_594c1_1437955199_f4b374137ec8cd1125d820c73e97f07a: ~
+uniques: 
+  certificate: 
+    friendly_name: 
+      www.africahomepage.net and africahomepage.net: www_africahomepage_net_c5d56_594c1_1437955199_f4b374137ec8cd1125d820c73e97f07a
+  key: 
+    friendly_name: 
+      2,048 bits, created 7/26/14 1:21 PM UTC: c5d56_594c1_064a315d567cdd37ba58715e2fbea6da
+    modulus: 
+      c5d5637e0411a1ad46e6c2ef68b6c51daff4f0074c6ad37d5f864d362a6dcb64d47d6169daf1389a252543fd3c216570703f8c07f98e39240d50429aaf2f9ecb9a227c87faad03b8342e9a942cb89b72d4652ebcb351b662792e3cb2a099c5940a2ff8435079b2b56092da9efcc2f7787a5c214f80ed57cae3ced7d52c9c5c58ff30f59228c92508690c99123e7bf2db08f72cea4f34467da81f7d38ac5c6649f1ea5a0e5481bff6215004830ddb84c727c557345cee30a24c5abd9eb79b276f212fdc935295602dbf4527f41cdb95bfe3cae2f9e509e362205eb0cab29bb9219b48bcb98f4c2a83380cbce08da817fc3e3db073e2be43126dc94b0802a594c1: c5d56_594c1_064a315d567cdd37ba58715e2fbea6da

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Nkrumah&#39;s Vision</title>
+		<title>AfricaHomepage.net</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<!-- Bootstrap -->
@@ -38,7 +38,7 @@
 				<div class="col-md-6 logo">
 		                        <h1>
 		                            <a href="/">
-		                                <span class="icon-africa"></span> Homepage Africa
+		                                <span class="icon-africa"></span> AfricaHomepage
 		                            </a>
 		                        </h1>
                         	</div><!-- end main-content-area -->
@@ -56,8 +56,8 @@
 		                            </a>
 		                        </h1>
                         	</div><!-- end main-content-area -->
-				<div class="col-md-3 login-link">
-		                                <h1><a href="/login">Login</a></h1>
+				<div class="col-md-3 login-link">						
+		                                 <h1><a href="/login">Login</a></h1> 
 				</div><!-- end col-md-3 -->
                             @endif      					
                     </div><!-- end of mylogo -->
@@ -71,9 +71,9 @@
                     <aside class="col-md-3 sidebar">
                         <div class="sidebar-widget">
                             <h2>Connect with Us</h2>
-                                <a href="https://twitter.com/nkrumahsvision" ><span style="color:black;" class="icon-twitter"></span> </a>
-                                <a href="https://plus.google.com/nkrumahsvision" ><span style="color:black;" class="icon-googleplus"></span> </a>
-                                <a href="https://facebook.com/nkrumahsvision" ><span style="color:black;" class="icon-facebook"></span> </a>
+                                <a href="https://twitter.com/africahomepage" ><span style="color:black;" class="icon-twitter"></span> </a>
+                                <a href="https://plus.google.com/101725105360299569055" rel="publisher"><span style="color:black;" class="icon-googleplus"></span></a>                                
+                                <a href="https://facebook.com/africahomepage" ><span style="color:black;" class="icon-facebook"></span> </a>
                         </div>
                         <div class="sidebar-widget clearfix">
                                 Advertisement
