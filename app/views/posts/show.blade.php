@@ -17,9 +17,6 @@
                 <a href="#" class="post-vote-down" id={{$post->id}}>
                     <span class="icon-point-down"></span>
                 </a>            
-                               		<!--<a href="#" class="post-vote-up" id={{$post->id}}> <i class="icon-arrow-up"></i></a>
-		<span class="number-of-votes" id={{$post->id}}></span> votes
-		<a href="#" class="post-vote-down" id={{$post->id}}><i class="icon-arrow-down"></i></a> -->
 	    </div>
 	</div>
 	<div class="comment-wrapper">
@@ -52,20 +49,20 @@
 						<div class="comment-box">
 							<div class="comment-text">
 								<div>  
-								   <h3 class="username-field" > {{ $comment->createdBy }} </h3>					
+								   <h3 class="username-field" > {{ $comment->createdBy }} </h3>			
 								</div>							
 								<div class="show-post-comments-and-votes col-md-12 ">
 									<div>
 										{{ $comment->message }}
 									</div>	
-									<div class="votes-paragraph">
-									    <a href="#" class="comment-vote-up" id={{$comment->id}} > 
-										<i class="icon-arrow-up"></i>
-									    </a>
-									    <span class="number-of-votes" id={{$comment->id}}></span> votes
-									    <a href="#" class="comment-vote-down" id={{$comment->id}}>
-										<i class="icon-arrow-down"></i>
-									    </a>
+									<div class="votes-div">
+										<a href="#" class="comment-vote-up" id={{$comment->id}}>
+										    <span class="icon-point-up"></span>
+										</a>
+										    <span class="number-of-votes" id={{$comment->id}}></span> votes
+										<a href="#" class="comment-vote-down" id={{$comment->id}}>
+										    <span class="icon-point-down"></span>
+										</a>            
 									</div>
 								 </div>						
 							</div>
