@@ -15,20 +15,12 @@
 		<link href="/css/bootstrap.min.css?<?php echo time(); ?>" rel="stylesheet" media="screen">
 		<link href="/css/mystyle.css?<?php echo time(); ?>" rel="stylesheet" media="screen">
                 <link href="/css/icons.css?<?php echo time(); ?>" rel="stylesheet" media="screen">
-                <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
-		<!--{{ HTML::script('//underscorejs.org/underscore.js') }}
-		{{ HTML::script('//code.jquery.com/jquery.js') }}
-                <script>
-                if (typeof jQuery == 'undefined') {
-                            document.write(unescape("%3Cscript src='/js/jquery-1.10.2.js' type='text/javascript'%3E%3C/script%3E"));
-                }
-                </script>
-		{{ HTML::script('//backbonejs.org/backbone-min.js') }} -->
+                <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>		
                 <script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script>
                 <script src="/js/comment_post_script.js?<?php echo time(); ?>" type="text/javascript" ></script>
                 <script src="/js/comment_delete_script.js?<?php echo time(); ?>" type="text/javascript"></script>
                 <script src="/js/post_vote_script.js?<?php echo time(); ?>" type="text/javascript"></script>
-		{{ HTML::script('/js/app.js?<?php echo time(); ?>') }}
+		
 	</head>
 	<body>
             <header><!--HEADER -->
@@ -74,13 +66,7 @@
                                 <a href="https://twitter.com/africahomepage" ><span style="color:black;" class="icon-twitter"></span> </a>
                                 <a href="https://plus.google.com/101725105360299569055" rel="publisher"><span style="color:black;" class="icon-googleplus"></span></a>                                
                                 <a href="https://facebook.com/africahomepage" ><span style="color:black;" class="icon-facebook"></span> </a>
-                        </div>
-                        <div class="sidebar-widget clearfix">
-                                Advertisement
-                                <figure>
-                                        <img src="http://lorempixel.com/140/140" class="img-rounded">
-                                </figure>
-                        </div>
+                        </div>                        
                     </aside><!-- end of aside -->
                 </div><!-- main area -->
             </div><!-- container -->

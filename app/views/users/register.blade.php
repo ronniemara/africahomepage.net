@@ -37,11 +37,11 @@
 				<div class="form-group">
 					{{ Form::label('password', 'Confirm Password') }}
 					{{ Form::password('password2', array('placeholder' => 'Password','class'=> 'form-control')) }}
-						<div class="form-group">
-							{{ Form::captcha() }}
-						</div>
+						
 				</div>
-				
+                                <div class="form-group">
+                                        {{ Form::captcha() }}
+                                </div>				
 				<button type="submit" class="btn btn-default">Submit</button>
 					
 				
