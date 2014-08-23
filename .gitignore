@@ -14,4 +14,4 @@ nbproject/
 /objects
 /perl5
 /ssl
-
+/app/config/database.php
