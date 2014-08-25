@@ -25,8 +25,7 @@
 		<div class="comment-insert">
 			<h3 class="user"> Add a comment, {{ Session::get('currentUserName') }}</h3>
 			<div class="comment-insert-container">
-				<textarea id="comment-post-text" class="comment-insert-text">
-				</textarea>
+				<textarea id="comment-post-text" class="comment-insert-text"></textarea>
 				<input type="hidden" id="userId" value= {{ Sentry::getId() }} />	
 				<input type="hidden" id="postId" value= {{ $post->id }} />	
 			</div>
