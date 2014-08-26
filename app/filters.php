@@ -92,7 +92,7 @@ Route::filter('csrf', function()
 Route::filter('Sentry', function()
 {
 	if ( ! Sentry::check()) {
-		return Redirect::route('cms.login');
+		return Redirect::route('login')->with('message', 'Please login!');
 	}
 });
  
