@@ -7,7 +7,7 @@ class LoginController extends BaseController {
      */
     public function __construct()
     {
-        $this->beforeFilter('csrf', array('on' => array('postLogin','postRegister')));
+        $this->beforeFilter('csrf', array('on' => 'postLogin'));
     }
 	/*
 	*Get the login page
@@ -22,13 +22,6 @@ class LoginController extends BaseController {
      */
     public function postLogin()
     {
-            //$rules = array('recaptcha_response_field' => 'required|recaptcha');		
-            //$validator = Validator::make(Input::all(), $rules);
-
-            //if ($validator->fails())
-            //{
-            //	return Redirect::to('/login')->withErrors($validator);
-            //}
             try
             {
                 // set login credentials
