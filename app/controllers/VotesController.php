@@ -1,6 +1,5 @@
 <?php
 
-
 class VotesController extends BaseController {
     
     protected $vote = null;

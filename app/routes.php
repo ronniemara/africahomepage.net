@@ -30,8 +30,6 @@ Route::group(array('before' => ''), function()
 	Route::post('password-form', 'UsersController@sendResetPasswordEmail');
 	Route::get('reset', 'UsersController@getResetPasswordPage');
 	Route::post('reset', 'UsersController@newPassword');
-	//user is logged in?
-	Route::get('check-user', 'UsersController@isLoggedIn');
 
 	//register user route
 	Route::get('register', 'UsersController@create');
@@ -44,9 +42,11 @@ Route::get('login', 'LoginController@getLogin');
 Route::post('login', 'LoginController@postLogin');
 //logout route
 Route::get('logout', 'LoginController@logout');
-
-Route::post('vote-up', 'VotesController@upvote', array('before' => 'Sentry'));
-Route::post('vote-down', 'VotesController@downvote', array('before' => 'Sentry'));
+Route::group(array('before' => 'Sentry'), function()
+{
+	Route::post('vote-up', 'VotesController@upvote');
+	Route::post('vote-down', 'VotesController@downvote');
+});
 Route::get('getvotes', 'VotesController@getvotes');
 
 

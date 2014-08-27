@@ -5,21 +5,13 @@
 	<h5> If you are not yet registered, please {{ HTML::link('register', 'Register')}} </h5>
 	<h3>Login</h3>
 		{{ Form::open(array('url' => 'login', 'role' =>'form')) }}
-
-
-<?php
-
-?>
-
-
-				@if($errors->any())
+				@if ($errors->any())
 					<div class="alert alert-warning">
 						<a href="#" class="close" data-dismiss="alert">&times;</a>
 						{{ implode('', $errors->all('<li class="error">:message</li>')) }}
 					</div>
-				@endif
-
-				@if(Session::has('message'))
+				@endif:
+				@if (Session::has('message'))
 				
 					<div class="alert alert-success">
 						<a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -37,12 +29,7 @@
 						</div>
 						<div class="form-group">
 						{{	Form::captcha() }}
-						</div>
-				
+						</div>				
 						<button type="submit" class="btn btn-default">Submit</button>
-						
-				
-			
 		{{ Form::close()  }}
-
 @stop
