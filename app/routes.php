@@ -36,7 +36,7 @@ Route::group(array('before' => ''), function()
 	Route::post('register', 'UsersController@store');
 	Route::resource('users', 'UsersController');
 });
-
+Route::when('users/*', 'crsf', array('post'));
 //login routes
 Route::get('login', 'LoginController@getLogin');
 Route::post('login', 'LoginController@postLogin');

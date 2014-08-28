@@ -10,6 +10,8 @@ class UsersController extends BaseController {
     {
       $this->post = $post;
       $this->comment = $comment;
+      $this->beforeFilter('inGroup:general');
+      $this->beforeFilter('inGroup:sergeant');
     }
   
     /**
