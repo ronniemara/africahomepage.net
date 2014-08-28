@@ -90,10 +90,17 @@ Route::filter('csrf', function()
 * * Checks if the user is logged in
 * */
 Route::filter('Sentry', function()
-{
-	if ( ! Sentry::check()) {
-		return json_encode(false);
-	}
+	{
+		if ( ! Sentry::check()) {			
+			if (Request::ajax())
+			{
+			return json_encode(false);
+			}
+			else		
+			{
+			return Redirect::to('login')->with('message', 'Please login!');	
+			}
+		}
 });
  
 /**

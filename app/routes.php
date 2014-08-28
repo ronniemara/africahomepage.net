@@ -21,8 +21,6 @@ Route::resource('posts', 'PostsController');
 Route::resource('comments', 'CommentsController');
 
 //users resource
-Route::group(array('before' => ''), function()
-{
 	//user activation routes
 	Route::get('activate', 'UsersController@getActivate');
 	//user password reset
@@ -35,8 +33,6 @@ Route::group(array('before' => ''), function()
 	Route::get('register', 'UsersController@create');
 	Route::post('register', 'UsersController@store');
 	Route::resource('users', 'UsersController');
-});
-Route::when('users/*', 'crsf', array('post'));
 //login routes
 Route::get('login', 'LoginController@getLogin');
 Route::post('login', 'LoginController@postLogin');
