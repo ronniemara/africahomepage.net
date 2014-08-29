@@ -19,25 +19,6 @@ Route::resource('posts', 'PostsController');
 
 //comments resource
 Route::resource('comments', 'CommentsController');
-
-//users resource
-	//user activation routes
-	Route::get('activate', 'UsersController@getActivate');
-	//user password reset
-	Route::get('password-form', 'UsersController@getResetPasswordEmail');
-	Route::post('password-form', 'UsersController@sendResetPasswordEmail');
-	Route::get('reset', 'UsersController@getResetPasswordPage');
-	Route::post('reset', 'UsersController@newPassword');
-
-	//register user route
-	Route::get('register', 'UsersController@create');
-	Route::post('register', 'UsersController@store');
-	Route::resource('users', 'UsersController');
-//login routes
-Route::get('login', 'LoginController@getLogin');
-Route::post('login', 'LoginController@postLogin');
-//logout route
-Route::get('logout', 'LoginController@logout');
 Route::group(array('before' => 'Sentry'), function()
 {
 	Route::post('vote-up', 'VotesController@upvote');

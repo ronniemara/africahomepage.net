@@ -6,7 +6,6 @@
 		"laravel/framework": "4.1.*",
 		"toddish/verify": "2.2",
 		"way/generators": "dev-master",
-		"cartalyst/sentry": "2.1.*",
 		"laravelbook/ardent": "dev-master",
 		 "twbs/bootstrap":"*",
 		"greggilbert/recaptcha": "dev-master",

@@ -37,7 +37,7 @@
 				<div class="col-md-6 login-link">
                                     <div class="signed-in-as">
                                         <p class="navbar-text">Signed in as {{ Session::get('currentUserName') }}
-                                        <a href="/logout">Logout</a></p>
+                                        <a href="/user/logout">Logout</a></p>
                                     </div>
 				</div><!-- end col-md-3 -->
                             @else
@@ -49,7 +49,7 @@
 		                        </h1>
                         	</div><!-- end main-content-area -->
 				<div class="col-md-3 login-link">						
-		                                 <h1><a href="/login">Login</a></h1> 
+		                                 <h1><a href="/user/login">Login</a></h1> 
 				</div><!-- end col-md-3 -->
                             @endif      					
                     </div><!-- end of mylogo -->
