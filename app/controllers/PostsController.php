@@ -9,9 +9,10 @@ class PostsController extends BaseController {
      */
     protected $post = null;
     protected $votes = null;
+    protected $user = null;
 
     
-    public function __construct(Post $post, Vote $votes)
+    public function __construct(Post $post, Vote $votes )
     {
         $this->post = $post;    
         $this->votes = $votes;
@@ -58,8 +59,11 @@ class PostsController extends BaseController {
                         })->reverse();
        
         $postsValues = $sortPosts->values();
+        
+        $check_user = \App::make('authentication_helper');
+        
 
-        return  View::make('posts.index', compact('postsValues'));
+        return  View::make('posts.index', compact('postsValues', 'check_user'));
     }
 
     /**

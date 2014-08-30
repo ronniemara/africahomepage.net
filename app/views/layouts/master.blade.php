@@ -49,7 +49,7 @@
 		                        </h1>
                         	</div><!-- end main-content-area -->
 				<div class="col-md-3 login-link">						
-		                                 <h1><a href="/user/login">Login</a></h1> 
+		                                 <h1><a href="/login">Login</a></h1> 
 				</div><!-- end col-md-3 -->
                             @endif      					
                     </div><!-- end of mylogo -->
@@ -73,6 +73,10 @@
             <div class="container">
                 <footer>
                                 <p style="color: white;">&copy; 2013 Black Mirror Media</p>
+                                
+                                    @if ($check_user->hasPermission(array('_superadmin', '_user-editor','_group-editor', '_permissions-editor','_profile-editor')))
+                                    {{ HTML::link('/admin/login', 'Admin') }}
+                                    @endif
                 </footer> <!-- end footer div -->
             </div>
 	</body>
