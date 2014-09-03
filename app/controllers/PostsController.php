@@ -9,7 +9,7 @@ class PostsController extends BaseController {
      */
     protected $post = null;
     protected $votes = null;
-    protected $user = null;
+
 
     
     public function __construct(Post $post, Vote $votes )
@@ -47,8 +47,10 @@ class PostsController extends BaseController {
            
 
                 //setting post->first_name  and post->last name properties
-            $user = Sentry::findUserById($post->user_id);
-            $post->username = $user->username;
+            $user = App::make('authenticator');
+             //$userObject = $user->getUserById($post->user_id);
+             $userObject = $user->getUserById(3);
+            $post->username = $user->code;
             
 
          }
@@ -109,8 +111,10 @@ class PostsController extends BaseController {
      */
     public function show($id)
     {
-         $post = $this->post->findOrFail($id);
-         $createdBy = Sentry::findUserById($post->user_id);
+	    $post = $this->post->findOrFail($id);
+
+        $user = \App::make('authenticator');
+         $createdBy = $user->getUserById($post->user_id);
          $post->createdBy = $createdBy->username;
          $post->time_ago = Carbon::createfromTimeStamp(strtotime($post->created_at))->diffForHumans(); 
 
@@ -125,7 +129,8 @@ class PostsController extends BaseController {
           $comment->createdBy = $user->username;
         }
 
-        return View::make('posts.show', compact('post','comments'));
+        $check_user = \App::make('authentication_helper');
+        return View::make('posts.show', compact('post','comments', 'check_user'));
     }
 
     /**

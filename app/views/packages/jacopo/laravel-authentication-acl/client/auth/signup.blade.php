@@ -59,11 +59,21 @@
 
                         <div class="form-group">
                             <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                {{Form::text('code', '', ['id' => 'code', 'class' => 'form-control', 'placeholder' => 'Username', 'required', 'autocomplete' => 'off'])}}
+                            </div>
+                            <span class="text-danger">{{$errors->first('code')}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email address', 'required', 'autocomplete' => 'off'])}}
                             </div>
                             <span class="text-danger">{{$errors->first('email')}}</span>
                         </div>
+
+
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">

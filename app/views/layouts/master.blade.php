@@ -64,7 +64,7 @@
                         <div class="sidebar-widget">
                             <h2>Connect with Us</h2>
                                 <a href="https://twitter.com/africahomepage" ><span style="color:black;" class="icon-twitter"></span> </a>
-                                <a href="https://plus.google.com/101725105360299569055" rel="publisher"><span style="color:black;" class="icon-googleplus"></span></a>                                
+                                <a href="https://plus.google.com/+AfricahomepageNet" rel="publisher"><span style="color:black;" class="icon-googleplus"></span></a>                                
                                 <a href="https://facebook.com/africahomepage" ><span style="color:black;" class="icon-facebook"></span> </a>
                         </div>                        
                     </aside><!-- end of aside -->
