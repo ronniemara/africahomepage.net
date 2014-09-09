@@ -9,14 +9,4 @@ composer.lock
 .project
 .settings/
 nbproject/
-/access-logs
-/mail
-/objects
-/perl5
-/ssl
-/app/config/database.php
-/tmp
-/etc
-webalizer.conf
-app/config/
 /.idea
