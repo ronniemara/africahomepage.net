@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class DropUsersTable extends Migration {
+class CreateCommentsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,16 @@ class DropUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('users', function(Blueprint $table) {
-			
+		Schema::create('comments', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('user_id');
+			$table->integer('post_id');
+			$table->text('message');
+			$table->timestamps();
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.
@@ -24,9 +30,7 @@ class DropUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('users', function(Blueprint $table) {
-			
-		});
+		Schema::drop('comments');
 	}
 
 }

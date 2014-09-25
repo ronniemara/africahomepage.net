@@ -5,9 +5,11 @@ body{
 	background: transparent;
 }
 .mylogo{
-width: 1140px;
+width: 930px;
 position: relative;
 height: 70px;
+    margin-left: auto ;
+    margin-right: auto ;
 }
 .logo{
 background-color: #000;
@@ -27,6 +29,9 @@ height: 100%;
 background: #fff;
 margin-top: 0px;
 min-height: 600px;
+width: 930px;
+margin-left: auto ;
+margin-right: auto ;
 overflow:auto;
 }
 

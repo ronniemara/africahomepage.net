@@ -47,7 +47,7 @@ class PostsController extends BaseController {
            
 
                 //setting post->first_name  and post->last name properties
-            $user = App::make('authenticator');
+
              //$userObject = $user->getUserById($post->user_id);
              $userObject = $user->getUserById(3);
             $post->username = $user->code;
@@ -61,12 +61,13 @@ class PostsController extends BaseController {
                         })->reverse();
        
         $postsValues = $sortPosts->values();
-        
-        $check_user = \App::make('authentication_helper');
-        
 
-        return  View::make('posts.index', compact('postsValues', 'check_user'));
-    }
+        $check_user = $this->check_user;
+
+
+            return  View::make('posts.index', compact('postsValues', 'check_user'));
+
+      }
 
     /**
      * Show the form for creating a new resource.

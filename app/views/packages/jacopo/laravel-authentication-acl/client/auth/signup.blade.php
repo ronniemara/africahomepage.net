@@ -9,7 +9,7 @@
 
     {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/bootstrap.min.css') }}
     {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/style.css') }}
-    {{ HTML::style('packages/jacopo/laravel-authentication-acl/password_strength/strength.css') }}
+    {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/strength.css') }}
     {{ HTML::style('//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css') }}
     {{ HTML::style('packages/jacopo/laravel-authentication-acl/css/fonts.css') }}
 
@@ -59,21 +59,11 @@
 
                         <div class="form-group">
                             <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                {{Form::text('code', '', ['id' => 'code', 'class' => 'form-control', 'placeholder' => 'Username', 'required', 'autocomplete' => 'off'])}}
-                            </div>
-                            <span class="text-danger">{{$errors->first('code')}}</span>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
                                 {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email address', 'required', 'autocomplete' => 'off'])}}
                             </div>
                             <span class="text-danger">{{$errors->first('email')}}</span>
                         </div>
-
-
 
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -134,7 +124,8 @@
 </div>
   {{-- Js files --}}
   {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/jquery-1.10.2.min.js') }}
-  {{ HTML::script('packages/jacopo/laravel-authentication-acl/vendor/password_strength/strength.js') }}
+  {{ HTML::script('packages/jacopo/laravel-authentication-acl/js/vendor/password_strength/strength.js') }}
+
   <script>
     $(document).ready(function() {
       //------------------------------------

@@ -10,3 +10,4 @@ composer.lock
 .settings/
 nbproject/
 /.idea
+.env.local.php

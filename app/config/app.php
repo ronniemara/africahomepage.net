@@ -65,7 +65,7 @@ return array(
 	|
 	*/
 
-	'key' => 'Qi5DL0vhP3MyxTJq2vSKmyWRlPys2XVT',
+	'key' => $_ENV['LOCAL_KEY'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -186,7 +186,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Carbon'	  => 'Carbon\Carbon',
-		'Sentry' => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
+
 	),
 
 );

@@ -5,11 +5,12 @@
 	"require": {
 		"laravel/framework": "4.1.*",
 		"toddish/verify": "2.2",
-		"way/generators": "dev-master",
+		"way/generators": "~2.0",
 		"laravelbook/ardent": "dev-master",
 		 "twbs/bootstrap":"*",
 		"greggilbert/recaptcha": "dev-master",
-		"jacopo/laravel-authentication-acl": "1.1.*"
+		"jacopo/laravel-authentication-acl": "1.1.*",
+		"way/generators": "~2.0"
 	},
 	"autoload": {
 		"classmap": [

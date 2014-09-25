@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class RemoveActivatetwoFromUsersTable extends Migration {
+class CreateVotesTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,10 +12,16 @@ class RemoveActivatetwoFromUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('users', function(Blueprint $table) {
-			$table->dropColumn('activate');
+		Schema::create('votes', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->integer('count');
+			$table->integer('votable_id');
+			$table->string('votable_type');
+			$table->timestamps();
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.
@@ -24,9 +30,7 @@ class RemoveActivatetwoFromUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('users', function(Blueprint $table) {
-			$table->string('activate');
-		});
+		Schema::drop('votes');
 	}
 
 }

@@ -74,9 +74,12 @@
                 <footer>
                                 <p style="color: white;">&copy; 2013 Black Mirror Media</p>
                                 
-                                    @if ($check_user->hasPermission(array('_superadmin', '_user-editor','_group-editor', '_permissions-editor','_profile-editor')))
+                                    @if (isset($check_user))
+                                    @if($check_user->hasPermission(array('_superadmin', '_user-editor','_group-editor', '_permissions-editor','_profile-editor')))
                                     {{ HTML::link('/admin/login', 'Admin') }}
-                                    @endif
+                    @endif
+                    @endif
+
                 </footer> <!-- end footer div -->
             </div>
 	</body>
