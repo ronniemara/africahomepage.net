@@ -65,7 +65,7 @@
                     @yield('content')
                     </div>
                 <aside class="col-md-3">
-                    <div class="sidebar-widget">
+                    <div class="acl-sidebar-widget">
                         <h4>Connect with Us</h4>
                         <a href="https://twitter.com/africahomepage" ><span style="color:black;" class="icon-twitter"></span> </a>
                         <a href="https://plus.google.com/+AfricahomepageNet" rel="publisher"><span style="color:black;" class="icon-googleplus"></span></a>

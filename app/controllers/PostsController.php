@@ -65,7 +65,7 @@ class PostsController extends BaseController {
         $check_user = $this->check_user;
 
 
-            return  View::make('posts.index', compact('postsValues', 'check_user'));
+            return  View::make('posts.reddit2', compact('postsValues', 'check_user'));
 
       }
 

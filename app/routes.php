@@ -26,6 +26,8 @@ Route::group(array('before' => 'Sentry'), function()
 });
 Route::get('getvotes', 'VotesController@getvotes');
 
+Route::resource('opinion', 'OpinionController',  array('only' => array('index', 'show')));
+
 
 
 

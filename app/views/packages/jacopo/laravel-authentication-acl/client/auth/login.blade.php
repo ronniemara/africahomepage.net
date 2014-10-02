@@ -1,4 +1,4 @@
-@extends('laravel-authentication-acl::client.layouts.base')
+@extends('laravel-authentication-acl::client.layouts.bootstrap')
 @section('title')
 User login
 @stop

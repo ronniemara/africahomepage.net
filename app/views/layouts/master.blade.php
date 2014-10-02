@@ -24,8 +24,8 @@
 	</head>
 	<body>
             <header><!--HEADER -->
-                <div class="container">
-                    <div class="mylogo">
+                
+                    <div class="mylogo hidden-xs hidden-sm ">
                            @if (Sentry::check())
 				<div class="col-md-6 logo">
 		                        <h1>
@@ -41,36 +41,55 @@
                                     </div>
 				</div><!-- end col-md-3 -->
                             @else
-				<div class="col-md-9 logo">
+				<div class="col-md-12 logo">
 		                        <h1>
-		                            <a href="/">
-		                                <span class="icon-africa"></span> Homepage Africa
-		                            </a>
+		                            <a href="/"><span class="icon-africa"></span>Homepage Africa</a>
 		                        </h1>
                         	</div><!-- end main-content-area -->
-				<div class="col-md-3 login-link">						
-		                                 <h1><a href="/login">Login</a></h1> 
-				</div><!-- end col-md-3 -->
+				
                             @endif      					
                     </div><!-- end of mylogo -->
-                </div><!-- container -->
+                    <nav class="navbar navbar-default" role="navigation">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                  </button> 
+                                <a href="/" class="hidden-lg hidden-sm hidden-md" ><span class="icon-africa"></span>Homepage Africa</a>
+                             </div>                           
+                            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> <!-- Collect the nav links, forms, and other content for toggling -->
+                                <ul class="nav navbar-nav">
+                                    <li>{{ HTML::link('/opinion', 'Opinion') }}</li>
+                                    <li>{{ HTML::link('/posts', 'Posts') }}</li>   
+                                    
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right"><li>{{ HTML::link('/login', 'Login') }}</li></ul>
+                            </div>
+                        </div>
+
+                    </nav>
+                
             </header> <!-- end header -->
-            <div class="container"><!-- MAIN BODY -->
-                <div class="main-area">
-                    <div class="col-md-9 main-content-area">
-                        @yield('content')
-                    </div><!-- end main-content-area -->
-                    <aside class="col-md-3 sidebar">
-                        <div class="sidebar-widget">
+            <div class="container-fluid"><!-- MAIN BODY -->
+                <div class="row-fluid" style="background-color: white">
+                    <aside class="col-md-3  col-xs-6 sidebar pull-right">
+                        <div class="sidebar-widget ">
                             <h2>Connect with Us</h2>
                                 <a href="https://twitter.com/africahomepage" ><span style="color:black;" class="icon-twitter"></span> </a>
                                 <a href="https://plus.google.com/+AfricahomepageNet" rel="publisher"><span style="color:black;" class="icon-googleplus"></span></a>                                
                                 <a href="https://facebook.com/africahomepage" ><span style="color:black;" class="icon-facebook"></span> </a>
                         </div>                        
                     </aside><!-- end of aside -->
+                    <div class="col-md-9 col-xs-6 main-content-area">
+                        @yield('content')
+                    </div><!-- end main-content-area -->
+                    
                 </div><!-- main area -->
             </div><!-- container -->
-            <div class="container">
+            <div class="row-fluid">
                 <footer>
                                 <p style="color: white;">&copy; 2013 Black Mirror Media</p>
                                 
@@ -83,6 +102,7 @@
                 </footer> <!-- end footer div -->
             </div>
 	</body>
+       
 </html>
 
 

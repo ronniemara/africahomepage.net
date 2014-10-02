@@ -1,8 +1,10 @@
-@extends('layouts.master')
+@extends('layouts.bootstrap')
 
 @section('content')
 
-<h2>All Posts</h2>
+
+<div class='col-md-4 col-md-offset-2'>
+    <h2>All Posts</h2>
 
 	<h3>{{ link_to_route('posts.create', 'Add new post') }}</h3>
 
@@ -38,6 +40,11 @@
                 
 	@endif
  
+</div>
+<div class='col-md-4'>
+    @include('partials.social-media')
+</div>
+
 
 @stop
 
