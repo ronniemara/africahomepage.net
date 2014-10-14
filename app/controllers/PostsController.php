@@ -24,49 +24,60 @@ class PostsController extends BaseController {
      *
      * @return Response
      */
-    public function index()
-    {
-     $posts = $this->post->all();
+//    public function homepage()
+//    {
+//        
+//        
+//        return View::make('posts.index');
+     //$posts = $this->post->all()->toJson();
+//return $this->post->all()->toJson();
 
-
-         foreach($posts as $post)
-         {
+         //foreach($posts as $post)
+         //{
     		    //Time elapsed since post created
-            $age_in_hours = Carbon::now()->diffInHours($post->created_at);
-            $post->time_ago = Carbon::createfromTimeStamp(strtotime($post->created_at))->diffForHumans(); 
+           // $age_in_hours = Carbon::now()->diffInHours($post->created_at);
+           // $post->time_ago = Carbon::createfromTimeStamp(strtotime($post->created_at))->diffForHumans(); 
             
             //number of votes for post
-            $VoteObject = $this->post->find($post->id)->votes->first();            
+            //$VoteObject = $this->post->find($post->id)->votes->first();            
             
-             $numberOfVotes = (int) $VoteObject->count;     
+             //$numberOfVotes = (int) $VoteObject->count;     
              
             
 
     	        //setting the rank of the post when displaying all posts
-            $post->rank = $this->calculate_score($numberOfVotes, $age_in_hours);
+            //$post->rank = $this->calculate_score($numberOfVotes, $age_in_hours);
            
 
                 //setting post->first_name  and post->last name properties
 
              //$userObject = $user->getUserById($post->user_id);
-             $userObject = $user->getUserById(3);
-            $post->username = $user->code;
+            /* $userObject = $user->getUserById(3);
+            $post->username = $user->code;*/
             
 
-         }
+        // }
          
-         $sortPosts = $posts->sortBy(function($post)
+         /*$sortPosts = $posts->sortBy(function($post)
                         { 
                             return $post->rank;        
                         })->reverse();
        
-        $postsValues = $sortPosts->values();
+        $postsValues = $sortPosts->values();*/
+//$postsValues = $post->values();
+        //$check_user = $this->check_user;
 
-        $check_user = $this->check_user;
 
+            //return  View::make('posts.reddit2', compact('postsValues', 'check_user'));
+           //return  $posts;
 
-            return  View::make('posts.reddit2', compact('postsValues', 'check_user'));
-
+      //}
+      
+      public function index()
+      {
+          $data =  $this->post->all();
+           //return
+           return Response::make($data,200);
       }
 
     /**
@@ -112,26 +123,8 @@ class PostsController extends BaseController {
      */
     public function show($id)
     {
-	    $post = $this->post->findOrFail($id);
-
-        $user = \App::make('authenticator');
-         $createdBy = $user->getUserById($post->user_id);
-         $post->createdBy = $createdBy->username;
-         $post->time_ago = Carbon::createfromTimeStamp(strtotime($post->created_at))->diffForHumans(); 
-
-
-        $comments = $post->comments->sortBy(function($comment)
-        {
-            return $comment->created_at;
-        })->reverse();
-        foreach ($comments as $comment)
-        {
-          $user = Sentry::findUserById($comment->user_id);
-          $comment->createdBy = $user->username;
-        }
-
-        $check_user = \App::make('authentication_helper');
-        return View::make('posts.show', compact('post','comments', 'check_user'));
+       $post = $this->post->findOrFail($id);
+       return Response::make($post, 200);
     }
 
     /**

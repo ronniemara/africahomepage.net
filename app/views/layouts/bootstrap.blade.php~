@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="myapp">
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <title>AfricaHomepage.net</title>
@@ -52,13 +52,12 @@
         <link rel="shortcut icon" href="../assets/ico/favicon.png">
     </head>
 
-    <body >
+    <body ng-app="myapp">
         <div class="container-fluid">
             <div class="col-md-offset-1 col-md-10">                
-                <ng-include src="'templates/layouts/header.html'"></ng-include>
-                    
-                <div id="view"ng-view></div>                       
-            	
+                <section>                 
+                    <ng-view></ng-view>                       
+            	</section>
                 <footer style="clear: left; ">
                     <p>&copy; 2013 Black Mirror Media</p>
                 </footer>

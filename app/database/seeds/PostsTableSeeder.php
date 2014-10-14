@@ -8,11 +8,16 @@ class PostsTableSeeder extends Seeder {
     	// DB::table('posts')->delete();
 
         $posts = array(
+            'title' => "Zim going down the drain",
+            'url'=>"http://newzimbabwe.com",
+            'users_id'=> 1,
+            'created_at' => new DateTime(),
+            'updated_at'=> new DateTime()
 
         );
 
         // Uncomment the below to run the seeder
-        // DB::table('posts')->insert($posts);
+         DB::table('posts')->insert($posts);
     }
 
 }

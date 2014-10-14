@@ -155,3 +155,12 @@ Route::filter('inGroup', function($route, $request, $value)
 	}
 });
 
+Route::filter('ngcsrf',function($route,$request) {
+     
+    $token = md5(Session::token());
+    $supplied = $request->header('X-XSRF-TOKEN');
+     
+    if(empty($supplied) || $token != $supplied) {
+        throw new Illuminate\Session\TokenMismatchException;
+    }
+});

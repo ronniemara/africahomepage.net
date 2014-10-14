@@ -7,7 +7,7 @@ class BaseController extends Controller {
 
 	public function __construct()
 	{
-		$this->beforeFilter('csrf', array('on' => array('post', 'put', 'patch', 'delete')));
+		$this->beforeFilter('ngcsrf', array('on' => array('post', 'put', 'patch', 'delete')));
         $this->user = \App::make('authenticator');
         $this->check_user = \App::make('authentication_helper');
 	}	

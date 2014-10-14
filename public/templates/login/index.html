@@ -1,0 +1,55 @@
+<div class="panel">
+    <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+            <div class=panel panel-default ng-controller="LoginController as LoginCtrl">
+                <div class="panel-heading">
+                    <h3 class="panel-title bariol-thin">Login to AfricaHomePage.net</h3>
+                </div>
+                <div class="alert alert-success" ng-show="loggedIn"></div>
+                <div class="alert alert-danger"ng-show="NotloggedIn" ng-model="reason">{{reason}}</div>
+                <div class="panel-body">
+                    <form name="LoginForm" ng-submit="LoginForm.$valid && login()">
+
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                        <input type="email" ng-model="LoginCtrl.email" placeholder="Email Address" class="form-control"required>
+                                        <!--                                
+                                        {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email address', 'required', 'autocomplete' => 'off'])}}-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                        <input type="password" ng-model="LoginCtrl.password" class="form-control" placeholder="Password" required="true">
+                                        <!--{{Form::password('password', ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password', 'required', 'autocomplete' => 'off'])}}-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--                {{Form::label('remember','Remember me')}}
+                                        {{Form::checkbox('remember')}}-->
+                        <label>Remember me</label>
+                        <input type="checkbox" ng-model="LoginCtrl.remember">
+                        <div>
+                            LoginForm is {{LoginForm.$valid}}
+                        </div>
+                        <input type="submit" value="Login" class="btn btn-info btn-block">
+                    </form>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
+                            <a href="/#/reset-password">Forgot password</a>
+                            or <a href="/#/signup" ><i class="fa fa-sign-in"></i> Signup here</a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

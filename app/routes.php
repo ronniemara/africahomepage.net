@@ -10,12 +10,16 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
+Blade::setContentTags('<%', '%>'); 		// for variables and all things Blade
+	Blade::setEscapedContentTags('<%%', '%%>'); 	// for escaped data
 //main-page
-Route::get('/', 'PostsController@index');
+Route::get('/', 
+        function(){
+    return View::make('layouts.bootstrap');
+        });
 
-
-//posts resource
 Route::resource('posts', 'PostsController');
+
 
 //comments resource
 Route::resource('comments', 'CommentsController');
@@ -26,8 +30,9 @@ Route::group(array('before' => 'Sentry'), function()
 });
 Route::get('getvotes', 'VotesController@getvotes');
 
-Route::resource('opinion', 'OpinionController',  array('only' => array('index', 'show')));
-
+Route::get('reset-password', 'Jacopo\Authentication\Controllers\AuthController@getReminder');
+Route::post('reset-password',"Jacopo\Authentication\Controllers\AuthController@postReminder");
+Route::get('signup', 'Jacopo\Authentication\Controllers\UserController@signup');
 
 
 

@@ -1,8 +1,15 @@
-    <div class="panel-heading">
-        <h3><a href="{{post.url}}">{{post.title}}</a></h3>
+<div class="panel"  style="padding: 5px;">
+             <div class="jumbotron">
+            <h1>Hello, world!</h1>
+            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+          </div>
+                
+            
+                            <div class="pull-right">
+        @include('partials.social-media')
     </div>
-    <div class="panel-body">
-        
+    <div>
         <h4 class="post-title"><%  HTML::link('opinion/' .  1 , 'Ebola Crisis: The African response') %></h4>
         <h5 class="post-author"> Posted by: <strong>Morpheus</strong> <i>1 day ago</i></h5>       
         <div class="comments-and-votes container">
@@ -22,5 +29,6 @@
                 </div>						
             </div>
         </div>
-    
     </div>
+                      
+                            </div>
