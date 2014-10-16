@@ -1,7 +1,7 @@
 <div class="panel">
     <div class="row centered-form">
         <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
-            <div class=panel panel-default ng-controller="LoginController as LoginCtrl">
+            <div class="panel panel-default" ng-controller="LoginController as LoginCtrl">
                 <div class="panel-heading">
                     <h3 class="panel-title bariol-thin">Login to AfricaHomePage.net</h3>
                 </div>
@@ -9,15 +9,12 @@
                 <div class="alert alert-danger"ng-show="NotloggedIn" ng-model="reason">{{reason}}</div>
                 <div class="panel-body">
                     <form name="LoginForm" ng-submit="LoginForm.$valid && login()">
-
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="email" ng-model="LoginCtrl.email" placeholder="Email Address" class="form-control"required>
-                                        <!--                                
-                                        {{Form::email('email', '', ['id' => 'email', 'class' => 'form-control', 'placeholder' => 'Email address', 'required', 'autocomplete' => 'off'])}}-->
+                                        <input type="email" name="email" id="email" ng-model="credentails.email" placeholder="Email Address" class="form-control" autocomplete="off" required>                                        
                                     </div>
                                 </div>
                             </div>
@@ -27,16 +24,13 @@
                                 <div class="form-group">
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" ng-model="LoginCtrl.password" class="form-control" placeholder="Password" required="true">
-                                        <!--{{Form::password('password', ['id' => 'password', 'class' => 'form-control', 'placeholder' => 'Password', 'required', 'autocomplete' => 'off'])}}-->
+                                        <input type="password" ng-model="credentails.password" class="form-control" placeholder="Password" autocomplete="off" required>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--                {{Form::label('remember','Remember me')}}
-                                        {{Form::checkbox('remember')}}-->
                         <label>Remember me</label>
-                        <input type="checkbox" ng-model="LoginCtrl.remember">
+                        <input type="checkbox" ng-model="credentials.remember">
                         <div>
                             LoginForm is {{LoginForm.$valid}}
                         </div>

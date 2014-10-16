@@ -33,12 +33,7 @@
         </style>
         <link href="/css/icons.css?<?php echo time(); ?>" rel="stylesheet" media="screen">
         <link href="/css/mystyle.css?<?php echo time(); ?>" rel="stylesheet" media="screen">
-        <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script src="/js/angular-route.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
-      <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
-
+       
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="../assets/js/html5shiv.js"></script>
@@ -57,19 +52,29 @@
             <div class="col-md-offset-1 col-md-10">                
                 <ng-include src="'templates/layouts/header.html'"></ng-include>
                     
-                <div id="view"ng-view></div>                       
+                <div id="view" ng-view></div>                       
             	
-                <footer style="clear: left; ">
-                    <p>&copy; 2013 Black Mirror Media</p>
+                <footer class="panel  clearfix" style="margin-top: -21px;">
+                    <hr>
+                    <p class="center-block">&copy; 2013 Black Mirror Media</p>
                 </footer>
             </div><!--col-md-10 -->
         </div><!--/.fluid-container-->
 
         <!-- Le javascript
         ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <!--<script src="/js/jquery-1.11.0.js?<?php //echo time();              ?>" type="text/javascript"></script>-->
-        <!--<script src="/js/bootstrap.min.js?<?php //echo time();              ?>" type="text/javascript"></script>-->
+<!--        Placed at the end of the document so the pages load faster  --> 
+        <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/bootstrap.min.js?<?php echo time();  ?>" type="text/javascript"></script>
+        <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular-route.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+        
+        
+
 
     </body>
 </html>

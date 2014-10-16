@@ -18,6 +18,11 @@
                         templateUrl: 'templates/posts/show.html'
 
                     }).
+                            when('/create-posts', {
+                        controller: 'PostsCreateController',
+                        templateUrl: 'templates/posts/create.html'
+
+                    }).
                             when('/login', {
                         templateUrl: 'templates/login/index.html',
                         controller: 'LoginController'
@@ -35,7 +40,12 @@
                     }).
                              when('/opinion', {
                         templateUrl: 'templates/opinion/index.html',
-                        controller: 'LoginController'
+                        controller: 'OpinionListController'
+
+                    }).
+                            when('/opinion/:postId', {
+                        controller: 'OpinionDetailController',
+                        templateUrl: 'templates/opinion/show.html'
 
                     }).
                     otherwise({

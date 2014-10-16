@@ -7,7 +7,8 @@
                     </h1>
                     </div>
                     <nav class="navbar navbar-default " role="navigation" style="margin-top: -21px;">
-                        <div class="row-fluid">
+                        <div class="container-fluid">
+                        
                             <div class="navbar-header">
                                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
                                     <span class="sr-only">Toggle navigation</span>
@@ -17,12 +18,10 @@
                                 </button>
                             </div>
                             <div class="collapse navbar-collapse" id="navbar-collapse-1">
-
                                 <ul class="nav navbar-nav" >
                                     <li ng-class=" "><a href="/#/posts" >Posts</a></li>
-                                    <li ng-class=""><a href="/#/opinion" >Opinion</a></li>  
-
-                                    <li ng-class=""><a href="/#/posts/create" >Create a Post</a></li>
+                                    <li ng-class=""><a href="/#/create-posts" >Create a Post</a></li>
+                                    <li ng-class=""><a href="/#/opinion" >Opinion</a></li>                                     
                                 </ul>            
                                
                                 <ul class="navbar-text navbar-right" ng-show="isLoggedIn">
@@ -39,7 +38,7 @@
                                 </ul>
                                 
                             </div><!--/.nav-collapse -->
+                        
                         </div>
-
                     </nav>
                 </header>

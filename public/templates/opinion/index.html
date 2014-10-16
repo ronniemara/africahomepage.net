@@ -1,17 +1,23 @@
 <div class="panel"  style="padding: 5px;">
-             <div class="jumbotron">
-            <h1>Hello, world!</h1>
-            <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-            <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p>
-          </div>
-                
-            
-                            <div class="pull-right">
-        @include('partials.social-media')
+    <div class="jumbotron col-md-7">
+        <h1>{{lead-opinion.title}}</h1>
+        <p>{{lead-opinion.summary}}</p>
+        <p><a href="/#/opinion/{{lead-opinion.id}}" class="btn btn-primary btn-large">Read more... &raquo;</a></p>
     </div>
-    <div>
-        <h4 class="post-title"><%  HTML::link('opinion/' .  1 , 'Ebola Crisis: The African response') %></h4>
-        <h5 class="post-author"> Posted by: <strong>Morpheus</strong> <i>1 day ago</i></h5>       
+
+
+    <div class="pull-right">
+        <h2>Connect with Us</h2> 
+        <aside class="well sidebar-nav ">
+
+            <a href="https://twitter.com/africahomepage" class="btn btn-social-icon btn-twitter"><i class="icon icon-twitter"></i></a>
+            <a href="https://plus.google.com/+AfricahomepageNet" class="btn btn-social-icon btn-google-plus" rel="publisher"><i class="icon-googleplus"></i></a>                                                  
+            <a href="https://facebook.com/africahomepage" class="btn btn-social-icon btn-facebook"><i class="icon icon-facebook"></i></a>                 
+        </aside><!--/.well -->
+    </div>
+    <div style="clear:both;">
+        <h4 class="post-title"><a href="#/opinion/{{opinion.id}}">{{opinion.title}}</a></h4>
+        <h5 class="post-author"> Posted by: <strong>{{opinion.author}}</strong> <i>{{opinion.created_at | time-ago}}</i></h5>       
         <div class="comments-and-votes container">
             <div class="row">							
                 <div class="comments-div col-md-1">
@@ -30,5 +36,5 @@
             </div>
         </div>
     </div>
-                      
-                            </div>
+
+</div>

@@ -30,9 +30,9 @@ Route::group(array('before' => 'Sentry'), function()
 });
 Route::get('getvotes', 'VotesController@getvotes');
 
-Route::get('reset-password', 'Jacopo\Authentication\Controllers\AuthController@getReminder');
+
 Route::post('reset-password',"Jacopo\Authentication\Controllers\AuthController@postReminder");
-Route::get('signup', 'Jacopo\Authentication\Controllers\UserController@signup');
+Route::post('signup', 'Jacopo\Authentication\Controllers\UserController@postSignup');
 
 
 
