@@ -31,7 +31,7 @@ class MyJsonResponseClass extends IlluminateResponse {
 protected function setAngularCookie()
 {
     // This is only relevant for an AJAX GET request
-    if(!Request::ajax() || !Request::isMethod('get')) {
+    if(!\Request::ajax() || !\Request::isMethod('get')) {
         return;
     }
      

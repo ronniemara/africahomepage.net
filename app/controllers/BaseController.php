@@ -2,14 +2,12 @@
 
 class BaseController extends Controller {
 
-    public $user = null;
-    public $check_user = null;
+   
 
 	public function __construct()
 	{
 		$this->beforeFilter('ngcsrf', array('on' => array('post', 'put', 'patch', 'delete')));
-        $this->user = \App::make('authenticator');
-        $this->check_user = \App::make('authentication_helper');
+        
 	}	
 
 	/**

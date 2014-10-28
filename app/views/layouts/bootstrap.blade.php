@@ -16,7 +16,7 @@
             body {
                 padding-top: 60px;
                 padding-bottom: 40px;
-                
+
             }
             .sidebar-nav {
                 padding: 9px 0;
@@ -33,7 +33,7 @@
         </style>
         <link href="/css/icons.css?<?php echo time(); ?>" rel="stylesheet" media="screen">
         <link href="/css/mystyle.css?<?php echo time(); ?>" rel="stylesheet" media="screen">
-       
+
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
           <script src="../assets/js/html5shiv.js"></script>
@@ -48,33 +48,92 @@
     </head>
 
     <body >
-        <div class="container-fluid">
-            <div class="col-md-offset-1 col-md-10">                
-                <ng-include src="'templates/layouts/header.html'"></ng-include>
-                    
-                <div id="view" ng-view></div>                       
-            	
-                <footer class="panel  clearfix" style="margin-top: -21px;">
-                    <hr>
-                    <p class="center-block">&copy; 2013 Black Mirror Media</p>
-                </footer>
-            </div><!--col-md-10 -->
-        </div><!--/.fluid-container-->
+        <div class="container-fluid" ng-model="isLoggedIn" ng-controller="PanelController">
+            <header>
+                <div class="panel">
+                    <h1 class="col-md-offset-3">
+                        <a href="#" style="text-decoration: none;">
+                            <span class="icon-africa"></span>AfricaHomepage
+                        </a>
+                    </h1>
+                </div>
+                <nav class="navbar navbar-default " role="navigation" style="margin-top: -21px;">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                            <ul class="nav navbar-nav" >
+                                <li ui-sref-active="active"><a ui-sref="posts" >Posts</a></li>
+                                <li ui-sref-active="active"><a ui-sref="create" >Create Post</a></li>
+                                <li ui-sref-active="active"><a ui-sref="opinions">Opinions</a></li>                                     
+                            </ul>            
+                            <div >
+                                <ul class="navbar-text navbar-right" ng-show="isLoggedIn" ng-model="user">
+                                    <li ui-sref-active="active">
+                                        Logged in as <cite><a class="navbar-link">{{user.username}}</a></cite>
+                                    </li>   
+                                    <li><a><button ng-click="logout()">Logout</button></a></li>
+                                </ul>                                
+                                <ul class=" nav navbar-nav navbar-right"ng-hide="isLoggedIn">
+                                    <li ui-sref-active="active">
+                                        <a ui-sref="login" class="navbar-link">Login</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div><!--/.nav-collapse -->
+                    </div>
+                </nav>
+            </header>
 
-        <!-- Le javascript
-        ================================================== -->
-<!--        Placed at the end of the document so the pages load faster  --> 
-        <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script src="/js/bootstrap.min.js?<?php echo time();  ?>" type="text/javascript"></script>
-        <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script src="/js/angular-route.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
-        <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
-        
-        
+            <div class="row-fluid">
+                <div class="col-md-12">
+                    <div class="row-fluid">
+                        <div class='col-md-9'>
+                            <div class="row-fluid">
+                                <div  ui-view></div>
+                            </div>
+                        </div>
+                        <aside class="col-md-3 well">
+                            <ng-include src="'templates/aside/guest.html'"></ng-include> 
+                        </aside>
+                    </div>
+                </div>
 
 
-    </body>
+            </div>
+            <div class="row-fluid">
+                <div class="col-md-12">
+                    <footer class="panel" style='clear:both; padding-top: -21px;'>
+                        <p>C 2014 My Site</p>
+                    </footer>   
+                </div>
+            </div>
+
+        </div><!--col-md-10 -->
+    </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!--        Placed at the end of the document so the pages load faster  --> 
+    <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/angular-ui-router.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/angular-resource.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+    <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
+
+
+
+
+</body>
 </html>

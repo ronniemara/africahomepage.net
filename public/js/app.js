@@ -1,61 +1,93 @@
 
 
-    var app = angular.module('myapp', [
-        'yaru22.angular-timeago', 'ngRoute', 'appControllers'
+var app = angular.module('myapp', [
+    'yaru22.angular-timeago', 'ui.router', 'appControllers'
 
-    ]);
+]);
 
-    app.config(['$routeProvider',
-        function ($routeProvider) {
-            $routeProvider.
-                    when('/posts', {
-                        templateUrl: 'templates/posts/index.html',
-                        controller: 'PostsListController'
+app.config(['$stateProvider', '$urlRouterProvider',
+    function ($stateProvider, $urlRouterProvider) {
 
-                    }).
-                    when('/posts/:postId', {
-                        controller: 'PostsDetailController',
-                        templateUrl: 'templates/posts/show.html'
+        //
+        // For any unmatched url, redirect to /state1
+        $urlRouterProvider.otherwise("posts");
 
-                    }).
-                            when('/create-posts', {
-                        controller: 'PostsCreateController',
-                        templateUrl: 'templates/posts/create.html'
+        //
+        // Now set up the states
+        $stateProvider
+                .state("posts", {
+                    url: "/posts",
+                    templateUrl: 'templates/posts/index.html',
+                    controller: 'PostsListController',
+                    resolve: {
+                        posts: function (PostsService) {
+                            return PostsService.getAll();
+                        }
+                    }
 
-                    }).
-                            when('/login', {
-                        templateUrl: 'templates/login/index.html',
-                        controller: 'LoginController'
+                })
+                .state('show', {
+                    url: "/show",
+                    controller: 'PostsListController',
+                    templateUrl: "templates/posts/show.html"
+                })
+                .state('create', {
+                    url: '/create',
+            templateUrl: "templates/posts/create.html",
+                    controller: 'PostsCreateController'
+                    
+                })
+                .state('opinions', {
+                    
+                    url: '/opinions',
+                    controller: "OpinionsController",
+                    templateUrl: "templates/opinion/index.html",
+                    resolve: {
+                        opinions: function (OpinionService) {
+                           
+                            return OpinionService.getAll();
+                        }
+                    }
+                })
+                .state('login', {
+                    url: '/login',
+                    controller: 'LoginController',
+                    templateUrl: "templates/login/index.html"
+                })
+                .state('reminder', {
+                    url: '/reminder',
+                    controller: 'LoginController',
+                    templateUrl: "templates/login/reminder.html"
+                })
+                .state('signup', {
+                    url: '/signup',
+                    controller: 'LoginController',
+                    templateUrl: "templates/login/signup.html"
+                })
 
-                    }).
-                             when('/signup', {
-                        templateUrl: 'templates/login/signup.html',
-                        controller: 'LoginController'
 
-                    }).
-                             when('/reset-password', {
-                        templateUrl: 'templates/login/reminder.html',
-                        controller: 'LoginController'
 
-                    }).
-                             when('/opinion', {
-                        templateUrl: 'templates/opinion/index.html',
-                        controller: 'OpinionListController'
 
-                    }).
-                            when('/opinion/:postId', {
-                        controller: 'OpinionDetailController',
-                        templateUrl: 'templates/opinion/show.html'
 
-                    }).
-                    otherwise({
-                        redirectTo: '/posts'
-                    });
-        }]);
+    }]);
 
-    app.config(['$httpProvider', function ($httpProvider) {
-            $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-        }]);
+app.run(['$rootScope', '$location', "AuthenticationService",
+    function ($rootScope, $location, AuthenticationService) {
+
+        $rootScope.$on('$stateChangeStart', function (event, next, current) {
+            var routesThatRequireAuth = ['/create-posts'];
+            var urlGiven = $location.path();
+
+            if ((routesThatRequireAuth.indexOf(urlGiven) !== -1) && !AuthenticationService.isLoggedIn()) {
+                $location.path('/login');
+            }
+        });
+
+    }]);
+
+app.config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+    }]);
 
 
 

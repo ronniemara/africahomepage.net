@@ -12,10 +12,11 @@ class PostsController extends BaseController {
 
 
     
-    public function __construct(Post $post, Vote $votes )
+    public function __construct(Post $post, Vote $votes, User $user )
     {
         $this->post = $post;    
         $this->votes = $votes;
+        $this->user = $user;
         
     }
 
@@ -24,61 +25,46 @@ class PostsController extends BaseController {
      *
      * @return Response
      */
-//    public function homepage()
-//    {
-//        
-//        
-//        return View::make('posts.index');
-     //$posts = $this->post->all()->toJson();
-//return $this->post->all()->toJson();
-
-         //foreach($posts as $post)
-         //{
-    		    //Time elapsed since post created
-           // $age_in_hours = Carbon::now()->diffInHours($post->created_at);
-           // $post->time_ago = Carbon::createfromTimeStamp(strtotime($post->created_at))->diffForHumans(); 
-            
-            //number of votes for post
-            //$VoteObject = $this->post->find($post->id)->votes->first();            
-            
-             //$numberOfVotes = (int) $VoteObject->count;     
-             
-            
-
-    	        //setting the rank of the post when displaying all posts
-            //$post->rank = $this->calculate_score($numberOfVotes, $age_in_hours);
-           
-
-                //setting post->first_name  and post->last name properties
-
-             //$userObject = $user->getUserById($post->user_id);
-            /* $userObject = $user->getUserById(3);
-            $post->username = $user->code;*/
-            
-
-        // }
-         
-         /*$sortPosts = $posts->sortBy(function($post)
-                        { 
-                            return $post->rank;        
-                        })->reverse();
-       
-        $postsValues = $sortPosts->values();*/
-//$postsValues = $post->values();
-        //$check_user = $this->check_user;
-
-
-            //return  View::make('posts.reddit2', compact('postsValues', 'check_user'));
-           //return  $posts;
-
-      //}
       
       public function index()
       {
-          $data =  $this->post->all();
-           //return
-           return Response::make($data,200);
-      }
+          
+        $posts = $this->post->all();
+        foreach ($posts as $post) {
+            //Time elapsed since post created
+            $age_in_hours = Carbon::now()->diffInHours($post->created_at);
+
+            //number of votes for post
+             $VoteObject = $this->post->find($post->id)->votes->first();
+             if($VoteObject == null){
+                 $numberOfVotes = 0;
+             } else { $numberOfVotes = (int) $VoteObject->count;}     
+            //setting the rank of the post when displaying all posts
+            $post->rank = $this->calculate_score($numberOfVotes, $age_in_hours);
+
+
+            //setting post->first_name  and post->last name properties
+
+            $userObject = $this->user->find($post->users_id);  
+            
+            $post->username = $userObject->username;
+        }
+
+        $sortPosts = $posts->sortBy(function($post) {
+                    return $post->rank;
+                });
+
+        $postsValues = $sortPosts->values()->toArray();
+        //$postsValues = $post->values();
+
+        $data = Paginator::make($postsValues, count($postsValues), 6);
+
+        //Paginator::make($items, $totalItems, $perPage);
+
+
+        //return
+        return Response::make($data, 200);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -98,21 +84,25 @@ class PostsController extends BaseController {
     public function store()
     {
         $input = Input::all();
+        
         $validation = Validator::make($input, Post::$rules);
 
-        if ($validation->passes())
-        {	
-		$user = Sentry::getUser();			
-		$input['user_id'] = $user->id;	
-            $this->post->create($input);
+        if ($validation->fails()) {
+            return Response::make(["flash" => $validation->messages()], 412);
+        } 
 
-            return Redirect::route('posts.index');
-        }
+        if (Auth::check()){
+                // The user is logged in...
+                $user = Auth::user();	
+                
+		$input['users_id'] = $user->id;	
+                $this->post->create($input);
 
-        return Redirect::route('posts.create')
-        ->withInput()
-        ->withErrors($validation)
-        ->with('message', 'There were validation errors.');
+            return Response::make($this->post, 200);
+            } else {
+                return Response::make(["flash" => "Please log in"], 400);    
+            }
+		
     }
 
     /**

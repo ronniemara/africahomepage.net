@@ -14,8 +14,8 @@ class OpinionController extends BaseController
     
     public function index() {
         $opinions = $this->opinion->all();
-        $opinionValues = $opinions->values();
-        return View::make('opinion.index', compact('opinionValues'));
+        
+        return Response::make($opinions, 200);
         
     }
 }

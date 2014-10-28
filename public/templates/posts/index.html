@@ -1,22 +1,27 @@
 <div class="panel">
-    <div class="row-fluid">
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="post in posts">
-                <h3><a href={{post.url}}>{{post.title}}</a></h3>   
-                <em>
-                    {{ post.created_at  }}
-                </em>
-                <div>
-                    <img>
-                    50 Votes
-                    <img>
-                    <em>40</em>Comments 
-                    
-                     
-                     <a href="#/posts/{{post.id}}">
-                         Add a Comment...
-                     </a>
-                </div>
-        </ul>
+    <div class="panel-body">
+        <ol class="list-group" type="1">
+            <li class="list-group-item" ng-repeat="post in filteredPosts">
+                <div class="col-md-1 vcenter " ng-model="position">
+                    {{($index + 1) + position}}.
+                </div> 
+                <div class="col-md-1 vcenter ">
+                    <a href="#" ng-click="vote - up"><i class="icon-arrow-up"></i></a>
+                    {{50}}votes
+                    <a href="#" ng-click="vote - down"><i class="icon-arrow-down"></i></a>
+                </div> 
+                <div class="col-md-9 vcenter">
+                    <h3><a href={{post.url}}>{{post.title}}</a></h3>   
+                    <em>{{ post.created_at | timeAgo}}</em> 
+                    by <cite>{{post.username}}</cite>
+                    <p>
+                        <em>{{40}}</em>Comments
+                        <a ui-sref="posts.show">Add a Comment...</a>
+                    </p>
+                </div> 
+            </li> 
+        </ol>
+        <pagination total-items="totalItems" items-per-page="itemsPerPage" 
+                    ng-model="currentPage" ng-change="pageChanged()"></pagination>
     </div>
 </div>

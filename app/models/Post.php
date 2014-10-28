@@ -5,6 +5,7 @@ class Post extends Eloquent {
     protected $guarded = array();
 
     public static $rules = array(
+                'title' => 'required',
 		'url' => 'required'
 		
 	);    
@@ -19,6 +20,10 @@ class Post extends Eloquent {
         return $this->morphMany('Vote', 'votable');
     }
     
+    public function users()
+    {
+        return $this->belongsTo('User', 'users_id');
+    }
     
 }
 

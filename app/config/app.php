@@ -119,8 +119,8 @@ return array(
 		'LaravelBook\Ardent\Providers\ArdentServiceProvider',
 		'Toddish\Verify\VerifyServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',	
-		'Greggilbert\Recaptcha\RecaptchaServiceProvider',
-		'Jacopo\Authentication\AuthenticationServiceProvider'
+		
+		
 	),
 
 	/*

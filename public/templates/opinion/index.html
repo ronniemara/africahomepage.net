@@ -1,21 +1,13 @@
-<div class="panel"  style="padding: 5px;">
+<!--<div class="panel"  style="padding: 5px;">
     <div class="jumbotron col-md-7">
-        <h1>{{lead-opinion.title}}</h1>
-        <p>{{lead-opinion.summary}}</p>
-        <p><a href="/#/opinion/{{lead-opinion.id}}" class="btn btn-primary btn-large">Read more... &raquo;</a></p>
+        <h1>{{lead.title}}</h1>
+        <p>{{lead.summary}}</p>
+        <p><a href="/#/opinion/{{lead.id}}" class="btn btn-primary btn-large">Read more... &raquo;</a></p>
     </div>
 
 
-    <div class="pull-right">
-        <h2>Connect with Us</h2> 
-        <aside class="well sidebar-nav ">
-
-            <a href="https://twitter.com/africahomepage" class="btn btn-social-icon btn-twitter"><i class="icon icon-twitter"></i></a>
-            <a href="https://plus.google.com/+AfricahomepageNet" class="btn btn-social-icon btn-google-plus" rel="publisher"><i class="icon-googleplus"></i></a>                                                  
-            <a href="https://facebook.com/africahomepage" class="btn btn-social-icon btn-facebook"><i class="icon icon-facebook"></i></a>                 
-        </aside><!--/.well -->
-    </div>
-    <div style="clear:both;">
+    
+    <div style="clear:both;" ng-repeat="opinion in opinions">
         <h4 class="post-title"><a href="#/opinion/{{opinion.id}}">{{opinion.title}}</a></h4>
         <h5 class="post-author"> Posted by: <strong>{{opinion.author}}</strong> <i>{{opinion.created_at | time-ago}}</i></h5>       
         <div class="comments-and-votes container">
@@ -37,4 +29,13 @@
         </div>
     </div>
 
+</div>-->
+
+    
+<div class="panel">
+    <div class="jumbotron ">
+        <h1>{{lead.title}}</h1>
+        <p ng-repeat="paragraph in lead.body">{{paragraph}}</p>
+    </div>
 </div>
+
