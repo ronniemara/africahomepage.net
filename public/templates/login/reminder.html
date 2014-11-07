@@ -5,13 +5,8 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Password recovery</h3>
                 </div>
-                <div class="alert alert-danger"  ng-show="hasErrors">
-                    <ul>
-                        <li ng-repeat="error in errors">{{error}}</li>
-                    </ul>
-                </div>
                 <div class="panel-body">
-                    <form ng-submit="passwordReset()">
+                    <form ng-submit="">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
@@ -29,7 +24,7 @@
                     </form>     
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
-                            <a href="/#/login"><i class="fa fa-arrow-left"></i> Back to login</a>
+                            <button class="btn btn-info" data-ng-click="login()">Back to login</button>
                         </div>
                     </div>
                 </div>

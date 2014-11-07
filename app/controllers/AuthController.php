@@ -9,10 +9,17 @@
 class AuthController extends BaseController {
 
     public function login() {
-        if (Auth::attempt(array("email" => Input::json('email'), "password" => Input::json('password')))) {
+        if (Auth::attempt(
+                [
+                  "email" => Input::json('email'),
+                 "password" => Input::json('password'),
+                ],                 
+                Input::get('remember')
+                )
+            ) {
             return Response::json(Auth::user());
         } else {
-            return Response::json(array('flash' => 'Invalid email or password!'), 500);
+            return Response::json(array('flash' => 'Invalid email or password!'), 401);
         }
     }
 
@@ -28,15 +35,6 @@ class AuthController extends BaseController {
             return Response::make(["flash"=>"Please login!"], 401);
         }
        
-        return;
+        return Response::json(Auth::user());
     }
-    
-    public function currentUser(){
-        $user = Auth::user();
-        if ($user===null){
-            return Response::make(["flash"=> "Please login!"], 412);
-        }
-        return Response::make($user, 200);
-    }
-
 }

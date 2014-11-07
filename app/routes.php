@@ -14,7 +14,6 @@ Blade::setContentTags('<%', '%>');   // for variables and all things Blade
 Blade::setEscapedContentTags('<%%', '%%>');  // for escaped data
 //main-page
 Route::get('/', function() {
-    
     return View::make('layouts.bootstrap');
 });
 
@@ -34,7 +33,12 @@ Route::get('getvotes', 'VotesController@getvotes');
 Route::post('auth/login', 'AuthController@login');
 Route::get('auth/logout', 'AuthController@logout');
 Route::get('auth/check', 'AuthController@isLoggedIn');
-Route::get('auth/user', 'AuthController@currentUser');
+
+Route::post('remind/email', 'RemindersController@postRemind');
+Route::post('remind/password', 'RemindersController@postRemind');
+
+Route::resource('users', 'UsersController');
+
 
 
 

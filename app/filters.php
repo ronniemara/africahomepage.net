@@ -164,3 +164,22 @@ Route::filter('ngcsrf',function($route,$request) {
         throw new Illuminate\Session\TokenMismatchException;
     }
 });
+
+Route::filter('timeout',function() {
+    $expired = true;
+    if ((time() - Session::activity()) > (Config::get('session.lifetime') * 60))
+    {
+        // Session expired
+        $expired = true;
+    }
+ else {
+        
+ $expired = true;
+     
+ }
+     
+  if($expired)
+  {
+      return Response::make('flash => Your session has expired. Please try again!', 404);
+  }
+});

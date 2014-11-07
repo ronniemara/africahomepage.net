@@ -34,11 +34,11 @@ appControllers.factory("PostsService", ['$http', '$q', function ($http, $q) {
                 return defer.promise;
             },
             create: function (data) {
-                    $http.post('posts', data).success(function (data) {
-                        $scope.posts = data;
-                    });
-                }
-        }
+                $http.post('posts', data).success(function (data) {
+                    $scope.posts = data;
+                });
+            }
+        };
     }]);
 
 appControllers.factory("OpinionService", ['$http', '$q', function ($http, $q) {
@@ -70,160 +70,189 @@ appControllers.factory("SessionService", function () {
         unset: function (key) {
             return sessionStorage.removeItem(key);
         }
-    }
+    };
 });
 
 appControllers.factory("AuthenticationService",
-        ['$http', '$location', '$q', "SessionService",
-            function ($http, $location, $q, SessionService) {
-                var cacheSession = function () {
-                    SessionService.set('authenticated', true);
-                };
-                var uncacheSession = function () {
-                    SessionService.unset('authenticated');
-                };
-                var setUser = function(user){
-                      this.user =   user;
-                      return this.user;
-                    };
-                    var unsetUser = function(){
-                        this.user =   {};
-                        return this.user;
-                    };
-                return {
-                    user: {},
-                    login: function (credentials) {
-                        var defer = $q.defer();
-                        $http.post('/auth/login', credentials)
-                                .success(function (response) {
-                                   
-                                 setUser(response);
-                                    isLoggedIn = true;
-                                    cacheSession;
-                                    $location.path('/#/posts');
-                                    defer.resolve();
-                                })
-                                .error(function () {
-                                    defer.reject();
-                                });
-                        return defer.promise;
-                    },
-                    logout: function () {
-                        var defer = $q.defer();
-                        $http.get('/auth/logout').success(function () {
-                            unsetUser();
-                                isLoggedIn = false;
-                            uncacheSession;
-                            $location.path('/#/login');
-                            defer.resolve();
-
-                        }).error(function (err) {
-                            defer.reject();
-                        });
-                        return defer.promise;
-
-                    },
-                    check: function () {
-
-                        var defer = $q.defer();
-                        $http.get('auth/check').success(function (res) {
-                            cacheSession;
-                            defer.resolve(res);
-
-                        }).error(function (err) {
-                            
-                            SessionService.set('authenticated', false);
-                        });
-                        return defer.promise;
-
-
-                    },
-                    isLoggedIn: false,
-                    getUser: function () {
-                        var defer = $q.defer();
-                        $http.get('auth/user').success(
-                                function (res) {
-
-                                    defer.resolve(res);
-                                }).error(function (err) {
-
-                            defer.reject();
-                        });
-
-                        return defer.promise;
-                    }
-
-
-
-
-                };
-            }]);
-
-//         AuthenticationService.isLoggedIn().then(function () {
-//                    $scope.isLoggedIn = true;
-//                },function () {
-//                    $scope.isLoggedIn = false;
-//                });
-//                AuthenticationService.getUser().then(function (res) {
-//                    $scope.user = res;
-//                });
-//                $scope.logout = function(){
-//                   AuthenticationService.logout(); 
-//                }
-
-appControllers.controller('LoginController',
-        ['$scope', '$location', "AuthenticationService",
-            function ($scope, AuthenticationService) {
-                $scope.credentials = {"email": "", "password": "", "remember": ""};
-
-                $scope.login = function () {
-                    debugger;
-                   return AuthenticationService.login($scope.credentials);                      
-                   
-               };
-                $scope.logout = function () {
-                    return AuthenticationService.logout();
-                };
-
-                //$scope.orderProp = 'age';
-                $scope.passwordReset = function ($scope, $http)
+    ['$http', '$location', '$q',
+        "SessionService", "FlashService", '$modal', '$scope',
+        function ($http, $location, $q, SessionService,
+        FlashService, $modal, $scope) {
+            var loginError = function(response){
+              FlashService.show(response.flash);  
+            };
+            return {
+                signup: function ()
                 {
-                    $http.post('/reset-password');
-                };
-                // Wrapping the Recaptcha create method in a javascript function 
-
-                $scope.showRecaptcha = function (element) {
-                    Recaptcha.create("6LdeD_wSAAAAAJjx8sHv23ULc6nUnz_V5_mJgol3",
-                            element, {
-                                theme: "red",
-                                callback: Recaptcha.focus_response_field});
-                };
-            }]);
-
-
-
-appControllers.controller('PostsListController',
-        [ '$scope',  'posts',
-            function ($scope, posts  ) {
-            
-                            $scope.posts = posts.data;
-                            $scope.itemsPerPage = 6;
-                            $scope.currentPage = 1;
-                            $scope.totalItems = $scope.posts.length;
-
-                            $scope.pageCount = function () {
-                                return Math.ceil($scope.posts.length / $scope.itemsPerPage);
+                    var defer = $q.defer();
+                    var signup = $modal.open({
+                        templateUrl: 'templates/login/signup.html'
+                    });
+                    
+                    signup.result.then(function(details){
+                        // Wrapping the Recaptcha create method in a javascript function 
+                        $scope.showRecaptcha = function (element) {
+                            Recaptcha.create(
+                                "6LdeD_wSAAAAAJjx8sHv23ULc6nUnz_V5_mJgol3",
+                                element, 
+                                { 
+                                    theme: "red",
+                                    callback: Recaptcha.focus_response_field
+                                });
+                        };
+                        $scope.submit = function(details){
+                            $http.post('users/create', details)
+                                .success()
+                                .error();
+                        };
+                    } );
+                },
+                login: function (credentials) {
+                    var defer = $q.defer();
+                    var login = $modal.open({
+                        templateUrl: 'templates/login/index.html',
+                        backdrop: true,
+                        windowClass: 'modal',
+                        controller: function ($scope, $modalInstance, credentials) {
+                            $scope.credentials = credentials;
+                            $scope.submit = function () {
+                                $modalInstance.close($scope.credentials);
+                            };
+                            $scope.close = function () {
+                                $modalInstance.dismiss('cancel');
                             };
 
-                            $scope.$watch('currentPage + itemsPerPage',
-                                function () {
-                                    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-                                    end = begin + $scope.itemsPerPage;
-                                    $scope.position = (6 * ($scope.currentPage - 1));
-                                    $scope.filteredPosts = $scope.posts.slice(begin, end);
-                                });
-                         
-            }]);
+
+                        },
+                        resolve: {
+                            credentials: function () {
+                                return $scope.credentials;
+                            }
+                        }
+                    });
+                    login.result.then(function (credentials) 
+                    {
+                        $scope.credentials = credentials;
+                        $http.post('/auth/login', credentials)
+                            .success(function (user) {
+                                SessionService.set('authenticated', true);
+                                SessionService.set('user', response.username);
+                                $rootScope.user = user;
+                                $rootScope.user.isLoggedIn = true;
+                                $location.path('/#/posts');
+                                defer.resolve();
+                            })
+                        .error(function (response) {
+                            loginError(response);
+                            defer.reject();
+                        });
+                        
+                            
+                        });
+                    return defer.promise;
+                },
+                               
+                logout: function () {
+                    var defer = $q.defer();
+                    $http.get('/auth/logout').success(function () {
+                       SessionService.unset('user');
+                        SessionService.unset('authenticated');
+                        $scope.user = {};
+                        $scope.user.isLoggedIn = false;
+                        $location.path('/#/login');
+                        defer.resolve();
+
+                    }).error(function (err) {
+                        defer.reject();
+                    });
+                    
+                    return defer.promise;
+                },
+                isLoggedIn: function () {
+                    var defer = $q.defer();
+                    $http.get('auth/check').success(
+                            function (res) {
+                                loginError(res);
+                                defer.resolve(res);
+                            }).error(function (err) {
+
+                        defer.reject();
+                    });
+
+                    return defer.promise;
+                },
+                reminder: function(email) {
+                        var defer = $q.defer();
+                        var reminder = $modal.open({
+                            templateUrl: 'templates/login/reminder.html'
+                        });
+                        reminder.result.then(function (email) {
+                            $scope.email = email;
+                                $scope.submit =function(){
+                                    $http.post('remind/email', email)
+                                        .success(function (message){
+                                            defer.resolve(message);
+                                        })
+                                        .error(function (response) {
+                                            loginError(response);
+                                            defer.reject();
+                                        });
+                                };
+                            });
+                        
+                    return defer.promise;
+                    
+                },
+                reset:  function(credentials){
+                    $defer =$q.defer();
+                    
+                    $http.post('remind/password', credentials)
+                            .success(function(response)
+                    {
+                                loginError({"flash": "Reset successful"});
+                                $defer.resolve();
+                            }).error(function(response){
+                                loginError(response);
+                                $defer.reject(response);
+                            });
+                            return defer.promise;
+                }
+            };
+    }]);
+
+appControllers.factory("FlashService", ['$rootScope',
+    function(){
+        return {
+            show: function(message){
+                $rootScope.flash = message;
+            },
+            clear: function(){
+                $rootScope.flash = "";
+            }
+        };
+}]);
+
+appControllers.controller('PostsListController',
+    [ '$scope',  'posts',
+        function ($scope, posts  ) {
+            $scope.posts = posts.data;
+            $scope.itemsPerPage = 6;
+            $scope.currentPage = 1;
+            $scope.totalItems = $scope.posts.length;
+
+            $scope.pageCount = function () {
+                return Math.ceil($scope.posts.length / $scope.itemsPerPage);
+            };
+
+            $scope.$watch('currentPage + itemsPerPage',
+                function () {
+                    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                    end = begin + $scope.itemsPerPage;
+                    $scope.position = (6 * ($scope.currentPage - 1));
+                    $scope.filteredPosts = $scope.posts.slice(begin, end);
+                });
+
+        }]);
 
 appControllers.controller('PostsCreateController',
         ["PostsService", '$scope', '$q', 
@@ -236,7 +265,6 @@ appControllers.controller("OpinionsController", ['$scope', "opinions",
     function ($scope, opinions) {
         
             var results = opinions;
-            console.log(results[0].body);
             $scope.lead = results[0];
             $scope.opinions = results.shift();
             
@@ -245,37 +273,29 @@ appControllers.controller("OpinionsController", ['$scope', "opinions",
         // $scope.orderProp = 'age';
     }]);
 
+appControllers.controller('PanelController',
+    [ '$modal', '$rootScope','$scope', 'AuthenticationService',
+       'TabsService', 'SessionService',
+        function ($modal, $rootScope, $scope,
+            AuthenticationService,TabsService, SessionService ) {
+                $scope.credentials = {"email": "", "password": "", "remember": ""};
+                $scope.reminder = AuthenticationService.reminder($scope.email);
+                
+                $scope.signup = AuthenticationService.signup();
 
+                $scope.login = AuthenticationService.login($scope.credentials);
 
-app.controller('PanelController', 
-        ['$scope', 'TabsService',  "AuthenticationService",
-            function ($scope, TabsService, AuthenticationService) {
+                $scope.logout = AuthenticationService.logout();
+
+                };
+
+            }]);
+
+appControllers.controller('RemindCtrl',
+        ['token', '$modal',
+            '$scope', 'FlashService',
+            function (token, $modal, $scope, FlashService) {
+                AuthenticationService.reset(credentials);
                
-                        $scope.isLoggedIn = AuthenticationService.isLoggedIn;
-                        $scope.isLoggedIn = AuthenticationService.user;
-                        $scope.$watch(function () {
-                                    return AuthenticationService.isLoggedIn;
-                                    },
-                                    function (newVal) {
-                                    $scope.isLoggedIn = newVal;
-                                    });     
-           
-           $scope.$watch(function () {
-                                    return AuthenticationService.user;
-                                    },
-                                    function (newVal) {
-                                    $scope.user = newVal;
-                                    });     
-           
-//                $scope.tab = TabsService.getTab();
-//
-//                $scope.selectTab = function(tab){
-//                    TabsService.selectTab(tab);
-//                };
-//
-//
-//                $scope.isSelected = function(tab){
-//                    return TabsService.isSelected(tab);
-//                }
             }]);
 

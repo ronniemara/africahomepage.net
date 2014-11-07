@@ -45,10 +45,10 @@
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
         <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
         <link rel="shortcut icon" href="../assets/ico/favicon.png">
+        
     </head>
-
     <body >
-        <div class="container-fluid" ng-model="isLoggedIn" ng-controller="PanelController">
+        <div class="container-fluid"  ng-controller="PanelController">
             <header>
                 <div class="panel">
                     <h1 class="col-md-offset-3">
@@ -70,33 +70,35 @@
                         <div class="collapse navbar-collapse" id="navbar-collapse-1">
                             <ul class="nav navbar-nav" >
                                 <li ui-sref-active="active"><a ui-sref="posts" >Posts</a></li>
-                                <li ui-sref-active="active"><a ui-sref="create" >Create Post</a></li>
                                 <li ui-sref-active="active"><a ui-sref="opinions">Opinions</a></li>                                     
                             </ul>            
-                            <div >
-                                <ul class="navbar-text navbar-right" ng-show="isLoggedIn" ng-model="user">
-                                    <li ui-sref-active="active">
+                            <div class="pull-right">
+                                <ul class="navbar-text navbar-right pull-right" ng-show="user.isLoggedIn" >
+                                    <p ui-sref-active="active">
                                         Logged in as <cite><a class="navbar-link">{{user.username}}</a></cite>
-                                    </li>   
-                                    <li><a><button ng-click="logout()">Logout</button></a></li>
+                                        <a><button ng-click="logout()">Logout</button></a>
+                                    </p>   
+                                    
                                 </ul>                                
-                                <ul class=" nav navbar-nav navbar-right"ng-hide="isLoggedIn">
-                                    <li ui-sref-active="active">
-                                        <a ui-sref="login" class="navbar-link">Login</a>
-                                    </li>
+                                <ul class=" nav navbar-nav" ng-hide="user.isLoggedIn">
+                                    <li ui-sref-active="active" ng-click="login()"><a href="#">Login!</a></li>
                                 </ul>
                             </div>
                         </div><!--/.nav-collapse -->
                     </div>
                 </nav>
             </header>
-
             <div class="row-fluid">
                 <div class="col-md-12">
                     <div class="row-fluid">
                         <div class='col-md-9'>
                             <div class="row-fluid">
-                                <div  ui-view></div>
+                                <div class="alert" ng-show="flash">
+                                    {{flash}}
+                                </div>
+                            </div>
+                            <div class="row-fluid">
+                               <div  ui-view>Loading...</div>
                             </div>
                         </div>
                         <aside class="col-md-3 well">
@@ -104,8 +106,6 @@
                         </aside>
                     </div>
                 </div>
-
-
             </div>
             <div class="row-fluid">
                 <div class="col-md-12">
@@ -114,7 +114,6 @@
                     </footer>   
                 </div>
             </div>
-
         </div><!--col-md-10 -->
     </div><!--/.fluid-container-->
 
@@ -127,10 +126,12 @@
     <script src="/js/angular-ui-router.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular-resource.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/angular-idle.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
-    <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
+    
 
 
 

@@ -46,7 +46,7 @@ protected function setAngularCookie()
     $value = md5( Session::token() );
      
     // Add the cookie to our response
-    $this->withCookie( new SymfonyCookie('XSRF-TOKEN', $value, 0, $path = '/',null, Request::secure(),false) );
+    $this->withCookie( new SymfonyCookie('XSRF-TOKEN', $value, 0, $path = '/',null, \Request::secure(),false) );
 }
 
 	
