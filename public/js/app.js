@@ -1,9 +1,31 @@
 
 
 var app = angular.module('myapp', [
-    'yaru22.angular-timeago', 'ui.router', 'appControllers', 'ui.bootstrap', 'ngIdle'
-
+    'yaru22.angular-timeago', 'ui.router', 
+    'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource'
 ]);
+
+app.provider('PostsProvider', function(){
+    this.$get = ['$resource', function($resource){
+       var Post = $resource('https://www.africahomepage.local/posts/:id', {},{
+           update:{
+               method: PUT
+           } 
+       }); 
+       return Post;
+    }];
+    });
+    
+    app.provider('OpinionsProvider', function(){
+    this.$get = ['$resource', function($resource){
+       var Opinion = $resource('https://www.africahomepage.local/opinions/:id', {},{
+           update:{
+               method: PUT
+           } 
+       }); 
+       return Opinion;
+    }];
+    });
 
 app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider', 
             '$idleProvider','$httpProvider',
@@ -30,46 +52,50 @@ app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider',
                             return PostsService.getAll();
                         }
                     }
-
                 })
                 .state('show', {
-                    url: "/show",
-                    controller: 'PostsListController',
+                    url: "/show/:id",
+                    controller: function($stateParams){
+                        
+                    },
                     templateUrl: "templates/posts/show.html"
                 })
-                
                 .state('opinions', {
-                    
                     url: '/opinions',
                     controller: "OpinionsController",
                     templateUrl: "templates/opinion/index.html",
                     resolve: {
                         opinions: function (OpinionService) {
-                           
+
                             return OpinionService.getAll();
                         }
                     }
-                    
+
+                })
+                .state('login', {
+                    url: "/login",
+                    templateUrl: "templates/login/index.html",
+                    controller: function(){
+                        
+                    }
+
+                })
+                .state('signup', {
+                    url: "/signup",
+                    templateUrl: "templates/login/signup.html",
+                    controller: function(){}
                 })
                 .state('reminder', {
-                    url: "/reminder?token",
-                    controller: "RemindCtrl",
-                    resolve: {
-                        token: function($stateParams){
-                        return $stateParams.token;
-                        }
-                    }
-                    
+                    url: "/reminder",
+                    templateUrl: "templates/login/reminder.html",
+                    controller: function(){}
                 });
-                
-                
-                
-
+    
     }]);
 
 app.run(['$rootScope', '$location', "AuthenticationService", '$idle', '$modal',
     function ($rootScope, $location, AuthenticationService, $idle, $modal) {
-        
+      
         $idle.watch();
         
         AuthenticationService.isLoggedIn().then(function(user){

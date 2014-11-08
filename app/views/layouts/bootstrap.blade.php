@@ -81,7 +81,7 @@
                                     
                                 </ul>                                
                                 <ul class=" nav navbar-nav" ng-hide="user.isLoggedIn">
-                                    <li ui-sref-active="active" ng-click="login()"><a href="#">Login!</a></li>
+                                    <li ui-sref-active="active"><a ui-sref="login">Login</a></li> 
                                 </ul>
                             </div>
                         </div><!--/.nav-collapse -->

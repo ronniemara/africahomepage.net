@@ -18,15 +18,15 @@ Route::get('/', function() {
 });
 
 Route::resource('posts', 'PostsController');
-Route::get('opinions', 'OpinionController@index');
+Route::resource('opinions', 'OpinionController@index');
 
 
 //comments resource
 Route::resource('comments', 'CommentsController');
-Route::group(array('before' => ''), function() {
+
     Route::post('vote-up', 'VotesController@upvote');
     Route::post('vote-down', 'VotesController@downvote');
-});
+
 Route::get('getvotes', 'VotesController@getvotes');
 
 

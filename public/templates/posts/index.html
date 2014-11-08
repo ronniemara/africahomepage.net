@@ -1,7 +1,5 @@
 <div class="panel">
     <div class="panel-heading">
-                                     
-    
         <div class="panel-body">
             <ol class="list-group" type="1">
                 <li class="list-group-item" ng-repeat="post in filteredPosts">
@@ -19,7 +17,7 @@
                         by <cite>{{post.username}}</cite>
                         <p>
                             <em>{{40}}</em>Comments
-                            <a ui-sref="posts.show">Add a Comment...</a>
+                            <a ui-sref="show/{{post.id}}" >Add a Comment...</a>
                         </p>
                     </div> 
                 </li> 
@@ -27,4 +25,5 @@
             <pagination total-items="totalItems" items-per-page="itemsPerPage" 
                         ng-model="currentPage" ng-change="pageChanged()"></pagination>
         </div>
+    </div>
     </div>

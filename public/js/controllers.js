@@ -22,43 +22,6 @@ appControllers.factory("TabsService", function () {
     };
 });
 
-appControllers.factory("PostsService", ['$http', '$q', function ($http, $q) {
-        return {
-            getAll: function () {
-                var defer = $q.defer();
-                $http.get('/posts').success(function (response) {
-                    defer.resolve(response);
-                }).error(function (error, status) {
-                    defer.reject(error);
-                });
-                return defer.promise;
-            },
-            create: function (data) {
-                $http.post('posts', data).success(function (data) {
-                    $scope.posts = data;
-                });
-            }
-        };
-    }]);
-
-appControllers.factory("OpinionService", ['$http', '$q', function ($http, $q) {
-        return {
-          
-            getAll: function () {
-                  
-                var defer = $q.defer();
-                $http.get('/opinions').success(function (response) {
-                    defer.resolve(response);
-                }).error(function (error, status) {
-                    defer.reject(error);
-                });
-                return defer.promise;
-            }
-
-        };
-        
-    }]);
-
 appControllers.factory("SessionService", function () {
     return {
         get: function (key) {
@@ -75,70 +38,23 @@ appControllers.factory("SessionService", function () {
 
 appControllers.factory("AuthenticationService",
     ['$http', '$location', '$q',
-        "SessionService", "FlashService", '$modal', '$scope',
+        "SessionService", "FlashService", '$modal', 
         function ($http, $location, $q, SessionService,
         FlashService, $modal, $scope) {
-            var loginError = function(response){
+            
+            var loginSuccess = function(response){
               FlashService.show(response.flash);  
             };
             return {
-                signup: function ()
-                {
+                
+                login: function () {
                     var defer = $q.defer();
-                    var signup = $modal.open({
-                        templateUrl: 'templates/login/signup.html'
-                    });
-                    
-                    signup.result.then(function(details){
-                        // Wrapping the Recaptcha create method in a javascript function 
-                        $scope.showRecaptcha = function (element) {
-                            Recaptcha.create(
-                                "6LdeD_wSAAAAAJjx8sHv23ULc6nUnz_V5_mJgol3",
-                                element, 
-                                { 
-                                    theme: "red",
-                                    callback: Recaptcha.focus_response_field
-                                });
-                        };
-                        $scope.submit = function(details){
-                            $http.post('users/create', details)
-                                .success()
-                                .error();
-                        };
-                    } );
-                },
-                login: function (credentials) {
-                    var defer = $q.defer();
-                    var login = $modal.open({
-                        templateUrl: 'templates/login/index.html',
-                        backdrop: true,
-                        windowClass: 'modal',
-                        controller: function ($scope, $modalInstance, credentials) {
-                            $scope.credentials = credentials;
-                            $scope.submit = function () {
-                                $modalInstance.close($scope.credentials);
-                            };
-                            $scope.close = function () {
-                                $modalInstance.dismiss('cancel');
-                            };
-
-
-                        },
-                        resolve: {
-                            credentials: function () {
-                                return $scope.credentials;
-                            }
-                        }
-                    });
-                    login.result.then(function (credentials) 
-                    {
-                        $scope.credentials = credentials;
-                        $http.post('/auth/login', credentials)
-                            .success(function (user) {
-                                SessionService.set('authenticated', true);
-                                SessionService.set('user', response.username);
-                                $rootScope.user = user;
-                                $rootScope.user.isLoggedIn = true;
+                                    $http.post('/auth/login', credentials)
+                                    .success(function (user) {
+                                    SessionService.set('authenticated', true);
+                                    SessionService.set('user', response.username);
+                                    $rootScope.user = user;
+                                    $rootScope.user.isLoggedIn = true;
                                 $location.path('/#/posts');
                                 defer.resolve();
                             })
@@ -147,8 +63,6 @@ appControllers.factory("AuthenticationService",
                             defer.reject();
                         });
                         
-                            
-                        });
                     return defer.promise;
                 },
                                
@@ -181,15 +95,11 @@ appControllers.factory("AuthenticationService",
 
                     return defer.promise;
                 },
-                reminder: function(email) {
+                reminder: function() {
                         var defer = $q.defer();
-                        var reminder = $modal.open({
-                            templateUrl: 'templates/login/reminder.html'
-                        });
-                        reminder.result.then(function (email) {
-                            $scope.email = email;
-                                $scope.submit =function(){
-                                    $http.post('remind/email', email)
+                        
+                        
+                                    $http.post('remind/email')
                                         .success(function (message){
                                             defer.resolve(message);
                                         })
@@ -197,13 +107,12 @@ appControllers.factory("AuthenticationService",
                                             loginError(response);
                                             defer.reject();
                                         });
-                                };
-                            });
+                               
                         
                     return defer.promise;
                     
                 },
-                reset:  function(credentials){
+                reset:  function(){
                     $defer =$q.defer();
                     
                     $http.post('remind/password', credentials)
@@ -220,7 +129,7 @@ appControllers.factory("AuthenticationService",
             };
     }]);
 
-appControllers.factory("FlashService", ['$rootScope',
+appControllers.factory("FlashService", [
     function(){
         return {
             show: function(message){
@@ -232,9 +141,11 @@ appControllers.factory("FlashService", ['$rootScope',
         };
 }]);
 
-appControllers.controller('PostsListController',
-    [ '$scope',  'posts',
-        function ($scope, posts  ) {
+appControllers.controller('PostsController',
+    [ '$scope',  'Post',
+        function ($scope, Post  ) {
+            var posts = Post.query();
+            var post = Post.get(post);
             $scope.posts = posts.data;
             $scope.itemsPerPage = 6;
             $scope.currentPage = 1;
@@ -254,12 +165,7 @@ appControllers.controller('PostsListController',
 
         }]);
 
-appControllers.controller('PostsCreateController',
-        ["PostsService", '$scope', '$q', 
-            function (PostsService, $scope, $q) {
-                $scope.post = {"title": "", "url": ""};
-                $scope.create = PostsService.create($scope.post);
-            }]);
+
 
 appControllers.controller("OpinionsController", ['$scope', "opinions",
     function ($scope, opinions) {
@@ -274,27 +180,26 @@ appControllers.controller("OpinionsController", ['$scope', "opinions",
     }]);
 
 appControllers.controller('PanelController',
-    [ '$modal', '$rootScope','$scope', 'AuthenticationService',
-       'TabsService', 'SessionService',
-        function ($modal, $rootScope, $scope,
-            AuthenticationService,TabsService, SessionService ) {
-                $scope.credentials = {"email": "", "password": "", "remember": ""};
-                $scope.reminder = AuthenticationService.reminder($scope.email);
-                
-                $scope.signup = AuthenticationService.signup();
+    [ '$scope', 'TabsService', 
+        function ( $scope, TabsService  ) {
 
-                $scope.login = AuthenticationService.login($scope.credentials);
-
-                $scope.logout = AuthenticationService.logout();
-
-                };
+                $scope.showRecaptcha = function (element) {
+                    // Wrapping the Recaptcha create method in a javascript function 
+                            Recaptcha.create(
+                                "6LdeD_wSAAAAAJjx8sHv23ULc6nUnz_V5_mJgol3",
+                                element, 
+                                { 
+                                    theme: "red",
+                                    callback: Recaptcha.focus_response_field
+                                });
+                        };
 
             }]);
 
 appControllers.controller('RemindCtrl',
         ['token', '$modal',
-            '$scope', 'FlashService',
-            function (token, $modal, $scope, FlashService) {
+            '$scope', 'FlashService', 'AuthenticationService',
+            function (token, $modal, $scope, FlashService,AuthenticationService) {
                 AuthenticationService.reset(credentials);
                
             }]);
