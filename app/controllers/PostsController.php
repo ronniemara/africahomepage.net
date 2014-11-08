@@ -66,15 +66,7 @@ class PostsController extends BaseController {
         return Response::make($data, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return View::make('posts.create');
-    }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -111,28 +103,10 @@ class PostsController extends BaseController {
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
+    public function show($postId, $commentId)
     {
        $post = $this->post->findOrFail($id);
        return Response::make($post, 200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $post = $this->post->find($id);
-
-        if (is_null($post))
-        {
-            return Redirect::route('posts.index');
-        }
-
-        return View::make('posts.edit', compact('post'));
     }
 
     /**

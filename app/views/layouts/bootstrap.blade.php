@@ -120,21 +120,14 @@
     <!-- Le javascript
     ================================================== -->
     <!--        Placed at the end of the document so the pages load faster  --> 
-    <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-ui-router.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-resource.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-idle.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
     
-
-
-
-
+<script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script> 
+<script src="js/libs/jquery-1.10.2.js"></script>
+<script src="js/libs/handlebars-v1.3.0.js"></script>
+<script src="js/libs/ember-1.8.1.js"></script>
+<script src="js/app.js"></script>   
+<script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>    
+<script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+ 
 </body>
 </html>

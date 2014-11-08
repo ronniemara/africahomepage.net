@@ -1,18 +1,21 @@
 <?php
-class CommentsController extends BaseController
-{
-	/**
-     * Comment Repository
-     *
-     * @var $comment
-     */
-    protected $comment;
 
-    public function __construct(Comment $comment)
-    {
-        $this->comment = $comment;
-        
+ 
+class CommentsController {
+    //put your code here
+     /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+      
+      public function index()
+      {
+          
+      
     }
+
+    
 
     /**
      * Store a newly created resource in storage.
@@ -21,24 +24,31 @@ class CommentsController extends BaseController
      */
     public function store()
     {
-	   
-	    $input = Input::except('task');
-	    $input['created_at'] = new DateTime;
-	    
-	    $comment = $this->comment->create($input);
        
-	    //set comment->createdBy
-        $user = Sentry::findUserById($comment->user_id);
-        
-        $comment->createdBy = $user->first_name . " " . $user->last_name;
+    }
 
-	    return $comment;
-	    			
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($postId, $commentId)
+    {
+      
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id)
+    {
         
     }
 
-   
-   
     /**
      * Remove the specified resource from storage.
      *
@@ -47,8 +57,6 @@ class CommentsController extends BaseController
      */
     public function destroy($id)
     {
-        $this->comment->find($id)->delete();
-
         
     }
 

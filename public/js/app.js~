@@ -1,144 +1,171 @@
 
-(function () {
-    var app = angular.module('myapp', [
-        'yaru22.angular-timeago', 'ngRoute'
 
-    ]);
+var app = angular.module('myapp', [
+    'yaru22.angular-timeago', 'ui.router', 
+    'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource'
+]);
+
+app.provider('PostsProvider', function(){
+    this.$get = ['$resource', function($resource){
+       var Post = $resource('https://www.africahomepage.local/posts/:id', {},{
+           update:{
+               method: PUT
+           } 
+       }); 
+       return Post;
+    }];
+    });
     
-    app.config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-            when('/',{
-                templateUrl: 'templates/posts/index.html',
-                controller: 'PostsListCtrl'
-                
-            }).
-      when('posts', {
+    app.provider('OpinionsProvider', function(){
+    this.$get = ['$resource', function($resource){
+       var Opinion = $resource('https://www.africahomepage.local/opinions/:id', {},{
+           update:{
+               method: PUT
+           } 
+       }); 
+       return Opinion;
+    }];
+    });
+
+app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider', 
+            '$idleProvider','$httpProvider',
+    function ($stateProvider, $urlRouterProvider, $keepaliveProvider,
+                $idleProvider, $httpProvider) {
         
-        controller: 'PostsListCtrl',
-        templateUrl: 'templates/posts/index.html'
-      }).
-      when('posts/:postId', {
+        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
         
-        controller: 'PostsDetailCtrl',
-        templateUrl: 'templates/posts/show.html'
-
-      }).
-      otherwise({
-        redirectTo: 'posts'
-      });
-  }]);
-
-    app.config(['$httpProvider', function ($httpProvider) {
-            $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-        }]);
-
-    app.controller('PostsListCtrl', ['$scope', '$http',
-        function ($scope, $http) {
-            $scope.showPost = false;
-            $http.get('posts').success(function (data) {
-                $scope.posts = data;
-
-            });
-            
-            $scope.show = function (postId)
-            {
-               var url = "posts/" + postId;
-               console.log(url);
-               
-               $http.get(url).success(function (data) {
-                $scope.$parent.tab = 3;
-                   $scope.post = data;
-                   $scope.showPost = true;
-                   //console.log(data);
-            });
-               
-            }
-
-            //$scope.orderProp = 'age';
-        }]);
-
-    app.controller('PostsDetailCtrl', ['$scope', '$http',
-        function ($scope, $http) {
-//            console.log($scope.postId); 
-//            _postId = $scope.postId;
-            
-            
-            //$http.get('postsdata/' . $scope.postId).success(function (data) {
-             //   $scope.post = data;
-
-            //});
-        }]);
-
-
-
-    app.controller('LoginController',
-                    ['$scope', '$http', '$q',
-                    function ($scope, $http, $q) {
-                        var _login = this;
+        $idleProvider.idleDuration(60);
+        $idleProvider.warningDuration(20);
+        $keepaliveProvider.interval(60);
+        //
+        // For any unmatched url, redirect to /state1
+        $urlRouterProvider.otherwise("posts");
+        //
+        // Now set up the states
+        $stateProvider
+                .state("posts", {
+                    url: "/posts",
+                    templateUrl: 'templates/posts/index.html',
+                    controller: 'PostsListController',
+                    resolve: {
+                        posts: function (PostsService) {
+                            return PostsService.getAll();
+                        }
+                    }
+                })
+                .state('show', {
+                    url: "/show/:id",
+                    controller: function($stateParams){
                         
-                        $scope.login = function () {
-                        var deferred = $q.defer();
-                        var promise = deferred.promise;
+                    },
+                    templateUrl: "templates/posts/show.html"
+                })
+                .state('opinions', {
+                    url: '/opinions',
+                    controller: "OpinionsController",
+                    templateUrl: "templates/opinion/index.html",
+                    resolve: {
+                        opinions: function (OpinionService) {
 
-                        promise.then(
-                                        function(result) {
-                                        //set tab =1
-                                        
-                                        if(result.login[0] === "Login failed.")
-                                        {
-                                        $scope.NotloggedIn = true;
-                                        $scope.reason = result.login[0];
-                                        }
-                                        else{
-                                            $scope.$parent.tab = 1;
-                                        }
-                                        },
-                                        function(reason) {
-                                        //display error message
-                                        alert(reason)
-                                        }
-                                    );
-
-                        $http.post(
-                                    'login', 
-                                    {"email": _login.email, "password": _login.password, "remember": _login.remember}
-                                   ).success(
-                                                function(response) {
-                                                deferred.resolve(response);
-                                                }
-                                    ).error(
-                                                function(errors) {                          
-                                                deferred.reject(errors);
-                                                }
-                                    );
+                            return OpinionService.getAll();
+                        }
                     }
 
-                                //$scope.orderProp = 'age';
-        }]);
+                })
+                .state('login', {
+                    url: "/login",
+                    templateUrl: "templates/login/index.html",
+                    controller: function(){
+                        
+                    }
+
+                })
+                .state('signup', {
+                    url: "/signup",
+                    templateUrl: "templates/login/signup.html",
+                    controller: function(){}
+                })
+                .state('reminder', {
+                    url: "/reminder",
+                    templateUrl: "templates/login/reminder.html",
+                    controller: function(){}
+                });
     
-    app.factory("SessionServiceProvider", ["","$http", "$location", function(){
-            
     }]);
 
-//app.controller('PanelController',
-//                    ['$scope', '$http', '$q',
-//                    function ($scope, $http, $q) {
-//                     $scope.tab = 1;
-//                         $scope.selectTab = function(tabSelected)
-//                     {
-//                         $scope.tab = tabSelected;
-//                     }
-//                        
-//                        this.isSelected = function(checkTab){
-//                            return $scope.tab === checkTab;
-//                        }
-//                    
-//                        
-//                      }]);
+app.run(['$rootScope', '$location', "AuthenticationService", '$idle', '$modal',
+    function ($rootScope, $location, AuthenticationService, $idle, $modal) {
+      
+        $idle.watch();
+        
+        AuthenticationService.isLoggedIn().then(function(user){
+            $rootScope.user = user;                           
+            $rootScope.user.isLoggedIn = true;
+        });
+
+        $rootScope.$on('$stateChangeStart', function (event, next, current) {
+            var statesThatRequireAuth = ['create'];
+            var urlGiven = $location.path();
+
+            if ((statesThatRequireAuth.indexOf(urlGiven) !== -1) && !AuthenticationService.isLoggedIn()) {
+                $location.path('/login');
+            }
+        });
+
+        $rootScope.$on('$idleTimeout', function () {
+            // end their session and redirect to login
+            AuthenticationService.logout().then(function(){
+                    $rootScope.user = null;                           
+            $rootScope.user.isLoggedIn = false;
+            $rootScope.timedout = $modal.open({
+                        templateUrl: 'templates/login/index.html',
+                        backdrop: true,
+                        windowClass: 'modal',
+                        controller: function ($scope, $modalInstance, credentials) {
+                            $scope.credentials = credentials;
+                            $scope.login = function () {
+                                
+                                $modalInstance.close($scope.credentials);
+                            };
+                            $scope.close = function () {
+                                $modalInstance.dismiss('cancel');
+                            };
+                        },
+                        resolve: {
+                            credentials: function () {
+                                return $scope.credentials;
+                            }
+                        }
+                    });
+                    $rootScope.timedout.result.then(function (credentials) {
+                        $scope.credentials = credentials;
+                        AuthenticationService.login($scope.credentials).then(function(user){
+                          $rootScope.user = user; 
+                          
+                          $rootScope.user.isLoggedIn = true;
+                        });
+                    }, function () {
+                    
+                    });
+                
+        });
+        });
+    }]);
 
 
 
 
 
-})();
+
+
+
+
+
+
+
+
+
+
+
+
+

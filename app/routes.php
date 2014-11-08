@@ -16,19 +16,11 @@ Blade::setEscapedContentTags('<%%', '%%>');  // for escaped data
 Route::get('/', function() {
     return View::make('layouts.bootstrap');
 });
-
 Route::resource('posts', 'PostsController');
-Route::resource('opinions', 'OpinionController@index');
+Route::resource('posts.comments', 'CommentsController');
 
-
-//comments resource
-Route::resource('comments', 'CommentsController');
-
-    Route::post('vote-up', 'VotesController@upvote');
-    Route::post('vote-down', 'VotesController@downvote');
-
-Route::get('getvotes', 'VotesController@getvotes');
-
+Route::resource('opinions', 'OpinionsController');
+Route::resource('opinions.comments', 'CommentsController');
 
 Route::post('auth/login', 'AuthController@login');
 Route::get('auth/logout', 'AuthController@logout');
