@@ -1,6 +1,10 @@
 <?php
 
 return array(
+        //Add a new cipher option in your app/config/app.php configuration file.
+        // The value of this option should be MCRYPT_RIJNDAEL_256.
+        'cipher' => MCRYPT_RIJNDAEL_256,
+    
         //    toggle the angularjs response class 
         'angular_json_protection' => true,
 
