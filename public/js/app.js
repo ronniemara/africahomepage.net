@@ -26,7 +26,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider',
                 .state('login', {
                     url: "/login",
                     templateUrl: "templates/login/index.html",
-                   controller: 'PanelController' 
+                   controller: 'PanelController',
                 })
                 .state('signup', {
                     url: "/signup",

@@ -17,28 +17,24 @@ appControllers.factory("SessionService", function () {
 
 appControllers.factory("AuthenticationService",
     ['$http', '$location', '$q',
-        "SessionService", "FlashService", '$modal', 
+        "SessionService", "FlashService", '$modal','$rootScope', 
         function ($http, $location, $q, SessionService,
-        FlashService, $modal, $scope) {
-            
+        FlashService, $modal, $scope, $rootScope) {
+           var user = {};
             var loginSuccess = function(response){
               FlashService.show(response.flash);  
             };
             return {
                 
-                login: function () {
+                login: function (credentials) {
                     var defer = $q.defer();
                                     $http.post('/auth/login', credentials)
-                                    .success(function (user) {
-                                    SessionService.set('authenticated', true);
-                                    SessionService.set('user', response.username);
-                                    $rootScope.user = user;
-                                    $rootScope.user.isLoggedIn = true;
+                                    .success(function (response) {
                                 $location.path('/#/posts');
-                                defer.resolve();
+                                defer.resolve(response);
                             })
                         .error(function (response) {
-                            loginError(response);
+                            loginSuccess(response);
                             defer.reject();
                         });
                         
@@ -49,9 +45,7 @@ appControllers.factory("AuthenticationService",
                     var defer = $q.defer();
 		    var user = {};
                     $http.get('/auth/logout').success(function () {
-                       SessionService.unset('user');
-                        SessionService.unset('authenticated');
-                        user.isLoggedIn = false;
+                        $rootScope.isLoggedIn = false;
                         $location.path('/#/login');
                         defer.resolve();
 
@@ -65,7 +59,6 @@ appControllers.factory("AuthenticationService",
                     var defer = $q.defer();
                     $http.get('auth/check').success(
                             function (res) {
-                                loginError(res);
                                 defer.resolve(res);
                             }).error(function (err) {
 
@@ -109,7 +102,8 @@ appControllers.factory("AuthenticationService",
     }]);
 
 appControllers.factory("FlashService", [
-    function(){
+		'$rootScope',
+    function($rootScope){
         return {
             show: function(message){
                 $rootScope.flash = message;
@@ -149,12 +143,20 @@ appControllers.controller('PostsController',
 
 
 appControllers.controller('PanelController',
-    [ '$scope',  
-        function ( $scope ) {
-		$scope.credentials = {"email": "", "password": "", "remember": "" };
+    [ '$scope', 'AuthenticationService', '$rootScope',  
+        function ( $scope, AuthenticationService, $rootScope) {
+		$scope.credentials = {"email":"", "password":"", "remember":""};
 		$scope.login = function()
 {
-	return AuthenticationService.login(credentials);
+	AuthenticationService.login($scope.credentials).then(function(user){
+		$rootScope.user = user;
+		$rootScope.user.isLoggedIn =true;
+
+	});
+};
+
+$scope.logout = function(){
+AuthenticationService.logout();
 };
                 $scope.showRecaptcha = function (element) {
                     // Wrapping the Recaptcha create method in a javascript function 
