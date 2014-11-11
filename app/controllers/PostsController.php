@@ -15,7 +15,6 @@ class PostsController extends BaseController {
     public function __construct(Post $post, Vote $votes, User $user )
     {
         $this->post = $post;    
-        $this->votes = $votes;
         $this->user = $user;
         
     }

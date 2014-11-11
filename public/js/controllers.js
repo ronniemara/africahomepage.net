@@ -1,27 +1,6 @@
 
 var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource']);
 
-appControllers.factory("TabsService", function () {
-    var tab = (typeof tab === 'undefined') ? 1 : tab;
-    return {
-        selectTab: function (tabSelected)
-        {
-            if (typeof tabSelected === 'undefined') {
-                return tab;
-            } else {
-                tab = tabSelected;
-            }
-
-        },
-        isSelected: function (checkTab) {
-            return tab === checkTab;
-        },
-        getTab: function () {
-            return  tab;
-        }
-    };
-});
-
 appControllers.factory("SessionService", function () {
     return {
         get: function (key) {
@@ -68,11 +47,11 @@ appControllers.factory("AuthenticationService",
                                
                 logout: function () {
                     var defer = $q.defer();
+		    var user = {};
                     $http.get('/auth/logout').success(function () {
                        SessionService.unset('user');
                         SessionService.unset('authenticated');
-                        $scope.user = {};
-                        $scope.user.isLoggedIn = false;
+                        user.isLoggedIn = false;
                         $location.path('/#/login');
                         defer.resolve();
 
@@ -142,11 +121,12 @@ appControllers.factory("FlashService", [
 }]);
 
 appControllers.controller('PostsController',
-    [ '$scope',  'Post',
-        function ($scope, Post  ) {
-            var posts = Post.query();
-            var post = Post.get(post);
-            $scope.posts = posts.data;
+    [ '$scope',  'Posts',
+        function ($scope, Posts  ) {
+            var posts = Posts.query();
+            var post = Posts.get(post);
+
+            $scope.posts = posts;
             $scope.itemsPerPage = 6;
             $scope.currentPage = 1;
             $scope.totalItems = $scope.posts.length;
@@ -167,22 +147,15 @@ appControllers.controller('PostsController',
 
 
 
-appControllers.controller("OpinionsController", ['$scope', "opinions",
-    function ($scope, opinions) {
-        
-            var results = opinions;
-            $scope.lead = results[0];
-            $scope.opinions = results.shift();
-            
-           // $scope.opinionId = $routeParams.opinionId;
-        
-        // $scope.orderProp = 'age';
-    }]);
 
 appControllers.controller('PanelController',
-    [ '$scope', 'TabsService', 
-        function ( $scope, TabsService  ) {
-
+    [ '$scope',  
+        function ( $scope ) {
+		$scope.credentials = {"email": "", "password": "", "remember": "" };
+		$scope.login = function()
+{
+	return AuthenticationService.login(credentials);
+};
                 $scope.showRecaptcha = function (element) {
                     // Wrapping the Recaptcha create method in a javascript function 
                             Recaptcha.create(

@@ -3604,7 +3604,6 @@ function $StateRefActiveDirective($state, $stateParams, $interpolate) {
         if (typeof $attrs.uiSrefActiveEq !== 'undefined') {
           return $state.$current.self === state && matchesParams();
         } else {
-           
           return $state.includes(state.name) && matchesParams();
         }
       }
