@@ -3,7 +3,8 @@
 var app = angular.module('myapp', [
     'yaru22.angular-timeago', 'ui.router', 
     'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource', 
-	'myapp.utils.service',  'myapp.posts', 'myapp.posts.service'
+	'myapp.utils.service',  'myapp.posts', 'myapp.posts.service',
+        'vcRecaptcha'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider', 
@@ -26,12 +27,12 @@ app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider',
                 .state('login', {
                     url: "/login",
                     templateUrl: "templates/login/index.html",
-                   controller: 'PanelController',
+                   controller: 'PanelController'
                 })
                 .state('signup', {
                     url: "/signup",
                     templateUrl: "templates/login/signup.html",
-                    controller: function(){}
+                    controller: 'PanelController'
                 })
                 .state('reminder', {
                     url: "/reminder",

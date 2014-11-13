@@ -118,9 +118,8 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'LaravelBook\Ardent\Providers\ArdentServiceProvider',
 		'Toddish\Verify\VerifyServiceProvider',
-		'Way\Generators\GeneratorsServiceProvider',	
-		
-		
+		'Way\Generators\GeneratorsServiceProvider',
+                'Myapp\Providers\RecaptchaServiceProvider'
 	),
 
 	/*
@@ -188,7 +187,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Carbon'	  => 'Carbon\Carbon',
-
+                'Recaptcha'       => 'Myapp\Recaptcha\Recaptcha'
 	),
 
 );

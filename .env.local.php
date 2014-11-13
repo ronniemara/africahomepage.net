@@ -9,7 +9,7 @@
 
 return array(
 
-    'LOCAL_KEY' => '0tikK5g2gXIn6sUb99vgmF8pjiQyHNP',
+    'LOCAL_KEY' => 'gy8pE2Q30KgqbW9bA5eOZovoMhZz58QT',
     'DATABASE' => 'africah3_db',
     'USERNAME' => 'root',
     'PASSWORD' => 'l1fe1sg00d',

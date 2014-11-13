@@ -183,3 +183,17 @@ Route::filter('timeout',function() {
       return Response::make('flash => Your session has expired. Please try again!', 404);
   }
 });
+
+Route::filter('captcha', function(){
+    $privatekey = "6LdeD_wSAAAAAEVqwI8sFQC42bZRRCFN-96imxkU";
+    $resp = \Myapp\Recaptcha\Recaptcha->recaptcha_check_answer ($privatekey,
+        Request::getClientIp(),
+        Input::get("challenge"),
+        Input::get("response"));
+    if (!$resp->is_valid) {
+    // What happens when the CAPTCHA was entered incorrectly
+    return Response::make(['flash' => "The reCAPTCHA wasn't entered correctly. Please try it again."], 401); 
+         
+} 
+
+});

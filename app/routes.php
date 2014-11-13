@@ -37,6 +37,7 @@ Route::get('auth/check', 'AuthController@isLoggedIn');
 Route::post('remind/email', 'RemindersController@postRemind');
 Route::post('remind/password', 'RemindersController@postRemind');
 
+Route::get('activate/{confirmationCode}', 'UsersController@postActivate');
 Route::resource('users', 'UsersController');
 
 

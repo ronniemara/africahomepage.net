@@ -8,7 +8,7 @@
 		<h2>Activate Account</h2>
 
 		<div>
-			To active your account <a href='http://africahomepage.net/activate?x={{  $activationCode }}'>Click this link</a>
+			Click this link to active your account <?php echo URL::to('activate/' . $activationCode) ?>
 		</div>
 	</body>
 </html>

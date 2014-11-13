@@ -11,3 +11,4 @@ composer.lock
 nbproject/
 /.idea
 .env.local.php
+_ide_helper.php

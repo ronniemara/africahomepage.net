@@ -1,22 +1,24 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 class AuthController extends BaseController {
 
     public function login() {
-        if (Auth::attempt(
-                [
+        $rules = ["email" => "required|email",
+                        
+                        "password" => "required"];
+        $credentials = [
                   "email" => Input::json('email'),
                  "password" => Input::json('password'),
-                ],                 
-                Input::get('remember')
-                )
-            ) {
+                    
+                ];
+        $validator = Validator::make($credentials, $rules);
+        
+        if($validator->fails()){
+            return Response::make(['flash' => [$validator->messages()->all()]], 401);
+        }
+        $credentials['activated'] = 1;
+        if (Auth::attempt($credentials, Input::get('remember'))) {
             return Response::json(Auth::user());
         } else {
             return Response::json(array('flash' => 'Invalid email or password!'), 401);

@@ -122,6 +122,7 @@
 <script src="/js/posts/posts.js?<?php echo time(); ?>" type="text/javascript"></script>
 <script src="/js/posts/posts-service.js?<?php echo time(); ?>" type="text/javascript"></script>
 <script src="/js/utils-service.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script type="text/javascript" src="https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+    <script type="text/javascript" src="//www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+    <script type="text/javascript" src="/js/angular-recaptcha.js?<?php echo time(); ?>"></script>
 </body>
 </html>
