@@ -1,5 +1,5 @@
 <?php
-namaspace \Myapp\Recaptcha;
+namespace Myapp\Recaptcha;
 
 /*
  * To change this license header, choose License Headers in Project Properties.

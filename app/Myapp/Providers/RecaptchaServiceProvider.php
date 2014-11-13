@@ -10,11 +10,12 @@ use Illuminate\Support\ServiceProvider;
  * @author ron
  */
 class RecaptchaServiceProvider extends ServiceProvider {
+
     //put your code here
     public function register() {
-        App::bind('recaptcha', function()
-{
-    return new \Myapp\Recaptcha\MyRecaptcha;
-});
+        \App::bind('recaptcha', function() {
+            return new \Myapp\Recaptcha\MyRecaptcha;
+        });
     }
+
 }
