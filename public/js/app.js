@@ -37,7 +37,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider',
                 .state('reminder', {
                     url: "/reminder",
                     templateUrl: "templates/login/reminder.html",
-                    controller: function(){}
+                    controller: 'PanelController'
                 });
     
     }]);

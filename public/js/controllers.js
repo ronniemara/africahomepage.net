@@ -65,11 +65,11 @@ appControllers
 
 		return defer.promise;
 	},
-	reminder: function() {
+	reminder: function(email) {
 		var defer = $q.defer();
 
 
-		$http.post('remind/email')
+		$http.post('remind/email', email)
 			.success(function (message){
 				defer.resolve(message);
 			})
@@ -188,6 +188,10 @@ appControllers.controller('PanelController',
 				AuthenticationService.register(data)
 					.then(function(){},function(){});				
 			};
+                        $scope.recover = {"email":""};
+                        $scope.reminder = function(){
+                         AuthenticationService.reminder($scope.recover);   
+                        };
 
 }]);
 

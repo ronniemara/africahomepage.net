@@ -1,6 +1,7 @@
 <?php
 
 return array(
+            'cipher' => MCRYPT_RIJNDAEL_256,
         //    toggle the angularjs response class 
         'angular_json_protection' => true,
 
