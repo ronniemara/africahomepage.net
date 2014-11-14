@@ -23,7 +23,7 @@ class UsersController extends \BaseController {
             return Response::make(['flash' => 'User not found'], 401);
         }
 
-        $user = User::whereConfirmationCode($activation_code)->first();
+        $user = User::whereActivationCode($activation_code)->first();
 
         if (!$user) {
             return Response::make(['flash' => 'User not found'], 401);
@@ -44,31 +44,34 @@ class UsersController extends \BaseController {
                 
 	{
                 
-		$rules = ["email" => "required|email|unique",
+		$rules = ["email" => "required|email|unique:users",
                         "firstName" => "required|alpha",
                         "lastName" => "required|alpha",
-                        "username" => "requred|unique|between:7,10|alpha_num",
-                        "password" => "required|min:7|confirmed:password2"];
-        //
-		$credentials = ['username' => Input::get('username'),
-                                'email'    => Input::get('email'),
-                                'password'    => Input::get('password'),
-                                'first_name'    => Input::get('firstName'),
-                                'last_name'   => Input::get('lastName')];
+                        "username" => "required|unique:users|between:7,10|alpha_num",
+                        "password" => "required|min:7|confirmed:password_confirmation"];
+                
+        $input = Input::only(["email","firstName", "lastName",
+                    "username", "password", "password_confirmation"]);
+		
 		//validation
-		$validator = Validator::make($credentials, $rules);
+		$validator = Validator::make($input, $rules);
                 
                 if($validator->fails()){
                     return Response::make(['flash'=> [$validator->messages()->all()]], 400);
                 }
-                
-                $confirmation_code = str_random(30);
-                $credentials['activation_code'] = $confirmation_code;
+                $user = new User;
+                $user->username = Input::get('username');
+                    $user->email    = Input::get('email');
+                    $user->password    = Hash::make(Input::get('password'));
+                    $user->first_name    = Input::get('firstName');
+                    $user->last_name   = Input::get('lastName');
+                    $data['confirmation_code'] = str_random(30);
+                    $user->activation_code = $data['confirmation_code'];
                 //store user
-                User::create($credentials);
+                $user->save();
                 //email user activation code
                 try{
-                Mail::queue('emails.auth.welcome', $confirmation_code, function ($message){
+                Mail::queue('emails.auth.welcome', $data, function ($message){
                     $message->to(Input::get('email'), Input::get('username'))
                             ->subject('Verify your email address');
                 });
