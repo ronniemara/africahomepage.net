@@ -13,5 +13,6 @@ return array(
     'DATABASE' => 'africah3_db',
     'USERNAME' => 'root',
     'PASSWORD' => 'l1fe1sg00d',
+    'EMAIL_PASSWORD' => 'Julyisa4791!'
 
 );

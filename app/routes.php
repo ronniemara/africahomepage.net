@@ -24,18 +24,15 @@ Route::resource('opinions', 'OpinionController@index');
 //comments resource
 Route::resource('comments', 'CommentsController');
 
-    Route::post('vote-up', 'VotesController@upvote');
-    Route::post('vote-down', 'VotesController@downvote');
-
-Route::get('getvotes', 'VotesController@getvotes');
-
 
 Route::post('auth/login', 'AuthController@login');
 Route::get('auth/logout', 'AuthController@logout');
 Route::get('auth/check', 'AuthController@isLoggedIn');
 
 Route::post('remind/email', 'RemindersController@postRemind');
-Route::post('remind/password', 'RemindersController@postRemind');
+Route::get('reset/{token}', 'RemindersController@getReset');
+Route::post('remind/password', 'RemindersController@postReset');
+
 
 Route::get('activate/{confirmationCode}', 'UsersController@postActivate');
 Route::resource('users', 'UsersController');

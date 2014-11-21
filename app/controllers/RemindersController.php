@@ -2,15 +2,7 @@
 
 class RemindersController extends Controller {
 
-	/**
-	 * Display the password reminder view.
-	 *
-	 * @return Response
-	 */
-	public function getRemind()
-	{
-		return View::make('password.remind');
-	}
+	
 
 	/**
 	 * Handle a POST request to remind a user of their password.
@@ -24,7 +16,6 @@ class RemindersController extends Controller {
 			case Password::INVALID_USER:
                                 return Response::json(['flash' => Lang::get($response)],401);
 				
-
 			case Password::REMINDER_SENT:
                             return Response::json(['flash' => Lang::get($response)]);
 		}

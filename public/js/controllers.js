@@ -18,13 +18,9 @@ appControllers.factory("SessionService", function () {
 appControllers
 .factory("AuthenticationService",
 	['$http', '$location', '$q',
-	"SessionService", "FlashService", '$modal', 
-	function ($http, $location, $q, SessionService,
-		  FlashService, $modal, $scope) {
-	var user = {};
-	var loginSuccess = function(response){
-		FlashService.show(response.flash);  
-		};
+	'messageCenterService', 
+	function ($http, $location, $q, 
+		   messageCenterService) {
 	return {
 	login: function (credentials) {
 		var defer = $q.defer();
@@ -34,7 +30,7 @@ appControllers
 				defer.resolve(response);
 			})
 			.error(function (response) {
-				loginSuccess(response);
+				
 				defer.reject();
 			});
 		return defer.promise;
@@ -67,18 +63,19 @@ appControllers
 	},
 	reminder: function(email) {
 		var defer = $q.defer();
-
-
 		$http.post('remind/email', email)
-			.success(function (message){
+                    .success(function (message){
+                        messageCenterService.remove();
+                        messageCenterService.add('success',
+                            'Password reset email sent!',
+                            { status: messageCenterService.status.next });
+				
+                            $location.path('posts');
 				defer.resolve(message);
 			})
-		.error(function (response) {
-			loginError(response);
+                    .error(function (response) {
 			defer.reject();
-		});
-
-
+                    });
 		return defer.promise;
 
 	},
@@ -88,10 +85,10 @@ appControllers
 		$http.post('remind/password', credentials)
 			.success(function(response)
 					{
-						loginError({"flash": "Reset successful"});
+						
 						$defer.resolve();
 					}).error(function(response){
-						loginError(response);
+						
 						$defer.reject(response);
 					});
 		return defer.promise;
@@ -110,18 +107,6 @@ appControllers
 	};
 }]);
 
-appControllers.factory("FlashService", [
-		'$rootScope',
-		function($rootScope){
-			return {
-				show: function(message){
-					$rootScope.flash = message;
-				},
-	clear: function(){
-		$rootScope.flash = "";
-	}
-			};
-		}]);
 
 appControllers.controller('PostsController',
 		[ '$scope',  'Posts',
@@ -153,34 +138,35 @@ appControllers.controller('PostsController',
 
 appControllers.controller('PanelController',
 		[ '$scope', 'AuthenticationService', '$rootScope', 
-                    'vcRecaptchaService',
-		function ( $scope, AuthenticationService, $rootScope, vcRecaptchaService) {
+                    'vcRecaptchaService', 'messageCenterService',
+		function ( $scope, AuthenticationService, $rootScope, vcRecaptchaService, messageCenterService) {
 			$scope.credentials = {"email":"", "password":"", "remember":""};
 			$scope.login = function(){
 				AuthenticationService.login($scope.credentials).then(function(user){
 					$rootScope.user = user;
 					$rootScope.user.isLoggedIn =true;
+                                         messageCenterService.remove();
+                                        messageCenterService.add('success',
+                                            'You are now logged in!',
+                                            { status: messageCenterService.status.next
+                                            });
 
 				});
 			};
 
 			$scope.logout = function(){
+                            
 				AuthenticationService.logout().then(function(){
 					$rootScope.user = {};
 					$rootScope.user.isLoggedIn =false;
+                                        messageCenterService.remove();
+                                        messageCenterService.add('warning',
+                                            'You are now logged out!',
+                                            { status: messageCenterService.status.next });
 				})	;
 			};
-			$scope.showRecaptcha = function (element) {
-				// Wrapping the Recaptcha create method in a javascript function 
-				Recaptcha.create(
-						"6LdeD_wSAAAAAJjx8sHv23ULc6nUnz_V5_mJgol3",
-						element, 
-						{ 
-							theme: "red",
-					callback: Recaptcha.focus_response_field
-						});
-			};
-                        $scope.showRecaptcha('recaptcha_div');
+			
+                        
 			$scope.guest = {"email": "", "firstName": "", "lastName": "", "username": "", "password": "", "password_confirmation": "","challenge":"", "response": ""};
 			$scope.register = function(){
                                 var captcha = vcRecaptchaService.data();
@@ -195,11 +181,5 @@ appControllers.controller('PanelController',
 
 }]);
 
-appControllers.controller('RemindCtrl',
-		['token', '$modal',
-		'$scope', 'FlashService', 'AuthenticationService',
-		function (token, $modal, $scope, FlashService,AuthenticationService) {
-			AuthenticationService.reset(credentials);
 
-		}]);
 

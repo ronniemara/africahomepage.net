@@ -3,8 +3,8 @@
 var app = angular.module('myapp', [
     'yaru22.angular-timeago', 'ui.router', 
     'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource', 
-	'myapp.utils.service',  'myapp.posts', 'myapp.posts.service',
-        'vcRecaptcha'
+	'myapp.utils.service',  'myapp.posts', 'postservice',
+        'vcRecaptcha', 'MessageCenterModule'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider', 
@@ -20,7 +20,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider',
         //
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("posts");
-        //
+        
         // Now set up the states
         $stateProvider
                               

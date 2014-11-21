@@ -10,7 +10,7 @@
 						<a href="#" class="close" data-dismiss="alert">&times;</a>
 						{{ implode('', $errors->all('<li class="error">:message</li>')) }}
 					</div>
-				@endif:
+				@endif
 				@if (Session::has('message'))
 				
 					<div class="alert alert-success">

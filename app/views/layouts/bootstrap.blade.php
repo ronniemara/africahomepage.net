@@ -69,11 +69,11 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
 			    <ul class="nav navbar-nav" >
-				<li ng-class="{active: $state.includes('posts')}"><a ui-sref="posts.list" >Posts</a></li>
+				<li ng-class="{active: $state.includes('posts')}"><a ui-sref="posts" >Posts</a></li>
 			    </ul>            
 			    <div class="pull-right">
 				<ul class="navbar-text navbar-right pull-right" ng-show="user.isLoggedIn" >
-				    <p ui-sref-active="active">
+                                    <p>
 					Logged in as <cite><a class="navbar-link">{{user.username}}</a></cite>
 					<a><button ng-click="logout()">Logout</button></a>
 				    </p>   
@@ -88,7 +88,14 @@
 		</nav>
 	    </header>
 		<div class="row-fluid">
-			<div class="col-md-9"  ui-view>Loading...</div>
+                            <div class="col-md-9"  >
+                                
+                                     <mc-messages></mc-messages>
+                                
+                                <div data-ui-view >
+                                    Loading...
+                                </div>
+                            </div>
 			<aside class="col-md-3 well">
 				<h3>Connect with Us</h3>
 					<a href="https://www.googleplus.com/africahomepage">
@@ -101,7 +108,7 @@
 		</aside>
 		</div>
 <footer class="panel">
-<p>C 2014 My Site</p>
+    <p> <i class="fa fa-copyright"></i> 2014 Black Mirror Media</p>
 </footer>
 
     </div><!--/.fluid-container-->
@@ -116,6 +123,7 @@
     <script src="/js/angular-resource.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular-idle.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="js/message-center.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
