@@ -3,7 +3,7 @@
 var app = angular.module('myapp', [
     'yaru22.angular-timeago', 'ui.router', 
     'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource', 
-        'vcRecaptcha', 'MessageCenterModule'
+        'vcRecaptcha', 'MessageCenterModule', 'restangular'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider', 

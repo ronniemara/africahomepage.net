@@ -15,11 +15,6 @@ class Post extends Eloquent {
         return $this->hasMany('Comment');
     } 
     
-    public function votes()
-    {
-        return $this->morphMany('Vote', 'votable');
-    }
-    
     public function users()
     {
         return $this->belongsTo('User', 'users_id');

@@ -125,6 +125,8 @@
     <script src="/js/angular-idle.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="js/message-center.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/lodash.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/restangular.min.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
 <script src="/js/posts/posts.js?<?php echo time(); ?>" type="text/javascript"></script>

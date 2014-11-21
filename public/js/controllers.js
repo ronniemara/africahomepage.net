@@ -106,46 +106,64 @@ appControllers
 	}
 	};
 }]);
-appControllers.factory('Posts', ['$resource',
-    function ($resource) {
-        return $resource('/posts/:postId', {postId: '@id'},
-        {'query':  {method:'GET', isArray:false}});
-    }]);
-
 
     
 
 appControllers.controller('PostsController',
-		['$scope', 'Posts',
-                        function ($scope, Posts) {
+		['$scope', 'Restangular',
+                        function ($scope, Restangular) {
+                            var allPosts = Restangular.all('posts');
                             
-                            
-                            $scope.posts = Posts.query();
-                            $scope.itemsPerPage = $scope.posts.per_page;
-                            $scope.currentPage = $scope.posts.current_page;
-                            $scope.totalItems = $scope.posts.total;
-
+                            // This will query /accounts and return a promise.
+                            allPosts.getList().then(function(posts) {
+                            $scope.posts = posts;
+                            $scope.itemsPerPage = 10;
+                            $scope.currentPage = 1;
+                            $scope.totalItems = $scope.posts.length;
                             $scope.pageCount = function () {
                                 return Math.ceil($scope.totalItems / $scope.itemsPerPage);
                             };
-
                             $scope.$watch('currentPage + itemsPerPage',
                                     function () {
                                         var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
                                                 end = begin + $scope.itemsPerPage;
-                                        $scope.position = (6 * ($scope.currentPage - 1));
+                                        $scope.position = (10 * ($scope.currentPage - 1));
                                         $scope.filteredPosts = $scope.posts.slice(begin, end);
                                     });
+                        });
 
+                            
+//                            $scope.posts = Posts.query();
+//                            $scope.itemsPerPage = $scope.posts.per_page;
+//                            $scope.currentPage = $scope.posts.current_page;
+//                            $scope.totalItems = $scope.posts.total;
+//
+//                            $scope.pageCount = function () {
+//                                return Math.ceil($scope.totalItems / $scope.itemsPerPage);
+//                            };
+//
+//                            $scope.$watch('currentPage + itemsPerPage',
+//                                    function () {
+//                                        var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+//                                                end = begin + $scope.itemsPerPage;
+//                                        $scope.position = (6 * ($scope.currentPage - 1));
+//                                        $scope.filteredPosts = $scope.posts.slice(begin, end);
+//                                    });
+//
 
                             $scope.voteUp = function (postId) {
-                                PostsService.voteUp(postId);
+                                var post = Restangular.one('posts', postId);
+                                post.vote = post.vote + 1;
+                                post.put();
                             };
                             $scope.voteDown = function (postId) {
-                                PostsService.voteDown(postId);
+                                var post = Restangular.one('posts', postId);
+                                post.vote = post.vote -1;
+                                post.put();
                             };
                             $scope.show = function (postId) {
-                                PostsService.show(postId);
+                                // Just ONE GET to /accounts/123/buildings
+                                Restangular.one('posts', postId).getList('comments');
                             };
 
                         }]);

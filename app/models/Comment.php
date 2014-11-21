@@ -15,9 +15,4 @@ class Comment extends Eloquent {
         return $this->belongsTo('User');
     }
     
-    public function votes()
-    {
-        return $this->morphMany('Vote', 'votable');
-    }
-    
 }

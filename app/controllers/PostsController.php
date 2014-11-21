@@ -12,7 +12,7 @@ class PostsController extends BaseController {
 
 
     
-    public function __construct(Post $post, Vote $votes, User $user )
+    public function __construct(Post $post, User $user )
     {
         $this->post = $post;    
         $this->user = $user;
@@ -33,16 +33,10 @@ class PostsController extends BaseController {
             //Time elapsed since post created
             $age_in_hours = Carbon::now()->diffInHours($post->created_at);
 
-            //number of votes for post
-             $VoteObject = $this->post->find($post->id)->votes->first();
-             if($VoteObject == null){
-                 $numberOfVotes = 0;
-             } else { $numberOfVotes = (int) $VoteObject->count;}     
+            $votes = $post->votes; 
+                
             //setting the rank of the post when displaying all posts
-            $post->rank = $this->calculate_score($numberOfVotes, $age_in_hours);
-
-
-            //setting post->first_name  and post->last name properties
+            $post->rank = $this->calculate_score($votes, $age_in_hours);
 
             $userObject = $this->user->find($post->users_id);  
             
@@ -54,15 +48,8 @@ class PostsController extends BaseController {
                 });
 
         $postsValues = $sortPosts->values()->toArray();
-        //$postsValues = $post->values();
-
-        $data = Paginator::make($postsValues, count($postsValues), 6);
-
-        //Paginator::make($items, $totalItems, $perPage);
-
-
-        //return
-        return Response::make($data, 200);
+        
+        return Response::make($postsValues, 200);
     }
 
     /**
