@@ -38,7 +38,7 @@ appControllers
 
 	logout: function () {
 		var defer = $q.defer();
-		var user = {};
+		
 		$http.get('/auth/logout').success(function () {
 			$location.path('/#/login');
 			defer.resolve();
@@ -106,32 +106,49 @@ appControllers
 	}
 	};
 }]);
+appControllers.factory('Posts', ['$resource',
+    function ($resource) {
+        return $resource('/posts/:postId', {postId: '@id'},
+        {'query':  {method:'GET', isArray:false}});
+    }]);
 
+
+    
 
 appControllers.controller('PostsController',
-		[ '$scope',  'Posts',
-		function ($scope, Posts  ) {
-			var posts = Posts.query();
-			var post = Posts.get(post);
+		['$scope', 'Posts',
+                        function ($scope, Posts) {
+                            
+                            
+                            $scope.posts = Posts.query();
+                            $scope.itemsPerPage = $scope.posts.per_page;
+                            $scope.currentPage = $scope.posts.current_page;
+                            $scope.totalItems = $scope.posts.total;
 
-			$scope.posts = posts;
-			$scope.itemsPerPage = 6;
-			$scope.currentPage = 1;
-			$scope.totalItems = $scope.posts.length;
+                            $scope.pageCount = function () {
+                                return Math.ceil($scope.totalItems / $scope.itemsPerPage);
+                            };
 
-			$scope.pageCount = function () {
-				return Math.ceil($scope.posts.length / $scope.itemsPerPage);
-			};
+                            $scope.$watch('currentPage + itemsPerPage',
+                                    function () {
+                                        var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+                                                end = begin + $scope.itemsPerPage;
+                                        $scope.position = (6 * ($scope.currentPage - 1));
+                                        $scope.filteredPosts = $scope.posts.slice(begin, end);
+                                    });
 
-			$scope.$watch('currentPage + itemsPerPage',
-				function () {
-					var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-				end = begin + $scope.itemsPerPage;
-			$scope.position = (6 * ($scope.currentPage - 1));
-			$scope.filteredPosts = $scope.posts.slice(begin, end);
-				});
 
-		}]);
+                            $scope.voteUp = function (postId) {
+                                PostsService.voteUp(postId);
+                            };
+                            $scope.voteDown = function (postId) {
+                                PostsService.voteDown(postId);
+                            };
+                            $scope.show = function (postId) {
+                                PostsService.show(postId);
+                            };
+
+                        }]);
 
 
 

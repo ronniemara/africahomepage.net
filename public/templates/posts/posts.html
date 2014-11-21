@@ -11,9 +11,9 @@
                                     {{($index + 1) + position}}.
                             </div>
                             <div class="col-md-2 vcenter">
-                                <a href="#" ng-click="voteUp({{post.id}})"> <i class="fa fa-angle-up"></i></a>
+                                <a href="#" ng-click="voteUp(post.id)"> <i class="fa fa-angle-up"></i></a>
                                 <small>{{50}}votes</small>
-                                <a href="#" ng-click="voteDown({{post.id}})"> <i class="fa fa-angle-down"></i></a>
+                                <a href="#" ng-click="voteDown(post.id)"> <i class="fa fa-angle-down"></i></a>
                             </div>
                             <div class="col-md-6 vcenter">
                                 <h3>
@@ -23,7 +23,7 @@
                                 by <cite>{{post.username}}</cite>
                                 <p>
                                     <em>{{40}}</em>Comments
-                                    <a ng-click="show({{post.id}})" >View Comments...</a>
+                                    <a ng-click="show(post.id)" >View Comments...</a>
                                 </p>
                             </div>
                         </div>

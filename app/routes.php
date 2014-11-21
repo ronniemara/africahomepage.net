@@ -18,11 +18,8 @@ Route::get('/', function() {
 });
 
 Route::resource('posts', 'PostsController');
-Route::resource('opinions', 'OpinionController@index');
-
-
 //comments resource
-Route::resource('comments', 'CommentsController');
+Route::resource('posts.comments', 'CommentsController');
 
 
 Route::post('auth/login', 'AuthController@login');

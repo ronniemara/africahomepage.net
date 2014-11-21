@@ -3,12 +3,11 @@
 var app = angular.module('myapp', [
     'yaru22.angular-timeago', 'ui.router', 
     'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource', 
-	'myapp.utils.service',  'myapp.posts', 'postservice',
         'vcRecaptcha', 'MessageCenterModule'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider', 
-            '$idleProvider','$httpProvider',
+            '$idleProvider','$httpProvider', 
     function ($stateProvider, $urlRouterProvider, $keepaliveProvider,
                 $idleProvider, $httpProvider) {
         
@@ -38,9 +37,15 @@ app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider',
                     url: "/reminder",
                     templateUrl: "templates/login/reminder.html",
                     controller: 'PanelController'
-                });
+                })
+                .state('posts', {
+                    url: '/posts',
+                    templateUrl: 'templates/posts/posts.html',
+                    controller: 'PostsController'
+            });
+
+                }]);   
     
-    }]);
 
 app.run(['$rootScope', '$location', "AuthenticationService",
 	 '$idle', '$modal', '$state','$stateParams',
