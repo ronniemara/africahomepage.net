@@ -1,37 +1,84 @@
 <div>
     <div class="pa-sidebar well well-small">
-            <ul class="nav nav-list">
-                    <li ng-class="{ active: $state.includes('posts') }">
-                        <h4>All Posts</h4>
-                    </li>
-                    <li class="nav-header">Top Posts</li>
-                    <li class="list-group-item" ng-repeat="post in filteredPosts">
-                        <div class="row-fluid">
-                            <div class="col-md-1 vcenter">	
-                                    {{($index + 1) + position}}.
-                            </div>
-                            <div class="col-md-2 vcenter">
-                                <a href="#" ng-click="voteUp(post.id)"> <i class="fa fa-angle-up"></i></a>
-                                <small>{{50}}votes</small>
-                                <a href="#" ng-click="voteDown(post.id)"> <i class="fa fa-angle-down"></i></a>
-                            </div>
-                            <div class="col-md-6 vcenter">
-                                <h3>
-                                    <a href={{post.url}}>{{post.title}}</a>
-                                </h3>   
-                                <em>{{ post.created_at | timeAgo}}</em> 
-                                by <cite>{{post.username}}</cite>
-                                <p>
-                                    <em>{{40}}</em>Comments
-                                    <a ng-click="show(post.id)" >View Comments...</a>
-                                </p>
+        <ul class="nav nav-list">
+            <li ng-class="{ active: $state.includes('posts') }">
+                <h4>All Posts</h4>
+            </li>
+            <li ng-if="user.isLoggedIn">
+                <button class="btn btn-info" ng-click="trigger()">Create a Post</button>
+                <div class="panel" ng-if="create.form">
+                    <form name="PostForm" ng-submit="PostForm.$valid && post()">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-header"></i></span>
+                                        <input type="text" name="title" id="title" ng-model="post.title" placeholder="Title" class="form-control" autocomplete="off" required>                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </li>
-                    <pagination total-items="totalItems" items-per-page="itemsPerPage" 
-                    ng-model="currentPage" ng-change="pageChanged()"></pagination>
-            </ul>
-            <hr>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-at"></i></span>
+                                        <input type="url" ng-model="post.url" class="form-control" placeholder="URL" autocomplete="off" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <input class="btn btn-info" type="submit" value="Create"> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </li>
+            <li class="nav-header">Top Posts</li>
+            <li class="list-group-item" ng-repeat="post in filteredPosts">
+                
+                <div class="row-fluid">
+                    <div class="col-md-1 vcenter">	
+                        {{($index + 1) + position}}.
+                    </div>
+                    <div class="col-md-2 vcenter">
+                        <a href="#" ng-click="voteUp(post)"> <i class="fa fa-angle-up"></i></a>
+                        <small>{{post.votes}}votes</small>
+                        <a href="#" ng-click="voteDown(post)"> <i class="fa fa-angle-down"></i></a>
+                    </div>
+                    <div class="col-md-6 vcenter">
+                        <h3>
+                            <a href={{post.url}}>{{post.title}}</a>
+                        </h3>   
+                        <em>{{ post.created_at | timeAgo}}</em> 
+                        by <cite>{{post.username}}</cite>
+                        <div>
+                            <em>{{40}}</em>Comments
+                            <button ng-click="show(post)" >View Comments...</button>
+                            <ul class="nav nav-list" ng-if="comments.show">
+                                <li class="list-group-item" ng-repeat="comment in comments">
+                                    <div>
+                                        <cite>{{comment.username}}</cite>
+                                        <p>
+                                            {{comment.message}}
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <pagination total-items="totalItems" items-per-page="itemsPerPage" 
+                        ng-model="currentPage" ng-change="pageChanged()"></pagination>
+        </ul>
+        <hr>
     </div>
 </div>
 

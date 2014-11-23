@@ -117,6 +117,7 @@ appControllers.controller('PostsController',
                             // This will query /accounts and return a promise.
                             allPosts.getList().then(function(posts) {
                             $scope.posts = posts;
+                            $scope.predicate = 'rank';
                             $scope.itemsPerPage = 10;
                             $scope.currentPage = 1;
                             $scope.totalItems = $scope.posts.length;
@@ -151,19 +152,34 @@ appControllers.controller('PostsController',
 //                                    });
 //
 
-                            $scope.voteUp = function (postId) {
-                                var post = Restangular.one('posts', postId);
-                                post.vote = post.vote + 1;
-                                post.put();
+                            $scope.voteUp = function (post) {
+                                post.votes += 1;
+                                var send = Restangular.one('posts', post.id).get();
+                                send.then(function(res){
+                                     res.votes = res.votes + 1;
+                                     res.put();
+                                });
+                                
                             };
-                            $scope.voteDown = function (postId) {
-                                var post = Restangular.one('posts', postId);
-                                post.vote = post.vote -1;
-                                post.put();
+                            $scope.voteDown = function (post) {
+                                post.votes -= 1;
+                                var send = Restangular.one('posts', post.id).get();
+                                send.then(function(res){
+                                     res.votes = res.votes - 1;
+                                     res.put();
+                                });
                             };
-                            $scope.show = function (postId) {
+                            $scope.comments = { "show" : false };
+                            $scope.show = function (post) {
+                                
                                 // Just ONE GET to /accounts/123/buildings
-                                Restangular.one('posts', postId).getList('comments');
+                                Restangular.one('posts', post.id).getList('comments').then(function(res){
+                                   $scope.comments = angular.extend($scope.comments, res);
+                                   $scope.comments.show = true;
+                                });
+                            };
+                            $scope.trigger = function(){
+                                $scope.create = {"form" : true };
                             };
 
                         }]);

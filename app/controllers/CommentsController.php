@@ -13,7 +13,34 @@ class CommentsController extends BaseController
         $this->comment = $comment;
         
     }
+/**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+      
+      public function index()
+      {
+          
+        $comments = $this->comment->all();
+        foreach ($comments as $comment){
+            $user = User::findOrFail($comment->user_id);
+            $comment->username = $user->username;
+        }
+       return Response::json($comments);
+    }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+    public function create()
+    {
+        return View::make('posts.create');
+    }
+
+    
     /**
      * Store a newly created resource in storage.
      *

@@ -42,10 +42,9 @@ class PostsController extends BaseController {
             
             $post->username = $userObject->username;
         }
-
-        $sortPosts = $posts->sortBy(function($post) {
+       $sortPosts = $posts->sortBy(function($post) {
                     return $post->rank;
-                });
+                })->reverse();
 
         $postsValues = $sortPosts->values()->toArray();
         
@@ -137,15 +136,12 @@ class PostsController extends BaseController {
             $post = $this->post->find($id);
             $post->update($input);
 
-            return Redirect::route('posts.show', $id);
+            return Response::make($post);
         }
 
-        return Redirect::route('posts.edit', $id)
-        ->withInput()
-        ->withErrors($validation)
-        ->with('message', 'There were validation errors.');
-    }
-
+        return Response::make('$post', 401);
+    } 
+  
     /**
      * Remove the specified resource from storage.
      *
