@@ -47,56 +47,8 @@ app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider',
                 }]);   
     
 
-app.run(['$rootScope', '$location', "AuthenticationService",
-	 '$idle', '$modal', '$state','$stateParams',
-    function ($rootScope, $location, AuthenticationService,
-              $idle, $modal,$state, $stateParams) {
 
-       $rootScope.$state = $state;
-       $rootScope.$stateParams = $stateParams;
 
-       $idle.watch();
-        
-        $rootScope.$on('$idleTimeout', function () {
-            debugger;
-            // end their session and redirect to login
-            
-            AuthenticationService.logout().then(function(){
-                    $rootScope.user = null;                           
-            $rootScope.user.isLoggedIn = false;
-            $rootScope.timedout = $modal.open({
-                        templateUrl: 'templates/login/index.html',
-                        backdrop: true,
-                        windowClass: 'modal',
-                        controller: function ($scope, $modalInstance, credentials) {
-                            $scope.credentials = credentials;
-                            $scope.login = function () {
-                                
-                                $modalInstance.close($scope.credentials);
-                            };
-                            $scope.close = function () {
-                                $modalInstance.dismiss('cancel');
-                            };
-                        },
-                        resolve: {
-                            credentials: function () {
-                                return $scope.credentials;
-                            }
-                        }
-                    });
-                    $rootScope.timedout.result.then(function (credentials) {
-                        $scope.credentials = credentials;
-                        AuthenticationService.login($scope.credentials).then(function(user){
-                          $rootScope.user = user; 
-                          
-                          $rootScope.user.isLoggedIn = true;
-                        });
-                    }, function () {
-                    
-                    });
-        });
-        });
-    }]);
 
 
 
