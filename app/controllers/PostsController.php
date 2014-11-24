@@ -28,7 +28,7 @@ class PostsController extends BaseController {
       public function index()
       {
           
-        $posts = $this->post->all();
+        $posts = $this->post->with('comments.author', 'author')->get();
         foreach ($posts as $post) {
             //Time elapsed since post created
             $age_in_hours = Carbon::now()->diffInHours($post->created_at);
@@ -37,10 +37,8 @@ class PostsController extends BaseController {
                 
             //setting the rank of the post when displaying all posts
             $post->rank = $this->calculate_score($votes, $age_in_hours);
-
-            $userObject = $this->user->find($post->users_id);  
             
-            $post->username = $userObject->username;
+            
         }
        $sortPosts = $posts->sortBy(function($post) {
                     return $post->rank;

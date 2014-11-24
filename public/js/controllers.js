@@ -40,7 +40,7 @@ appControllers
 		var defer = $q.defer();
 		
 		$http.get('/auth/logout').success(function () {
-			$location.path('/#/login');
+			
 			defer.resolve();
 
 		}).error(function (err) {
@@ -180,6 +180,17 @@ appControllers.controller('PostsController',
                             };
                             $scope.trigger = function(){
                                 $scope.create = {"form" : true };
+                            };
+                            $scope.select = function(item) {
+                                
+                                Restangular.one('posts', item.id).getList('comments').then(function(res){
+                                    $scope.comments = res;
+                                });
+                                $scope.selected = item;
+                                
+                            };
+                            $scope.isSelected = function(item) {
+                                return $scope.selected === item;
                             };
 
                         }]);

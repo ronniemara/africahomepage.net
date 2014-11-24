@@ -19,15 +19,21 @@ class CommentsController extends BaseController
      * @return Response
      */
       
-      public function index()
+      public function index($post_id)
       {
           
-        $comments = $this->comment->all();
+        $comments = $this->comment->with('author')->where('post_id', '=', $post_id)->get();
+        if($comments != null){
         foreach ($comments as $comment){
             $user = User::findOrFail($comment->user_id);
             $comment->username = $user->username;
         }
-       return Response::json($comments);
+        return Response::json($comments);
+        }
+        else{
+            return Response::json(['comments'=> 0]);
+        }
+       
     }
 
     /**

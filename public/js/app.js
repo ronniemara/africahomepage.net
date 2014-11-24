@@ -13,9 +13,9 @@ app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider',
         
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
         
-        $idleProvider.idleDuration(60);
-        $idleProvider.warningDuration(20);
-        $keepaliveProvider.interval(60);
+        $idleProvider.idleDuration(5);
+        
+        
         //
         // For any unmatched url, redirect to /state1
         $urlRouterProvider.otherwise("posts");
@@ -57,22 +57,10 @@ app.run(['$rootScope', '$location', "AuthenticationService",
 
        $idle.watch();
         
-        AuthenticationService.isLoggedIn().then(function(user){
-            $rootScope.user = user;                           
-            $rootScope.user.isLoggedIn = true;
-        });
-
-        $rootScope.$on('$stateChangeStart', function (event, next, current) {
-            var statesThatRequireAuth = ['create'];
-            var urlGiven = $location.path();
-
-            if ((statesThatRequireAuth.indexOf(urlGiven) !== -1) && !AuthenticationService.isLoggedIn()) {
-                $location.path('/login');
-            }
-        });
-
         $rootScope.$on('$idleTimeout', function () {
+            debugger;
             // end their session and redirect to login
+            
             AuthenticationService.logout().then(function(){
                     $rootScope.user = null;                           
             $rootScope.user.isLoggedIn = false;
@@ -106,7 +94,6 @@ app.run(['$rootScope', '$location', "AuthenticationService",
                     }, function () {
                     
                     });
-                
         });
         });
     }]);

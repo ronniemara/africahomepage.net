@@ -72,13 +72,13 @@
 				<li ng-class="{active: $state.includes('posts')}"><a ui-sref="posts" >Posts</a></li>
 			    </ul>            
 			    <div class="pull-right">
-				<ul class="navbar-text navbar-right pull-right" ng-if="user.isLoggedIn" >
+				<div class="navbar-right pull-right" ng-if="user.isLoggedIn" >
                                     <p>
 					Logged in as <cite><a class="navbar-link">{{user.username}}</a></cite>
-					<a><button ng-click="logout()">Logout</button></a>
+                                    <a><button ng-click="logout()">Logout</button></a>
 				    </p>   
 
-				</ul>                                
+				</div>                                
 				<ul class=" nav navbar-nav" ng-if="!user.isLoggedIn">
 				    <li ng-class="{active: $state.includes('login')}"><a ui-sref="login">Login</a></li> 
 				</ul>
