@@ -74,33 +74,33 @@ appControllers
 				defer.resolve(message);
 			})
                     .error(function (response) {
+                        messageCenterService.remove();
+                        messageCenterService.add('danger',
+                            response.flash,
+                            { status: messageCenterService.status.next });
+				
 			defer.reject();
                     });
 		return defer.promise;
 
 	},
-	reset:  function(){
-		 var defer =$q.defer();
-
-		$http.post('remind/password', credentials)
-			.success(function(response)
-					{
-						
-						$defer.resolve();
-					}).error(function(response){
-						
-						$defer.reject(response);
-					});
-		return defer.promise;
-	},
 	register: function(data){
 	var defer = $q.defer();
 	$http.post('users', data)
 		.success(function(res){
+                    messageCenterService.remove();
+                        messageCenterService.add('success',
+                            res.flash,
+                            { status: messageCenterService.status.next });
 			$location.path('/login');
+                
 			defer.resolve();	
 		})
 		.error(function(err){
+                    messageCenterService.remove();
+                        messageCenterService.add('danger',
+                            err.flash,
+                            { status: messageCenterService.status.next });
 		defer.reject();
 		});
 	}
@@ -112,9 +112,10 @@ appControllers
 appControllers.controller('PostsController',
 		['$scope', 'Restangular',
                         function ($scope, Restangular) {
+                             // Get all posts from server.
                             var allPosts = Restangular.all('posts');
                             
-                            // This will query /accounts and return a promise.
+                           
                             allPosts.getList().then(function(posts) {
                             $scope.posts = posts;
                             $scope.predicate = 'rank';
@@ -132,26 +133,7 @@ appControllers.controller('PostsController',
                                         $scope.filteredPosts = $scope.posts.slice(begin, end);
                                     });
                         });
-
-                            
-//                            $scope.posts = Posts.query();
-//                            $scope.itemsPerPage = $scope.posts.per_page;
-//                            $scope.currentPage = $scope.posts.current_page;
-//                            $scope.totalItems = $scope.posts.total;
-//
-//                            $scope.pageCount = function () {
-//                                return Math.ceil($scope.totalItems / $scope.itemsPerPage);
-//                            };
-//
-//                            $scope.$watch('currentPage + itemsPerPage',
-//                                    function () {
-//                                        var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-//                                                end = begin + $scope.itemsPerPage;
-//                                        $scope.position = (6 * ($scope.currentPage - 1));
-//                                        $scope.filteredPosts = $scope.posts.slice(begin, end);
-//                                    });
-//
-
+                            //voting up and down
                             $scope.voteUp = function (post) {
                                 post.votes += 1;
                                 var send = Restangular.one('posts', post.id).get();
@@ -169,17 +151,24 @@ appControllers.controller('PostsController',
                                      res.put();
                                 });
                             };
+                            //show comments by getting comments relationship of post from server
                             $scope.comments = { "show" : false };
                             $scope.show = function (post) {
                                 
-                                // Just ONE GET to /accounts/123/buildings
+                                
                                 Restangular.one('posts', post.id).getList('comments').then(function(res){
                                    $scope.comments = angular.extend($scope.comments, res);
                                    $scope.comments.show = true;
                                 });
                             };
+                            //show form to create a post
                             $scope.trigger = function(){
                                 $scope.create = {"form" : true };
+                            };
+                            //post a created post
+                            $scope.newPost = {"title": "", "url": ""};
+                            $scope.post = function(){
+                                allPosts.post($scope.newPost);
                             };
                             $scope.select = function(item) {
                                 
@@ -233,8 +222,7 @@ appControllers.controller('PanelController',
 			$scope.register = function(){
                                 var captcha = vcRecaptchaService.data();
                                 var data = angular.extend($scope.guest, captcha);
-				AuthenticationService.register(data)
-					.then(function(){},function(){});				
+				AuthenticationService.register(data);
 			};
                         $scope.recover = {"email":""};
                         $scope.reminder = function(){

@@ -186,9 +186,7 @@ Route::filter('timeout',function() {
 
 Route::filter('captcha', function(){
     $privatekey = "6LdeD_wSAAAAAEVqwI8sFQC42bZRRCFN-96imxkU";
-    if(empty(Input::get("response"))) {
-      return Response::make(['flash' => "Please enter the reCAPTCHA field."], 401);  
-    }
+    
     $resp = Recaptcha::recaptcha_check_answer ($privatekey,
         Request::getClientIp(),
         Input::get("challenge"),

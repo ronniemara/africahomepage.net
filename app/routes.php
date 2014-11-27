@@ -34,7 +34,7 @@ Route::post('remind/password', 'RemindersController@postReset');
 Route::get('activate/{confirmationCode}', 'UsersController@postActivate');
 Route::resource('users', 'UsersController');
 
-
+Route::get('tags', 'TagsController@index');
 
 
 

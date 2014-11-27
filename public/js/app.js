@@ -3,18 +3,15 @@
 var app = angular.module('myapp', [
     'yaru22.angular-timeago', 'ui.router', 
     'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource', 
-        'vcRecaptcha', 'MessageCenterModule', 'restangular'
+        'vcRecaptcha', 'MessageCenterModule', 'restangular',
+        'com.htmlxprs.autocomplete.directives'
 ]);
 
-app.config(['$stateProvider', '$urlRouterProvider','$keepaliveProvider', 
-            '$idleProvider','$httpProvider', 
-    function ($stateProvider, $urlRouterProvider, $keepaliveProvider,
-                $idleProvider, $httpProvider) {
+app.config(['$stateProvider', '$urlRouterProvider','$httpProvider', 
+    function ($stateProvider, $urlRouterProvider, 
+                 $httpProvider) {
         
         $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
-        
-        $idleProvider.idleDuration(5);
-        
         
         //
         // For any unmatched url, redirect to /state1

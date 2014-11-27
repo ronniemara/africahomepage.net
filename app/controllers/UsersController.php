@@ -19,14 +19,14 @@ class UsersController extends \BaseController {
 	}
         
         public function postActivate($activation_code) {
-        if (!$activation_code) {
-            return Response::make(['flash' => 'User not found'], 401);
+        if (is_null($activation_code)) {
+            return Response::make(['flash' => 'Please register in order to activate account'], 401);
         }
 
         $user = User::whereActivationCode($activation_code)->first();
 
-        if (!$user) {
-            return Response::make(['flash' => 'User not found'], 401);
+        if (is_null($user)) {
+            return Response::make(['flash' => 'User not found. Please register.'], 401);
         }
 
         $user->activated = 1;
@@ -79,7 +79,7 @@ class UsersController extends \BaseController {
                     return Response::make(['flash' => $e->getMessage()],500);
                 }
 		
-                return Response::make(['flash' => 'Account varification email sent!']);
+                return Response::make(['flash' => 'Account verification email sent!']);
 	}
 
 	/**

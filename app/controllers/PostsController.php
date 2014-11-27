@@ -1,5 +1,5 @@
 <?php
-
+use Myapp\Repositories\PostRepositoryInterface as PostRepositoryInterface;
 class PostsController extends BaseController {
 
     /**
@@ -12,7 +12,7 @@ class PostsController extends BaseController {
 
 
     
-    public function __construct(Post $post, User $user )
+    public function __construct(PostRepositoryInterface $post, User $user )
     {
         $this->post = $post;    
         $this->user = $user;
@@ -49,17 +49,7 @@ class PostsController extends BaseController {
         return Response::make($postsValues, 200);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return View::make('posts.create');
-    }
-
-    /**
+        /**
      * Store a newly created resource in storage.
      *
      * @return Response
@@ -74,14 +64,14 @@ class PostsController extends BaseController {
             return Response::make(["flash" => $validation->messages()], 412);
         } 
 
-        if (Auth::check()){
+                if(Auth::check()){
                 // The user is logged in...
-                $user = Auth::user();	
+                $user = Auth::getUser();	
                 
-		$input['users_id'] = $user->id;	
-                $this->post->create($input);
+		$input['user_id'] = $user->id;	
+                $post = $this->post->create($input);
 
-            return Response::make($this->post, 200);
+            return Response::make($post, 200);
             } else {
                 return Response::make(["flash" => "Please log in"], 400);    
             }

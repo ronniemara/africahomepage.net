@@ -28,7 +28,7 @@ return array(
 	| 'smtp.mailgun.org'
 	*/
 
-	'host' => 'mail.africahomepage.net',
+	'host' => $_ENV['EMAIL_HOST'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ return array(
 	|587
 	*/
 
-	'port' => 26,
+	'port' => $_ENV['EMAIL_PORT'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +67,7 @@ return array(
 	|
 	*/
 
-	'encryption' => '',
+	'encryption' => $_ENV['EMAIL_ENCRYPTION'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +80,7 @@ return array(
 	|
 	*/
 
-	'username' => 'webmaster@africahomepage.net',
+	'username' => $_ENV['EMAIL_USERNAME'],
 
 	/*
 	|--------------------------------------------------------------------------

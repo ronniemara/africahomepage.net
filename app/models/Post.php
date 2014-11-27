@@ -1,14 +1,13 @@
 <?php
 
 
-class Post extends Eloquent {
+class Post extends \Eloquent {
     protected $guarded = array();
     protected $hidden = ['user_id'];
 
     public static $rules = array(
-//                'title' => 'required',
-//		'url' => 'required'
-		
+               'title' => 'required',
+		'url' => 'required|url'		
 	);    
     
     public function comments()

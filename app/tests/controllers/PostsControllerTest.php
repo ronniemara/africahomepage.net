@@ -1,12 +1,13 @@
 <?php
 
 use Mockery as m;
-use Way\Tests\Factory;
 
-class PostsTest extends TestCase {
+
+class PostsControllerTest extends TestCase {
 
     public function __construct()
-    {
+    {   
+        parent::setUp();
         $this->mock = m::mock('Eloquent', 'Post');
         $this->collection = m::mock('Illuminate\Database\Eloquent\Collection')->shouldDeferMissing();
     }
@@ -15,7 +16,7 @@ class PostsTest extends TestCase {
     {
         parent::setUp();
 
-        $this->attributes = Factory::post(['id' => 1]);
+        //$this->attributes = 
         $this->app->instance('Post', $this->mock);
     }
 

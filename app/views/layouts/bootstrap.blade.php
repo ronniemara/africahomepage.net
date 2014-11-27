@@ -129,6 +129,7 @@
     <script src="/js/restangular.min.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/directives.js?<?php echo time(); ?>" type="text/javascript"></script>
 <script src="/js/posts/posts.js?<?php echo time(); ?>" type="text/javascript"></script>
 <script src="/js/posts/posts-service.js?<?php echo time(); ?>" type="text/javascript"></script>
 <script src="/js/utils-service.js?<?php echo time(); ?>" type="text/javascript"></script>
