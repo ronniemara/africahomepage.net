@@ -12,5 +12,8 @@
  * @author ron
  */
 class Tag extends Eloquent {
-    //put your code here
+  
+    public function posts(){
+        return $this->belongsToMany('Post');
+    }
 }

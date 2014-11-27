@@ -18,7 +18,7 @@ class RepositoriesServiceProvider extends ServiceProvider {
         });
         
         \App::bind('\Myapp\Repositories\TagRepositoryInterface', function() {
-            return new \Myapp\Repositories\EloquentTagRepository(new \Tag);
+            return new \Myapp\Repositories\EloquentTagRepository();
         });
     }
 

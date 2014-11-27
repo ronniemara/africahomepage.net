@@ -20,6 +20,10 @@ class Post extends \Eloquent {
         return $this->belongsTo('User', 'user_id');
     }
     
+    public function tags(){
+        return $this->belongsToMany('Tag');
+    }
+    
     public function getUsersIdAttribute($value)
     {
         return (int)$value;
