@@ -185,7 +185,7 @@ Route::filter('timeout',function() {
 });
 
 Route::filter('captcha', function(){
-    $privatekey = "6LdeD_wSAAAAAEVqwI8sFQC42bZRRCFN-96imxkU";
+    $privatekey = $_ENV['RECAPTCHA_KEY'];
     
     $resp = Recaptcha::recaptcha_check_answer ($privatekey,
         Request::getClientIp(),
