@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'webmaster@africahomepage.net', 'name' => null),
+	'from' => array('address' => $_ENV['EMAIL_ADDRESS'], 'name' => null),
 
 	/*
 	|--------------------------------------------------------------------------
