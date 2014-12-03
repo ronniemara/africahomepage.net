@@ -67,8 +67,8 @@ return array(
 	| will not be safe. Please do this before deploying an application!
 	|
 	*/
-            'key'  => 'gy8pE2Q30KgqbW9bA5eOZovoMhZz58QT',
-	//'key' => $_ENV['LOCAL_KEY'],
+            
+	'key' => $_ENV['LOCAL_KEY'],
 
 	/*
 	|--------------------------------------------------------------------------
