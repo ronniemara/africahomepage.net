@@ -72,4 +72,9 @@ class EloquentPostRepository implements PostRepositoryInterface  {
     return $this->post->with($relations);
     }
     
+    public function tags(){
+    
+        return $this->post->tags();
+    }
+    
 }

@@ -18,13 +18,17 @@ angular.module('com.htmlxprs.autocomplete.directives',[]).directive('autoComplet
             };
 
             scope.search=function(){
+                
                 $http.get('tags?term='+scope.searchText).success(function(data){
                     if(data.indexOf(scope.searchText)===-1){
                         data.unshift(scope.searchText);
+                        
                     }
                     scope.suggestions=data;
                     scope.selectedIndex=-1;
+                    
                 });
+                
             };
 
             scope.addToSelectedTags=function(index){

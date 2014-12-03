@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+use Myapp\Repositories\TagRepositoryInterface as TagsRepositoryInterface;
 /**
  * Description of TagsController
  *
@@ -22,18 +22,12 @@ class TagsController extends BaseController{
     public function index(){
         $data = [];
         $term = Input::get('term');
-        $tags = ['ebola', 'westafrica', 'politics', 'economy', 'football'];
+        $tags = $this->tags->all();
             foreach($tags as $tag){
-                if(starts_with($tag, $term) === TRUE){
-                    $data[] = $tag;
+                if(starts_with($tag->name, $term) === TRUE){
+                    $data[] = $tag->name;
                 }
             }
         return Response::json($data);
-    }
-    
-    public function startsWith($haystack, $needle)
-    {
-        $length = strlen($needle);
-        return (substr($haystack, 0, $length) === $needle);
     }
 }

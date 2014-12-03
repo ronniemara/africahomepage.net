@@ -21,6 +21,8 @@ Route::resource('posts', 'PostsController');
 //comments resource
 Route::resource('posts.comments', 'CommentsController');
 
+Route::resource('tags', 'TagsController');
+
 
 Route::post('auth/login', 'AuthController@login');
 Route::get('auth/logout', 'AuthController@logout');
@@ -34,7 +36,7 @@ Route::post('remind/password', 'RemindersController@postReset');
 Route::get('activate/{confirmationCode}', 'UsersController@postActivate');
 Route::resource('users', 'UsersController');
 
-Route::get('tags', 'TagsController@index');
+
 
 
 

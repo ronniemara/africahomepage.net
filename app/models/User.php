@@ -25,9 +25,12 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     protected $visible = ['username'];
     
     protected $guarded = ['*'];
+    
+    public function posts(){
+        return $this->hasMany('Post');
+    }
 
-
-    /**
+        /**
      * Get the unique identifier for the user.
      *
      * @return mixed
@@ -81,5 +84,7 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
     public function getReminderEmail() {
         return $this->email;
     }
+    
+   
 
 }

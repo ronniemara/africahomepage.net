@@ -36,3 +36,52 @@ ng-valid.ng-dirty
 .alert {
     margin: 0;
 }
+
+.tag {
+    margin-left: 1em;
+    display: inline-block;
+    background-color: #46b8da;
+}
+
+.suggestions-list {
+    
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    font-size: 14px;
+}
+.suggestions-list li {
+    color: #333333;
+    font-weight: 600;
+    padding: 4px 25px;
+    font-size: 1em;
+    cursor: pointer;
+    background: #f2f2f2;
+    border-bottom: 1px solid #dddddd;
+}
+.suggestions-list li:hover {
+    background: #dddddd;
+}
+.suggestions-list li:active,
+.suggestions-list li.active {
+    color: #20a28e;
+    background: #dddddd;
+}
+.suggestions-list:focus{
+    outline:none;
+}
+
+.ng-invalid.ng-dirty {
+    border-color: #CC0000;
+}
+
+.ng-valid.ng-dirty {
+    border-color: #008000;
+}

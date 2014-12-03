@@ -8,15 +8,11 @@ class PostsController extends BaseController {
      * @var Post
      */
     protected $post = null;
-    protected $votes = null;
 
-
-    
     public function __construct(PostRepositoryInterface $post, User $user )
     {
         $this->post = $post;    
         $this->user = $user;
-        
     }
 
     /**
@@ -27,7 +23,6 @@ class PostsController extends BaseController {
       
       public function index()
       {
-          
         $posts = $this->post->with('comments.author', 'author')->get();
         foreach ($posts as $post) {
             //Time elapsed since post created
@@ -37,8 +32,6 @@ class PostsController extends BaseController {
                 
             //setting the rank of the post when displaying all posts
             $post->rank = $this->calculate_score($votes, $age_in_hours);
-            
-            
         }
        $sortPosts = $posts->sortBy(function($post) {
                     return $post->rank;
@@ -56,26 +49,39 @@ class PostsController extends BaseController {
      */
     public function store()
     {
-        $input = Input::all();
+        $input = Input::except('tags');
         
         $validation = Validator::make($input, Post::$rules);
 
         if ($validation->fails()) {
             return Response::make(["flash" => $validation->messages()], 412);
         } 
-
+        // The user is logged in...
                 if(Auth::check()){
-                // The user is logged in...
-                $user = Auth::getUser();	
+                    //get user
+                $user = Auth::getUser();
+                $input = new Post($input);
+                //insert post using user relationship
+                $post = $user->posts()->save($input);
+                //get tags input
+                $tags = Input::get('tags');
+                foreach ($tags as $tag) {
+                    $validation = Validator::make(['name' => $tag], Tag::$rules);
+                    if ($validation->fails()) {
+                      return Response::make(["flash" => $validation->messages()], 412);  
+                    } 
+                    $model = new Tag(['name' => $tag]);
+                    $post->tags()->save($model);
+                }
                 
-		$input['user_id'] = $user->id;	
-                $post = $this->post->create($input);
+                unset($input['tags']);
+                
+                
 
             return Response::make($post, 200);
             } else {
                 return Response::make(["flash" => "Please log in"], 400);    
             }
-		
     }
 
     /**
