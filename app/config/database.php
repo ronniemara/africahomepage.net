@@ -57,7 +57,7 @@ return array(
 			'host'      => '127.0.0.1',
 			'database'  => $_ENV['DATABASE'],
 			'username'  => $_ENV['DB_USERNAME'],
-			'password' => $_ENV['PASSWORD'],
+			'password' => $_ENV['DB_PASSWORD'],
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
