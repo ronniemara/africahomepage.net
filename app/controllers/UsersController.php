@@ -32,6 +32,9 @@ class UsersController extends \BaseController {
         $user->activated = 1;
         $user->activation_code = null;
         $user->save();
+        
+        
+        return View::make('layouts.bootstrap');
     }
 
     /**
