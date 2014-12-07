@@ -68,9 +68,12 @@
                                     var defer = $q.defer();
                                     $http.get('auth/check').success(
                                             function (res) {
-                                                defer.resolve(res);
+                                                $rootScope.user = res;
+                                                $rootScope.user.isLoggedIn = true;
+                                                defer.resolve();
                                             }).error(function (err) {
-
+                                                $rootScope.user = {};
+                                                $rootScope.user.isLoggedIn = false;
                                         defer.reject();
                                     });
 
@@ -214,6 +217,8 @@
                 'vcRecaptchaService', '$idle',
                 function ($scope, AuthenticationService, 
                  vcRecaptchaService, $idle) {
+                     AuthenticationService.isLoggedIn();
+
                      //start watching for idling...
                         $idle.watch();
                 //event listener for when idle time out occurs
