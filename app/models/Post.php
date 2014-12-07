@@ -6,8 +6,8 @@ class Post extends \Eloquent {
     protected $hidden = ['user_id'];
 
     public static $rules = array(
-               'title' => 'required',
-		'url' => 'required|url'		
+               'title' => 'required|unique:posts',
+		'url' => 'required|url|unique:posts'		
 	);    
     
     public function comments()

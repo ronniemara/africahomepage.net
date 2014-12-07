@@ -59,8 +59,10 @@
                     </div>  
                         <div class="col-sm-8">
                             <h4><a href={{post.url}}>{{post.title}}</a></h4> 
+                             <div></div>
                             <em>{{ post.created_at | timeAgo}}</em> 
                             by <cite>{{post.author.username}}</cite> 
+                           
                         </div>
                         <div>
                         <a href ng-click="select(post)">

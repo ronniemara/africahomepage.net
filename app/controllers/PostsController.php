@@ -23,7 +23,7 @@ class PostsController extends BaseController {
       
       public function index()
       {
-        $posts = $this->post->with(['comments.author', 'author'])->get();
+        $posts = $this->post->with(['comments.author', 'author', 'tags'])->get();
         foreach ($posts as $post) {
             //Time elapsed since post created
             $age_in_hours = Carbon::now()->diffInHours($post->created_at);
@@ -70,6 +70,8 @@ class PostsController extends BaseController {
                     if ($validation->fails()) {
                       return Response::make(["flash" => $validation->messages()], 412);  
                     } 
+                    $all_tags = Tag::all();
+                    
                     $model = new Tag(['name' => $tag]);
                     $post->tags()->save($model);
                 }
