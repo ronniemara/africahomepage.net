@@ -48,6 +48,7 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
@@ -84,76 +85,6 @@ Route::filter('csrf', function()
 });
 
 
-/**
-* *  Sentry filter
-* *
-* * Checks if the user is logged in
-* */
-Route::filter('Sentry', function()
-	{
-		if ( ! Sentry::check()) {			
-			if (Request::ajax())
-			{
-			return json_encode(false);
-			}
-			else		
-			{
-			return Redirect::to('login')->with('message', 'Please login!');	
-			}
-		}
-});
- 
-/**
-	* * hasAcces filter (permissions)
-	* *
-	* * Check if the user has permission (group/user)
-	* */
-Route::filter('hasAccess', function($route, $request, $value)
-{
-	try
-	{
-		$user = Sentry::getUser();
-		 
-		if( ! $user->hasAccess($value))
-		{
-			return Redirect::route('cms.login')->withErrors(array(Lang::get('user.noaccess')));
-		}
-	}
-	catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-	{
-		return Redirect::route('cms.login')->withErrors(array(Lang::get('user.notfound')));
-	}
-	 
-});
- 
-/**
- * * InGroup filter
- * *
- * * Check if the user belongs to a group
- * */
-Route::filter('inGroup', function($route, $request, $value)
-{
-	try
-	{
-		$user = Sentry::getUser();
-		 
-		$group = Sentry::findGroupByName($value);
-		 
-		if( ! $user->inGroup($group))
-		{
-			return Redirect::route('login')->withErrors(array(Lang::get('user.noaccess')));
-		}
-	}
-	catch (Cartalyst\Sentry\Users\UserNotFoundException $e)
-	{
-		return Redirect::route('login')->withErrors(array(Lang::get('user.notfound')));
-	}
-	 
-	catch (Cartalyst\Sentry\Groups\GroupNotFoundException $e)
-	{
-		return Redirect::route('login')->withErrors(array(Lang::get('group.notfound')));
-	}
-});
 
 Route::filter('ngcsrf',function($route,$request) {
      
@@ -165,24 +96,7 @@ Route::filter('ngcsrf',function($route,$request) {
     }
 });
 
-Route::filter('timeout',function() {
-    $expired = true;
-    if ((time() - Session::activity()) > (Config::get('session.lifetime') * 60))
-    {
-        // Session expired
-        $expired = true;
-    }
- else {
-        
- $expired = true;
-     
- }
-     
-  if($expired)
-  {
-      return Response::make('flash => Your session has expired. Please try again!', 404);
-  }
-});
+
 
 Route::filter('captcha', function(){
     $privatekey = $_ENV['RECAPTCHA_KEY'];

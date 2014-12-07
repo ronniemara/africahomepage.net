@@ -7,8 +7,8 @@ class BaseController extends Controller {
 
 	public function __construct(TagRepositoryInterface $tag)
 	{
-		$this->beforeFilter('ngcsrf', array('on' => array('post', 'put', 'patch', 'delete')));
-        $this->tag = $tag;
+            $this->beforeFilter('ngcsrf', ['on' => ['post', 'put', 'patch', 'delete']]);
+            $this->tag = $tag;
 	}	
 
 	/**
