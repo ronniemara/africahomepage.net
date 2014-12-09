@@ -60,13 +60,13 @@
                         <div class="col-sm-8">
                             <h4><a href={{post.url}}>{{post.title}}</a></h4>
                             <div>
-                            <ul class="list-inline">
-                                <li ng-repeat="tag in post.tags">
-                                    <span class="fa fa-tag"></span>
-                                {{tag.name}}
-                                </li>
-                            </ul>
-                                <div>
+                                <ul class="list-inline">
+                                    <li ng-repeat="tag in post.tags">
+                                        <span class="fa fa-tag"></span>
+                                    {{tag.name}}
+                                    </li>
+                                </ul>
+                            <div>
                             <em>{{ post.created_at | timeAgo}}</em> 
                             by <cite>{{post.author.username}}</cite> 
 
@@ -90,9 +90,9 @@
                                 <p>{{comment.message}}</p>
                             </li>
                         </ul>
-                        <form class="form" role="form" ng-if="user.isLoggedIn">
-                               <label for="exampleInputEmail1">Add a Comment</label>
-                               <textarea class="form-control" id="exampleInputEmail1" rows="3"></textarea>
+                        <form class="CommentForm" novalidate role="form" ng-if="user.isLoggedIn" ng-submit="CommentForm.$valid && comment()">
+                               <label for="InputComment">Add a Comment</label>
+                               <textarea ng-model="newComment" class="form-control" id="InputComment" rows="3" required></textarea>
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>
                     </div>

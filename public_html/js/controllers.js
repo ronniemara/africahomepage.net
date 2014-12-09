@@ -48,7 +48,9 @@
                                 },
                                 logout: function () {
                                     var defer = $q.defer();
-
+                                        if($rootScope.user.isLoggedIn === false){
+                                            return;
+                                        }
                                     $http.get('/auth/logout').success(function () {
                                         $rootScope.user = {};
                                         $rootScope.user.isLoggedIn = false;
@@ -206,6 +208,16 @@
                     };
                     $scope.isSelected = function (item) {
                         return $scope.selected === item;
+                    };
+                    $scope.newComment = {"message": ""};
+                    $scope.comment = function (post) {
+                        
+                       Restangular.one('posts', post.id).post('comments', $scope.newComment)
+                           .then(function(res) {
+                        console.log("Object saved OK");
+                        }, function(err) {
+                        console.log("There was an error saving");
+                        }); 
                     };
 
                 }]);
