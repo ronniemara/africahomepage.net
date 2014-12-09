@@ -186,10 +186,10 @@
                     //post a created post
                     $scope.data = {"title": "", "url": "", "tags": ""};
 
-                    $scope.post = function () {
+                    $scope.post = function (form) {
                         allPosts.post($scope.data).then(function(res){
                             $scope.data = {"title": "", "url": "", "tags": ""};
-                            $scope.PostForm.$setPristine();
+                            form.$setPristine();
                             angular.extend(allPosts, res);
                         },function(err){
                             messageCenterService.remove();

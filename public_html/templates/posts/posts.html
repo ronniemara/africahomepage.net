@@ -7,7 +7,7 @@
             <li ng-if="user.isLoggedIn">
                 <button class="btn btn-info" ng-click="trigger()">Create a Post</button>
                 <div class="panel" ng-if="create.form">
-                    <form novalidate name="PostForm" ng-submit="PostForm.$valid && post()">
+                    <form novalidate name="PostForm" ng-submit="PostForm.$valid && post(PostForm)">
                         <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
