@@ -125,17 +125,10 @@ class PostsController extends BaseController {
     public function update($id)
     {
         $input = array_except(Input::all(), '_method');
-        $validation = Validator::make($input, Post::$rules);
-
-        if ($validation->passes())
-        {
-            $post = $this->post->find($id);
-            $post->update($input);
-
-            return Response::make($post);
-        }
-
-        return Response::make('$post', 401);
+        
+        $post = $this->post->find($id);
+        $post->update($input);
+        return Response::make($post);
     } 
   
     /**

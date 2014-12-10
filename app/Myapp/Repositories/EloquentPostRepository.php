@@ -38,6 +38,15 @@ class EloquentPostRepository implements PostRepositoryInterface  {
     public function find($id){
         return $this->post->findOrFail($id);
     }
+    
+    /**
+     * find one post.
+     *
+     * @return Response
+     */
+    public function findOrFail($id){
+        return $this->post->findOrFail($id);
+    }
    
     /**
      * create the specified resource in storage.
