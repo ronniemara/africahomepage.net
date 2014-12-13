@@ -20,7 +20,7 @@
                 <script src="/js/comment_post_script.js?<?php echo time(); ?>" type="text/javascript" ></script>
                 <script src="/js/comment_delete_script.js?<?php echo time(); ?>" type="text/javascript"></script>
                 <script src="/js/post_vote_script.js?<?php echo time(); ?>" type="text/javascript"></script>
-		
+                <base href="/public_html/"></base>
 	</head>
 	<body>
             <header><!--HEADER -->

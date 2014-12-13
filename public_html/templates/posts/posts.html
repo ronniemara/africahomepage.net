@@ -90,9 +90,9 @@
                                 <p>{{comment.message}}</p>
                             </li>
                         </ul>
-                        <form class="CommentForm" novalidate role="form" ng-if="user.isLoggedIn" ng-submit="CommentForm.$valid && comment()">
+                        <form name="CommentForm" novalidate role="form" ng-if="user.isLoggedIn" ng-submit="CommentForm.$valid && comment(post)">
                                <label for="InputComment">Add a Comment</label>
-                               <textarea ng-model="newComment" class="form-control" id="InputComment" rows="3" required></textarea>
+                               <textarea ng-model="newComment.message" class="form-control" id="InputComment" rows="3" required></textarea>
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>
                     </div>

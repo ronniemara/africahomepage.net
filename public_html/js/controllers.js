@@ -1,40 +1,29 @@
 (function () {
     var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource']);
 
-    appControllers.factory("SessionService", function () {
-        return {
-            get: function (key) {
-                return sessionStorage.getItem(key);
-            },
-            set: function (key, value) {
-                return sessionStorage.setItem(key, value);
-            },
-            unset: function (key) {
-                return sessionStorage.removeItem(key);
-            }
-        };
-    });
-
     appControllers
-            .factory("AuthenticationService",
+            .factory("AuthSvc",
                     ['$http', '$location', '$q',
-                        'messageCenterService', '$rootScope',
+		    'messageCenterService', '$rootScope',
                         function ($http, $location, $q,
                                 messageCenterService,$rootScope) {
                                  
                             return {
-                                login: function (credentials) {
+                                login: function (credentials, form) {
                                     var defer = $q.defer();
-                                    $http.post('/auth/login', credentials)
+                                    $http.post('/api/auth/login', credentials)
                                             .success(function (response) {
                                                 $rootScope.user = response;
+					    
+					    form.$setPristine();
                                                 $rootScope.user.isLoggedIn = true;
                                                 messageCenterService.remove();
                                                 messageCenterService.add('success',
                                                         'You are now logged in!',
                                                         {status: messageCenterService.status.next
                                                         });
-                                                $location.path('/#/posts');
+                                               $location.path('/posts');
+					        
                                                 defer.resolve(response);
                                             })
                                             .error(function (response) {
@@ -51,7 +40,7 @@
                                         if($rootScope.user.isLoggedIn === false){
                                             return;
                                         }
-                                    $http.get('/auth/logout').success(function () {
+                                    $http.get('/api/auth/logout').success(function () {
                                         $rootScope.user = {};
                                         $rootScope.user.isLoggedIn = false;
                                         messageCenterService.remove();
@@ -130,12 +119,13 @@
 
 
 
-    appControllers.controller('PostsController',
+    appControllers.controller('PostsCtrl',
             ['$scope', 'Restangular',
                 function ($scope, Restangular) {
+                    
                     // Get all posts from server.
-                    var allPosts = Restangular.all('posts');
-
+                    var allPosts = Restangular.all('api/posts');
+                    
                     allPosts.getList().then(function (posts) {
                         $scope.posts = posts;
                         $scope.predicate = 'rank';
@@ -155,21 +145,23 @@
                     });
                     //voting up and down
                     $scope.voteUp = function (post) {
-                        post.votes += 1;
+			
+                        
                         var send = Restangular.one('posts', post.id).get();
                         send.then(function (res) {
                             res.votes = res.votes + 1;
                             res.put();
                         });
-
+post.votes += 1;
                     };
                     $scope.voteDown = function (post) {
-                        post.votes -= 1;
+                        
                         var send = Restangular.one('posts', post.id).get();
                         send.then(function (res) {
                             res.votes = res.votes - 1;
                             res.put();
                         });
+			post.votes -= 1;
                     };
                     //show comments by getting comments relationship of post from server
                     $scope.comments = {"show": false};
@@ -225,40 +217,41 @@
 
 
 
-    appControllers.controller('PanelController',
-            ['$scope', 'AuthenticationService', 
+    appControllers.controller('PanelCtrl',
+            ['$scope', 'AuthSvc', 
                 'vcRecaptchaService', '$idle',
-                function ($scope, AuthenticationService, 
+                function ($scope, AuthSvc, 
                  vcRecaptchaService, $idle) {
-                     AuthenticationService.isLoggedIn();
+                     
+                     AuthSvc.isLoggedIn();
 
                      //start watching for idling...
                         $idle.watch();
                 //event listener for when idle time out occurs
                 $scope.$on('$idleTimeout', function () {
                 // end their session and  logout
-                AuthenticationService.logout();
+                AuthSvc.logout();
                  
             });
                     $scope.credentials = {"email": "", "password": "", "remember": ""};
-                    $scope.login = function () {
-                        AuthenticationService.login($scope.credentials);
+                    $scope.login = function (form) {
+                        AuthSvc.login($scope.credentials, form);
                         
                     };
 
                     $scope.logout = function () {
-                        AuthenticationService.logout();
+                        AuthSvc.logout();
                     };
 
                     $scope.guest = {"email": "", "firstName": "", "lastName": "", "username": "", "password": "", "password_confirmation": "", "challenge": "", "response": ""};
                     $scope.register = function () {
                         var captcha = vcRecaptchaService.data();
                         var data = angular.extend($scope.guest, captcha);
-                        AuthenticationService.register(data);
+                        AuthSvc.register(data);
                     };
                     $scope.recover = {"email": ""};
                     $scope.reminder = function () {
-                        AuthenticationService.reminder($scope.recover);
+                        AuthSvc.reminder($scope.recover);
                     };
 
                 }]);

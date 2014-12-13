@@ -7,10 +7,12 @@ class CommentsController extends BaseController
      * @var $comment
      */
     protected $comment;
+     protected $post;
 
-    public function __construct(Comment $comment)
+    public function __construct(Comment $comment, Post $post )
     {
         $this->comment = $comment;
+        $this->post = $post;
         
     }
 /**
@@ -52,18 +54,25 @@ class CommentsController extends BaseController
      *
      * @return Response
      */
-    public function store()
+    public function store($post_id)
     {
 	   
-	    $input = Input::except('task');
-	    $input['created_at'] = new DateTime;
+	    $input = Input::message();
+            
+            // The user is logged in...
+                if(Auth::check()){
+                    $new_comment = $this->comment($input);
+                $post = $this->post->findOrFail($post_id);
+                $comment = $post->comments()->save($new_comment);
 	    
-	    $comment = $this->comment->create($input);
+                }
+               else {
+                   return Response::make(['flash' => 'Please login to comment'], 401);
+                }
        
-	    //set comment->createdBy
-        $user = Sentry::findUserById($comment->user_id);
+	    
         
-        $comment->createdBy = $user->first_name . " " . $user->last_name;
+       
 
 	    return $comment;
 	    			

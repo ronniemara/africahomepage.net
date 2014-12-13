@@ -45,10 +45,10 @@
 	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
 	<link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 	<link rel="shortcut icon" href="../assets/ico/favicon.png">
-
+        <base href="/">
     </head>
     <body >
-	<div class="container-fluid"  ng-controller="PanelController">
+	<div class="container-fluid"  ng-controller="PanelCtrl">
 	    <header>
 		<div class="panel">
 		    <h1 class="col-md-offset-3">
@@ -88,24 +88,21 @@
 		</nav>
 	    </header>
 		<div class="row-fluid">
-                            <div class="col-md-9"  >
-                                
-                                     <mc-messages></mc-messages>
-                                
-                                <div data-ui-view >
-                                    Loading...
-                                </div>
+                        <div class="col-md-9"  >
+                            <mc-messages></mc-messages>
+                            <div data-ui-view >
+                                Loading...
                             </div>
+                        </div>
 			<aside class="col-md-3 well">
-				<h3>Connect with Us</h3>
-					<a href="https://www.googleplus.com/africahomepage">
-					<i class="fa fa-google-plus fa-3x"></i>
-					</a>	
-					<a href="https://www.twitter.com/africahomepage">
-					<i class="fa fa-twitter-square fa-3x"></i>
-					
-					</a>	
-		</aside>
+                            <h3>Connect with Us</h3>
+                                <a href="https://www.googleplus.com/africahomepage">
+                                    <i class="fa fa-google-plus fa-3x"></i>
+                                </a>	
+                                <a href="https://www.twitter.com/africahomepage">
+                                    <i class="fa fa-twitter-square fa-3x"></i>
+                                </a>	
+                        </aside>
 		</div>
 <footer class="panel">
     <p> <i class="fa fa-copyright"></i> 2014 Black Mirror Media</p>
@@ -123,7 +120,7 @@
     <script src="/js/angular-resource.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular-idle.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="js/message-center.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/message-center.js?<?php echo time(); ?>" ></script>
     <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/lodash.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/restangular.min.js?<?php echo time(); ?>" type="text/javascript"></script>
