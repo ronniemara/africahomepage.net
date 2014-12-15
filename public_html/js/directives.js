@@ -31,7 +31,7 @@ angular.module('com.htmlxprs.autocomplete.directives',[]).directive('autoComplet
                 
             };
 
-            scope.addToSelectedTags=function(index){
+            scope.addToSelectedTags=function(index){ 
                 if(scope.selectedTags.indexOf(scope.suggestions[index])===-1){
                     scope.selectedTags.push(scope.suggestions[index]);
                     scope.searchText='';

@@ -21,7 +21,7 @@ Route::get('/', function() {
 // =============================================
 // API ROUTES ==================================
 // =============================================
-Route::group(array('prefix' => 'api'), function() {
+Route::group(['prefix' => 'api'], function() {
 
 	// since we will be using this just for CRUD, we won't need create and edit
 	// Angular will handle both of those forms
@@ -53,12 +53,6 @@ App::missing(function($exception)
 {
 	return View::make('layouts.bootstrap');
 });
-
-
-Route::get('_escaped_fragment_', 'CrawlerController@index');
-
-
-
 
 Route::get('activate/{confirmationCode}', 'UsersController@postActivate');
 

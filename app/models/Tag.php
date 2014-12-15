@@ -16,7 +16,7 @@ class Tag extends Eloquent {
     public $fillable = ['name'];
     
     public static $rules = array(
-               'name' => 'required|alpha_dash|max:15|min:3',
+               'name' => 'required|alpha_dash|max:15|min:3|unique:tags',
 	);  
   
     public function posts(){

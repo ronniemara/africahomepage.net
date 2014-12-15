@@ -120,8 +120,8 @@
 
 
 appControllers.controller('PostsCtrl',
-		['$scope', 'Restangular',
-		function ($scope, Restangular) {
+		['$scope', 'Restangular', 'messageCenterService',
+		function ($scope, Restangular, messageCenterService) {
 
 			// Get all posts from server.
 			var allPosts = Restangular.all('api/posts');

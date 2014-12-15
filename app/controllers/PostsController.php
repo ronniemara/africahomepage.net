@@ -8,11 +8,14 @@ class PostsController extends BaseController {
      * @var Post
      */
     protected $post = null;
+    protected $user = null;
+    protected $tag = null;
 
-    public function __construct(PostRepositoryInterface $post, User $user )
+    public function __construct(PostRepositoryInterface $post, User $user, Tag $tag )
     {
         $this->post = $post;    
-        $this->user = $user;
+	$this->user = $user;
+	$this->tag = $tag;
     }
 
     /**
@@ -49,42 +52,64 @@ class PostsController extends BaseController {
      */
     public function store()
     {
-        $input = Input::except('tags');
-        
-        $validation = Validator::make($input, Post::$rules);
+	    $input = Input::except('tags');
 
-        if ($validation->fails()) {
-            return Response::make(["flash" => $validation->messages()], 412);
-        } 
-        // The user is logged in...
-                if(Auth::check()){
-                    //get user
-                $user = Auth::getUser();
-                $input = new Post($input);
-                //insert post using user relationship
-                $post = $user->posts()->save($input);
-                //get tags input
-                $tags = Input::get('tags');
-                foreach ($tags as $tag) {
-                    $validation = Validator::make(['name' => $tag], Tag::$rules);
-                    if ($validation->fails()) {
-                      return Response::make(["flash" => $validation->messages()], 412);  
-                    } 
-                    $all_tags = Tag::all();
+	    $validation = Validator::make($input, Post::$rules);
+
+	    if ($validation->fails()) {
+		    return Response::make(["flash" => $validation->messages()], 412);
+	    } 
+	    // The user is logged in...
+	    if(Auth::check()){
+		    //get user
+		    $user = Auth::getUser();
+		    $input = new Post($input);
+		    //insert post using user relationship
+		    $post = $user->posts()->save($input);
+		    //get tags input
+		    $tags = Input::get('tags');
                     
-                    $model = new Tag(['name' => $tag]);
-                    $post->tags()->save($model);
-                }
-                
-                unset($input['tags']);
-                
-                
-
-            return Response::make($post, 200);
-            } else {
-                return Response::make(["flash" => "Please log in"], 400);    
-            }
+                    $checked_tags = $this->check_tags($tags);
+                    
+                    $post->tags()->attach($checked_tags['tags']);
+                    
+                    $data = $this->post->find($post->id)->with('author', 'tags')->get();
+                    
+		   
+		    return Response::make($data, 200);
+	    } else {
+		    return Response::make(["flash" => "Please log in"], 400);    
+	    }
     }
+    
+    public function check_tags($tags)
+            
+    {
+        $data = [];
+         //remove tags that are already in db
+        foreach ($tags as $tag) {
+            $validation = Validator::make(['name' => $tag], Tag::$rules);
+            if ($validation->fails()) {
+                $failedRules = $validation->failed();
+                
+                if(isset($failedRules['name']['Unique'])) {
+                        $retrieved = $this->tag->where('name', '=', $tag)->first();
+                        $data['tags'][] = (int)$retrieved->id;
+                    }else {
+                        $data['errors'][] =[$tag => $messages];
+                } 
+           
+            } else {
+            $created = $this->tag->create(['name' => $tag]);
+            $data['tags'][]  = (int)$created->id;
+            }
+
+        }
+        
+        return $data;
+    }
+
+    
 
     /**
      * Display the specified resource.
