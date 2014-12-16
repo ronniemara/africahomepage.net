@@ -3,10 +3,12 @@
 
 	appControllers
 	.factory("AuthSvc",
-		['$http', '$location', '$q',
+		['$http', '$q',
 		'messageCenterService', '$rootScope',
-		function ($http, $location, $q,
-			messageCenterService,$rootScope) {
+		'$state',
+		function ($http,$q,
+			messageCenterService,$rootScope,
+			$state) {
 
 				return {
 					login: function (credentials, form) {
@@ -22,7 +24,7 @@
 				'You are now logged in!',
 				{status: messageCenterService.status.next
 				});
-			$location.path('/posts');
+			$state.go('posts');
 
 			defer.resolve(response);
 		})
@@ -80,7 +82,7 @@
 									'Password reset email sent!',
 									{status: messageCenterService.status.next});
 
-								$location.path('posts');
+								$state.go('posts');
 								defer.resolve(message);
 							})
 						.error(function (response) {
@@ -102,7 +104,7 @@
 								messageCenterService.add('success',
 									res.flash,
 									{status: messageCenterService.status.next});
-								$location.path('/login');
+								$state.go('login');
 
 								defer.resolve();
 							})
