@@ -95,10 +95,8 @@
                             </div>
                         </div>
 			<aside class="col-md-3 well">
-                            <h3>Connect with Us</h3>
-                                <a href="https://www.googleplus.com/africahomepage">
-                                    <i class="fa fa-google-plus fa-3x"></i>
-                                </a>	
+			    <h3>Connect with Us</h3>
+				<a href="https://plus.google.com/+AfricahomepageNet" rel="publisher"> <i class="fa fa-google-plus fa-3x"></i></a>
                                 <a href="https://www.twitter.com/africahomepage">
                                     <i class="fa fa-twitter-square fa-3x"></i>
                                 </a>	
