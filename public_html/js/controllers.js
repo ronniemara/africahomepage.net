@@ -9,11 +9,10 @@
 		function ($http,$q,
 			messageCenterService,$rootScope,
 			$state) {
-
-				return {
-					login: function (credentials, form) {
-						var defer = $q.defer();
-						$http.post('/api/auth/login', credentials)
+return {
+	login: function (credentials, form) {
+		var defer = $q.defer();
+		$http.post('/api/auth/login', credentials)
 		.success(function (response) {
 			$rootScope.user = response;
 
@@ -27,97 +26,97 @@
 			$state.go('posts');
 
 			defer.resolve(response);
-		})
-	.error(function (response) {
-		messageCenterService.remove();
-		messageCenterService.add('danger',
-			response.flash,
-			{status: messageCenterService.status.unseen});
-		defer.reject();
-	});
-	return defer.promise;
-					},
-					logout: function () {
-						var defer = $q.defer();
-						if($rootScope.user.isLoggedIn === false){
-							return;
-						}
-						$http.get('/api/auth/logout').success(function () {
-							$rootScope.user = {};
-							$rootScope.user.isLoggedIn = false;
-							messageCenterService.remove();
-							messageCenterService.add('warning',
-								'You are now logged out!',
-								{status: messageCenterService.status.next});
+			})
+		.error(function (response) {
+			messageCenterService.remove();
+			messageCenterService.add('danger',
+				response.flash,
+				{status: messageCenterService.status.unseen});
+			defer.reject();
+		});
+		return defer.promise;
+						},
+	logout: function () {
+		var defer = $q.defer();
+		if($rootScope.user.isLoggedIn === false){
+			return;
+		}
+		$http.get('/api/auth/logout').success(function () {
+			$rootScope.user = {};
+			$rootScope.user.isLoggedIn = false;
+			messageCenterService.remove();
+			messageCenterService.add('warning',
+				'You are now logged out!',
+				{status: messageCenterService.status.next});
 
-							defer.resolve();
+			defer.resolve();
 
-						}).error(function (err) {
-							defer.reject();
-						});
+		}).error(function (err) {
+			defer.reject();
+		});
 
-						return defer.promise;
-					},
-					isLoggedIn: function () {
-						var defer = $q.defer();
-						$http.get('auth/check').success(
-								function (res) {
-									$rootScope.user = res;
-									$rootScope.user.isLoggedIn = true;
-									defer.resolve();
-								}).error(function (err) {
-									$rootScope.user = {};
-									$rootScope.user.isLoggedIn = false;
-									defer.reject();
-								});
+		return defer.promise;
+	},
+	isLoggedIn: function () {
+		var defer = $q.defer();
+		$http.get('auth/check').success(
+				function (res) {
+					$rootScope.user = res;
+					$rootScope.user.isLoggedIn = true;
+					defer.resolve();
+				}).error(function (err) {
+					$rootScope.user = {};
+					$rootScope.user.isLoggedIn = false;
+					defer.reject();
+				});
 
-						return defer.promise;
-					},
-					reminder: function (email) {
-						var defer = $q.defer();
-						$http.post('remind/email', email)
-							.success(function (message) {
-								messageCenterService.remove();
-								messageCenterService.add('success',
-									'Password reset email sent!',
-									{status: messageCenterService.status.next});
+		return defer.promise;
+	},
+	reminder: function (email) {
+		var defer = $q.defer();
+		$http.post('api/remind/email', email)
+			.success(function (message) {
+				messageCenterService.remove();
+				messageCenterService.add('success',
+					'Password reset email sent!',
+					{status: messageCenterService.status.next});
 
-								$state.go('posts');
-								defer.resolve(message);
-							})
-						.error(function (response) {
-							messageCenterService.remove();
-							messageCenterService.add('danger',
-								response.flash,
-								{status: messageCenterService.status.next});
+				$state.go('posts');
+				defer.resolve(message);
+			})
+		.error(function (response) {
+			messageCenterService.remove();
+			messageCenterService.add('danger',
+				response.flash,
+				{status: messageCenterService.status.next});
 
-							defer.reject();
-						});
-						return defer.promise;
+			defer.reject();
+		});
+		return defer.promise;
 
-					},
-					register: function (data) {
-						var defer = $q.defer();
-						$http.post('users', data)
-							.success(function (res) {
-								messageCenterService.remove();
-								messageCenterService.add('success',
-									res.flash,
-									{status: messageCenterService.status.next});
-								$state.go('login');
+	},
+	register: function (data) {
+		var defer = $q.defer();
+		$http.post('api/users', data)
+			.success(function (res) {
+				messageCenterService.remove();
+				messageCenterService.add('success',
+					res.flash,
+					{status: messageCenterService.status.next});
+				$state.go('login');
 
-								defer.resolve();
-							})
-						.error(function (err) {
-							messageCenterService.remove();
-							messageCenterService.add('danger',
-								err.flash,
-								{status: messageCenterService.status.next});
-							defer.reject();
-						});
-					}
-				};
-			}]);
+				defer.resolve();
+			})
+		.error(function (err) {
+			messageCenterService.remove();
+			messageCenterService.add('danger',
+				err.flash,
+				{status: messageCenterService.status.next});
+			defer.reject();
+		});
+	}
+};
+		}]);
 
 
 
