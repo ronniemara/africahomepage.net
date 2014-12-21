@@ -8,7 +8,7 @@
 		<h2>Activate Account</h2>
 
 		<div>
-                    Click <a href="<?php echo URL::to('activate/' . $confirmation_code); ?>">this link</a> to confirm your account. 
+                    Click <a href="<?php echo URL::to('api/activate/' . $confirmation_code); ?>">this link</a> to confirm your account. 
 		</div>
 	</body>
 </html>
