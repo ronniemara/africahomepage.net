@@ -41,6 +41,8 @@ Route::post('remind/email', 'RemindersController@postRemind');
 Route::get('reset/{token}', 'RemindersController@getReset');
 Route::post('remind/password', 'RemindersController@postReset');
 
+Route::get('activate/{confirmationCode}', 'UsersController@postActivate');
+
 Route::resource('users', 'UsersController');
 });
 
@@ -54,7 +56,6 @@ App::missing(function($exception)
 	return View::make('layouts.bootstrap');
 });
 
-Route::get('activate/{confirmationCode}', 'UsersController@postActivate');
 
 
 

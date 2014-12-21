@@ -8,7 +8,7 @@
 
 		<div>
 			To reset your password, click this link 
-			<a href="<?php echo URL::to('api/activate/' . $token); ?>">Reset password</a>
+			<a href="<?php echo URL::to('api/reset/' . $token); ?>">Reset password</a>
 		</div>
 	</body>
 </html>
