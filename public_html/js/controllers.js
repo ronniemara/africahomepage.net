@@ -120,7 +120,9 @@ return {
 
 appControllers.controller('PostsCtrl',
 		['$scope', 'Restangular', 'messageCenterService',
-		function ($scope, Restangular, messageCenterService) {
+		    '$location', '$anchorScroll',
+		function ($scope, Restangular, messageCenterService,
+		$location, $anchorScroll) {
 
 			// Get all posts from server.
 			var allPosts = Restangular.all('api/posts');
@@ -136,10 +138,14 @@ appControllers.controller('PostsCtrl',
 				};
 				$scope.$watch('currentPage + itemsPerPage',
 					function () {
-						var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+					    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
 					end = begin + $scope.itemsPerPage;
 				$scope.position = (10 * ($scope.currentPage - 1));
 				$scope.filteredPosts = $scope.posts.slice(begin, end);
+				$location.hash('top');
+
+				// call $anchorScroll()
+				$anchorScroll();
 					});
 			});
 			//voting up and down

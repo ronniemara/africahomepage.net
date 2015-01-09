@@ -90,7 +90,7 @@
 		<div class="row-fluid">
                         <div class="col-xs-12 col-md-9">
                             <mc-messages></mc-messages>
-                            <div data-ui-view >
+                            <div data-ui-view  auto-scroll="true">
                                 Loading...
                             </div>
                         </div>

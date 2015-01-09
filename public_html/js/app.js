@@ -43,14 +43,17 @@
 
     app.run(['$rootScope', 
         '$idle', '$state', '$stateParams',
+	'$window',
         function ($rootScope, 
-            $idle, $state, $stateParams) {
-            $rootScope.$state = $state;
+            $idle, $state, $stateParams
+	    ) {
+	    $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
 	    $rootScope.user = {};
             //start watching for idling...
             //$idle.watch();
             $state.transitionTo('posts');
+	   
             
         }]);
 }());
