@@ -47,6 +47,7 @@
             $idle, $state, $stateParams) {
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
+	    $rootScope.user = {};
             //start watching for idling...
             //$idle.watch();
             $state.transitionTo('posts');

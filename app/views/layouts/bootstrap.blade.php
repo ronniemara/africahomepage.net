@@ -88,13 +88,13 @@
 		</nav>
 	    </header>
 		<div class="row-fluid">
-                        <div class="col-md-9"  >
+                        <div class="col-xs-12 col-md-9">
                             <mc-messages></mc-messages>
                             <div data-ui-view >
                                 Loading...
                             </div>
                         </div>
-			<aside class="col-md-3 well">
+			<aside class="col-xs-12 col-md-3 well">
 			    <h3>Connect with Us</h3>
 				<a href="https://plus.google.com/+AfricahomepageNet" rel="publisher"> <i class="fa fa-google-plus fa-3x"></i></a>
                                 <a href="https://www.twitter.com/africahomepage">
@@ -110,7 +110,7 @@
 
     <!-- Le javascript
     ================================================== -->
-    <!--        Placed at the end of the document so the pages load faster  --> 
+    
     <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>

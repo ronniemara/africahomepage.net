@@ -118,8 +118,6 @@ return {
 };
 		}]);
 
-
-
 appControllers.controller('PostsCtrl',
 		['$scope', 'Restangular', 'messageCenterService',
 		function ($scope, Restangular, messageCenterService) {
@@ -220,9 +218,9 @@ appControllers.controller('PostsCtrl',
 
 appControllers.controller('PanelCtrl',
 		['$scope', 'AuthSvc', 
-		'vcRecaptchaService', '$idle',
+		'vcRecaptchaService', '$idle', '$rootScope',
 		function ($scope, AuthSvc, 
-			vcRecaptchaService, $idle) {
+			vcRecaptchaService, $idle, $rootScope) {
 
 				AuthSvc.isLoggedIn();
 
@@ -231,7 +229,10 @@ appControllers.controller('PanelCtrl',
 				//event listener for when idle time out occurs
 				$scope.$on('$idleTimeout', function () {
 					// end their session and  logout
-					AuthSvc.logout();
+					if(Object.getOwnPropertyNames($rootScope.user).length === 0)
+					{
+						AuthSvc.logout();
+					}
 
 				});
 				$scope.credentials = {"email": "", "password": "", "remember": ""};
