@@ -4,48 +4,8 @@
             <li ng-class="{ active: $state.includes('posts') }">
                 <h4>All Posts</h4>
             </li>
-            <li ng-if="user.isLoggedIn">
-                <button class="btn btn-info" ng-click="trigger()">Create a Post</button>
-                <div class="panel" ng-if="create.form">
-                    <form novalidate name="PostForm" ng-submit="PostForm.$valid && post(PostForm)">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-header"></i></span>
-                                        <input type="text" name="title" id="title" ng-model="data.title" placeholder="Title" class="form-control" autocomplete="off" required>                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-at"></i></span>
-                                        <input type="url" ng-model="data.url" class="form-control" placeholder="URL" autocomplete="off" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <auto-complete model="data.tags"></auto-complete>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input class="btn btn-info" type="submit" value="Create"> 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </li>
             <li class="nav-header">Top Posts</li>
+	    <div ui-view="create"></div>
             <li class="list-group-item" ng-repeat="post in filteredPosts">
                 <div>
                     <div class="row-fluid">

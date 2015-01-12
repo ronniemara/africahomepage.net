@@ -1,60 +1,43 @@
-<div class="panel">
-    <div class="row centered-form">
-        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin">Create post</h3>
-                </div>
-                <div class="panel-body">
-                    <form name="CreatePostForm" ng-submit="CreatePostForm.$valid && create()">
-                        <div class="alert alert-warning" ng-show="hasErrors">
-                            <a href="#" class="close" data-dismiss="alert">&times;</a>
-
-                            <div ng-model="errors">
-                                <ul>
-                                    <li class="error" ng-repeat="error in errors">
-                                        {{error}}
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!--    <div class="alert alert-success">
-                                <a href="#" class="close" data-dismiss="alert">&times;</a>
-                                <ul>
-                                    <li class="error">{{ Session::get('message') }}</li> 
-                                </ul>
-                                
-                            </div>-->
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="title" ng-model="post.title" placeholder="Title" class="form-control" required>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                        <input type="url" ng-model="post.url" placeholder="Url" class="form-control" required>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </form>
-                </div>
-                <div>You must <a href="/#/login">login</a>, in order to post entries.</div>
-            </div>
-        </div> 
-    </div>
+<li ng-if="user.isLoggedIn">
+<button class="btn btn-info" ng-click="trigger()">Create a Post</button>
+<div class="panel" ng-if="create.form">
+	<form novalidate name="PostForm" ng-submit="PostForm.$valid && post(PostForm)">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-header"></i></span>
+						<input type="text" name="title" id="title" ng-model="data.title" placeholder="Title" class="form-control" autocomplete="off" required>                                        
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-at"></i></span>
+						<input type="url" ng-model="data.url" class="form-control" placeholder="URL" autocomplete="off" required>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<auto-complete model="data.tags"></auto-complete>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="form-group">
+					<div class="input-group">
+						<input class="btn btn-info" type="submit" value="Create"> 
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
+</li>
+<li class="nav-header">Top Posts</li>
 

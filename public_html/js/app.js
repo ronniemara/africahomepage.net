@@ -33,11 +33,18 @@
                     controller: 'PanelCtrl'
                 })
                 .state('posts', {
-                    url: 'posts?page',
+                    url: 'posts',
                     templateUrl:  '/templates/posts/posts.html',
-                    controller: 'PostsCtrl'
+                    controller: 'PostsCtrl',
+		})
+		.state('posts.create', 
+			{
+				views: 
+				{			
+					"create" : { templateUrl : "/templates/posts/create.html"}
+				}	
 		   
-                });
+               		 });
                 
         }]);
 
