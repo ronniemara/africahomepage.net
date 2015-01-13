@@ -33,16 +33,21 @@
                     controller: 'PanelCtrl'
                 })
                 .state('posts', {
-                    url: 'posts',
-                    templateUrl:  '/templates/posts/posts.html',
-                    controller: 'PostsCtrl',
+                    abstract: true,
+			url: 'posts',
+		    templateUrl:  '/templates/posts/posts.html',
 		})
-		.state('posts.create', 
-			{
-				views: 
-				{			
-					"create" : { templateUrl : "/templates/posts/create.html"}
-				}	
+		.state('posts.content', 
+		{
+		  url: '',
+		  views: 
+		  {			
+		  'create' : { templateUrl : '/templates/posts/create.html',
+				  controller: 'PostsCtrl',
+		  },
+		'list' : { templateUrl : '/templates/posts/list.html',
+			controller : 'PostsCtrl'}
+		  }	
 		   
                		 });
                 
@@ -59,7 +64,7 @@
 	    $rootScope.user = {};
             //start watching for idling...
             //$idle.watch();
-            $state.transitionTo('posts');
+            $state.transitionTo('posts.content');
 	   
             
         }]);
