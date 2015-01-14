@@ -9,9 +9,9 @@
 			</li>
 			<li class="nav-header">
 			<ul class="nav nav-tabs">
-				<li role="presentation"><a href="#">Top Posts</a> </li>
-				<li role="presentation"><a href="#">Newest Posts</a> </li>
-				<li role="presentation"><a href="#">Most Discussed Posts</a> </li>
+			<li><a href="" ng-click="sort('created_at')">Newest Posts</a></li>
+			<li><a href="" ng-click="sort('rank')">Top Posts</a></li>
+			<li><a href="" ng-click="sort('votes')">Most Discussed Posts</a></li>
 			</ul>
 			</li>
 			<div ui-view="list"></div>
