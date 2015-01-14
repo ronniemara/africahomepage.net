@@ -23,7 +23,7 @@ return {
 				'You are now logged in!',
 				{status: messageCenterService.status.next
 				});
-			$state.go('posts');
+			$state.go('posts.content');
 
 			defer.resolve(response);
 			})
@@ -121,15 +121,18 @@ return {
 appControllers.controller('PostsCtrl',
 		['$scope', 'Restangular', 'messageCenterService',
 		    '$location', '$anchorScroll',
+		    '$filter',
 		function ($scope, Restangular, messageCenterService,
-		$location, $anchorScroll) {
-
+		$location, $anchorScroll, $filter) {
+		
+			
 			// Get all posts from server.
 			var allPosts = Restangular.all('api/posts');
+			
 
 			allPosts.getList().then(function (posts) {
-				$scope.posts = posts;
 				$scope.predicate = 'rank';
+				$scope.posts = $filter('orderBy')(posts, $scope.predicate, false);
 				$scope.itemsPerPage = 10;
 				$scope.currentPage = 1;
 				$scope.totalItems = $scope.posts.length;
@@ -216,6 +219,16 @@ appControllers.controller('PostsCtrl',
 						console.log("There was an error saving");
 					}); 
 			};
+			
+			$scope.sort = function(predicate){
+						$scope.posts = $filter('orderBy')(posts, predicate, false);
+						$state.go('posts.content');
+			};
+
+			$scope.getTags = function(tagId) {
+			Restangular.one('tags', tagId).getList('posts')			
+			
+			}
 
 		}]);
 
@@ -235,7 +248,7 @@ appControllers.controller('PanelCtrl',
 				//event listener for when idle time out occurs
 				$scope.$on('$idleTimeout', function () {
 					// end their session and  logout
-					if(Object.getOwnPropertyNames($rootScope.user).length === 0)
+					if(typeof(Object.getOwnPropertyNames($rootScope.user)) === 'undefined')
 					{
 						AuthSvc.logout();
 					}

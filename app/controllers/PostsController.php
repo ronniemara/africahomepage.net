@@ -36,11 +36,12 @@ class PostsController extends BaseController {
             //setting the rank of the post when displaying all posts
             $post->rank = $this->calculate_score($votes, $age_in_hours);
         }
-       $sortPosts = $posts->sortBy(function($post) {
-                    return $post->rank;
-                })->reverse();
+       //$sortPosts = $posts->sortBy(function($post) {
+       //             return $post->rank;
+       //         })->reverse();
 
-        $postsValues = $sortPosts->values()->toArray();
+        //$postsValues = $sortPosts->values()->toArray();
+        $postsValues = $posts->values()->toArray();
         
         return Response::make($postsValues, 200);
     }
