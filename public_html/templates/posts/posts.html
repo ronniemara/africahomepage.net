@@ -1,23 +1,25 @@
 <div id="top">
-	<div class="panel panel-default">
-		<ul class="nav nav-list">
-			<li ng-class="{ active: $state.includes('posts') }">
-				<h4>All Posts</h4>
-			</li>
-			<li ng-if="user.isLoggedIn">
-			<div ui-view="create"></div>
-			</li>
-			<li class="nav-header">
-			<ul class="nav nav-tabs">
-			<li><a href="" ng-click="sort('created_at')">Newest Posts</a></li>
-			<li><a href="" ng-click="sort('rank')">Top Posts</a></li>
-			<li><a href="" ng-click="sort('votes')">Most Discussed Posts</a></li>
-			</ul>
-			</li>
-			<div ui-view="list"></div>
-				</ul>
-				<hr>
-			</div>
-		</div>
+    <div class="panel panel-default">
+        <ul class="nav nav-list">
+            <li ng-class="{ active: $state.includes('posts') }">
+                <h4>All Posts</h4>
+            </li>
+            <li ng-if="user.isLoggedIn">
+                <div data-ui-view="create"></div>
+            </li>
+            <li class="nav-header">
+                <ul class="nav nav-tabs">
+                    <li><a href="" ng-click="predicate = 'created_at';
+			reverse = !reverse;">Newest Posts</a></li>
+                    <li><a href="" ng-click="predicate = 'votes';
+			reverse = !reverse;">Top Posts</a></li>
+                    <!--<li><a href="" ng-click="predicate='comments'; reverse=!reverse;">Most Discussed Posts</a></li> -->
+                </ul>
+            </li>
+            <li><div data-ui-view="list"></div></li>
+        </ul>
+        <hr>
+    </div>
+</div>
 
 

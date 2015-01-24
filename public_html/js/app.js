@@ -5,10 +5,12 @@
         'vcRecaptcha', 'MessageCenterModule', 'restangular',
         'com.htmlxprs.autocomplete.directives'
     ]);
+    
     app.config(['$stateProvider', '$urlRouterProvider',
         '$idleProvider', '$httpProvider', '$locationProvider',
         function ($stateProvider, $urlRouterProvider,
             $idleProvider, $httpProvider, $locationProvider) {
+		
              $locationProvider.html5Mode(true); 
             $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
             //set the idle duration
@@ -32,26 +34,34 @@
                     templateUrl: "/templates/login/reminder.html",
                     controller: 'PanelCtrl'
                 })
-                .state('posts', {
-                    abstract: true,
-			url: 'posts',
-		    templateUrl:  '/templates/posts/posts.html',
+                .state('posts', 
+				{   abstract: true,
+				    url: 'posts',
+				    templateUrl:  '/templates/posts/posts.html'
+				    
 		})
-		.state('posts.content', 
-		{
-		  url: '',
-		  views: 
-		  {			
-		  'create' : { templateUrl : '/templates/posts/create.html',
-				  controller: 'PostsCtrl',
-		  },
-		'list' : { templateUrl : '/templates/posts/list.html',
-			controller : 'PostsCtrl'}
-		  }	
-		   
-               		 });
-                
-        }]);
+		.state('posts.content',
+		    {
+			url: '',
+			resolve: {	
+			    posts: function (PostsSvc) {
+				    debugger;
+						    return PostsSvc.getPosts();
+						}
+					    },
+			views:
+			    {
+				'create': { templateUrl: '/templates/posts/create.html',
+					    controller: 'PostsCtrl'
+				},
+				'list': {   templateUrl: '/templates/posts/list.html',
+					    controller: 'PostsCtrl'
+					}
+			    }
+
+		    });
+
+	}]);
 
     app.run(['$rootScope', 
         '$idle', '$state', '$stateParams',

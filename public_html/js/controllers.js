@@ -117,22 +117,41 @@ return {
 	}
 };
 		}]);
+	    
+	    
+	    appControllers.filter('page', function () {
+		
+    return function (input, start, end) {
+        return input.slice(start, end);
+    };
+});
+	    
+appControllers.factory('PostsSvc', ['Restangular', '$q',
+    function(Restangular, $q){
+return {
+  getPosts:function(){
+     var defer = $q.defer();
+     Restangular.all('api/posts')
+	 .getList()
+	 .then(function (posts) {
+	     defer.resolve(posts);
+     });
+     return defer.promise;
+
+			
+  }  
+};	
+}]);
 
 appControllers.controller('PostsCtrl',
-		['$scope', 'Restangular', 'messageCenterService',
+		['$scope', 'posts',
 		    '$location', '$anchorScroll',
-		    '$filter',
-		function ($scope, Restangular, messageCenterService,
-		$location, $anchorScroll, $filter) {
-		
-			
-			// Get all posts from server.
-			var allPosts = Restangular.all('api/posts');
-			
-
-			allPosts.getList().then(function (posts) {
+		    function ($scope, posts, $location,
+				$anchorScroll) {
+				   
+				$scope.posts = posts;
 				$scope.predicate = 'rank';
-				$scope.posts = $filter('orderBy')(posts, $scope.predicate, false);
+				$scope.reverse = false;
 				$scope.itemsPerPage = 10;
 				$scope.currentPage = 1;
 				$scope.totalItems = $scope.posts.length;
@@ -143,14 +162,13 @@ appControllers.controller('PostsCtrl',
 					function () {
 					    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
 					end = begin + $scope.itemsPerPage;
-				$scope.position = (10 * ($scope.currentPage - 1));
-				$scope.filteredPosts = $scope.posts.slice(begin, end);
+				
 				$location.hash('top');
 
 				// call $anchorScroll()
 				$anchorScroll();
 					});
-			});
+			
 			//voting up and down
 			$scope.voteUp = function (post) {
 
@@ -225,10 +243,10 @@ appControllers.controller('PostsCtrl',
 						$state.go('posts.content');
 			};
 
-			$scope.getTags = function(tagId) {
-			Restangular.one('tags', tagId).getList('posts')			
-			
-			}
+//			$scope.getTags = function(tagId) {
+//			Restangular.one('tags', tagId).getList('posts')			
+//			
+//			};
 
 		}]);
 
