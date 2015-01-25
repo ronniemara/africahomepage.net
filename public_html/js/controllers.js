@@ -118,14 +118,10 @@ return {
 };
 		}]);
 	    
-	    
-	    appControllers.filter('page', function () {
-		
-    return function (input, start, end) {
-        return input.slice(start, end);
-    };
-});
-	    
+	  
+
+  
+	   
 appControllers.factory('PostsSvc', ['Restangular', '$q',
     function(Restangular, $q){
 return {
@@ -142,7 +138,12 @@ return {
   }  
 };	
 }]);
-
+appControllers.filter('page', function () {
+		
+    return function (input, start, end) {
+        return input.slice(start, end);
+    };
+     });    
 appControllers.controller('PostsCtrl',
 		['$scope', 'posts',
 		    '$location', '$anchorScroll',
@@ -160,8 +161,8 @@ appControllers.controller('PostsCtrl',
 				};
 				$scope.$watch('currentPage + itemsPerPage',
 					function () {
-					    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
-					end = begin + $scope.itemsPerPage;
+					     $scope.begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
+					$scope.end = $scope.begin + $scope.itemsPerPage;
 				
 				$location.hash('top');
 

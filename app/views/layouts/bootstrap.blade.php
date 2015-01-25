@@ -69,7 +69,7 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
 			    <ul class="nav navbar-nav" >
-				<li ng-class="{active: $state.includes('posts')}"><a ui-sref="posts" >Posts</a></li>
+				<li ng-class="{active: $state.includes('posts')}"><a ui-sref="posts.content" >Posts</a></li>
 			    </ul>            
 			    <div class="pull-right">
 				<div class="navbar-right pull-right" ng-if="user.isLoggedIn" >

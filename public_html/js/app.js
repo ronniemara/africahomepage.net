@@ -6,6 +6,8 @@
         'com.htmlxprs.autocomplete.directives'
     ]);
     
+    
+    
     app.config(['$stateProvider', '$urlRouterProvider',
         '$idleProvider', '$httpProvider', '$locationProvider',
         function ($stateProvider, $urlRouterProvider,
@@ -45,7 +47,7 @@
 			url: '',
 			resolve: {	
 			    posts: function (PostsSvc) {
-				    debugger;
+				   
 						    return PostsSvc.getPosts();
 						}
 					    },
@@ -62,6 +64,8 @@
 		    });
 
 	}]);
+    
+     
 
     app.run(['$rootScope', 
         '$idle', '$state', '$stateParams',
