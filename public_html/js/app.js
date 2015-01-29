@@ -19,33 +19,47 @@
             //$urlRouterProvider.otherwise('posts');
             // Now set up the states
             $stateProvider
-                .state('login', {
+                .state('base', {
+                    url: "",
+                    templateUrl: "/templates/base/index.html",
+			resolve: {
+				user : function(AuthSvc){
+				return AuthSvc.isLoggedIn().then(function(res){
+				return res;
+				},
+					function(res){
+					return res;
+					});
+				}
+			},
+                    controller: 'PanelCtrl'
+                })
+                .state('base.login', {
                     url: "login",
                     templateUrl: "/templates/login/index.html",
-                    controller: 'PanelCtrl'
+                    controller: 'LoginCtrl'
                 })
-                .state('signup', {
+                .state('base.signup', {
                     url: "signup",
                     templateUrl: "/templates/login/signup.html",
-                    controller: 'PanelCtrl'
+                    controller: 'LoginCtrl'
                 })
-                .state('reminder', {
+                .state('base.reminder', {
                     url: "reminder",
                     templateUrl: "/templates/login/reminder.html",
-                    controller: 'PanelCtrl'
+                    controller: 'LoginCtrl'
                 })
-                .state('posts', 
+                .state('base.posts', 
 				{   abstract: true,
 				    url: 'posts',
 				    templateUrl:  '/templates/posts/posts.html'
 				    
 		})
-		.state('posts.content',
+		.state('base.posts.content',
 		    {
 			url: '',
 			resolve: {	
 			    posts: function (PostsSvc) {
-				    debugger;
 						    return PostsSvc.getPosts();
 						}
 					    },
@@ -71,10 +85,9 @@
 	    ) {
 	    $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
-	    $rootScope.user = {};
             //start watching for idling...
             //$idle.watch();
-            $state.transitionTo('posts.content');
+            $state.transitionTo('base.posts.content');
 	   
             
         }]);

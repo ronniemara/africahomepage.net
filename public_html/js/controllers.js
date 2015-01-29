@@ -9,23 +9,20 @@
 		function ($http,$q,
 			messageCenterService,$rootScope,
 			$state) {
+				var user = false;
 return {
 	login: function (credentials, form) {
 		var defer = $q.defer();
 		$http.post('/api/auth/login', credentials)
 		.success(function (response) {
-			$rootScope.user = response;
-
 			form.$setPristine();
-			$rootScope.user.isLoggedIn = true;
 			messageCenterService.remove();
 			messageCenterService.add('success',
 				'You are now logged in!',
 				{status: messageCenterService.status.next
 				});
-			$state.go('posts.content');
-
 			defer.resolve(response);
+
 			})
 		.error(function (response) {
 			messageCenterService.remove();
@@ -38,12 +35,7 @@ return {
 						},
 	logout: function () {
 		var defer = $q.defer();
-		if($rootScope.user.isLoggedIn === false){
-			return;
-		}
 		$http.get('/api/auth/logout').success(function () {
-			$rootScope.user = {};
-			$rootScope.user.isLoggedIn = false;
 			messageCenterService.remove();
 			messageCenterService.add('warning',
 				'You are now logged out!',
@@ -58,18 +50,15 @@ return {
 		return defer.promise;
 	},
 	isLoggedIn: function () {
+
 		var defer = $q.defer();
-		$http.get('auth/check').success(
+		$http.get('api/auth/check').success(
 				function (res) {
-					$rootScope.user = res;
-					$rootScope.user.isLoggedIn = true;
-					defer.resolve();
+					defer.resolve(res);
 				}).error(function (err) {
-					$rootScope.user = {};
-					$rootScope.user.isLoggedIn = false;
+					
 					defer.reject();
 				});
-
 		return defer.promise;
 	},
 	reminder: function (email) {
@@ -148,7 +137,6 @@ appControllers.controller('PostsCtrl',
 		    '$location', '$anchorScroll',
 		    function ($scope, posts, $location,
 				$anchorScroll) {
-				   
 				$scope.posts = posts;
 				$scope.predicate = 'rank';
 				$scope.reverse = false;
@@ -254,46 +242,60 @@ appControllers.controller('PostsCtrl',
 
 
 appControllers.controller('PanelCtrl',
-		['$scope', 'AuthSvc', 
+		['$scope', 'user', 'AuthSvc', 
 		'vcRecaptchaService', '$idle', '$rootScope',
-		function ($scope, AuthSvc, 
-			vcRecaptchaService, $idle, $rootScope) {
-
-				AuthSvc.isLoggedIn();
-
+		'$state',
+		function ($scope, user, AuthSvc, 
+			vcRecaptchaService, $idle, $rootScope, $state) {
+				$scope.user = user;
+				$scope.$on('loggedIn', function(){
+					$scope.user = user;
+				});
 				//start watching for idling...
 				$idle.watch();
 				//event listener for when idle time out occurs
 				$scope.$on('$idleTimeout', function () {
 					// end their session and  logout
 					if(typeof(Object.getOwnPropertyNames($rootScope.user)) === 'undefined')
-					{
-						AuthSvc.logout();
-					}
+				{
+					AuthSvc.logout();
+				}
 
 				});
-				$scope.credentials = {"email": "", "password": "", "remember": ""};
-				$scope.login = function (form) {
-					AuthSvc.login($scope.credentials, form);
-
-				};
-
 				$scope.logout = function () {
-					AuthSvc.logout();
+					AuthSvc.logout().then(function(){
+						$scope.user = false;
+					});
 				};
+				}]);
 
-				$scope.guest = {"email": "", "firstName": "", "lastName": "", "username": "", "password": "", "password_confirmation": "", "challenge": "", "response": ""};
-				$scope.register = function () {
-					var captcha = vcRecaptchaService.data();
-					var data = angular.extend($scope.guest, captcha);
-					AuthSvc.register(data);
-				};
-				$scope.recover = {"email": ""};
-				$scope.reminder = function () {
-					AuthSvc.reminder($scope.recover);
-				};
+appControllers.controller('LoginCtrl', ['$scope','AuthSvc', '$state',
+	       	function($scope, AuthSvc, $state){
+	$scope.credentials = {"email": "", "password": "", "remember": ""};
+	$scope.login = function (form) {
+		AuthSvc.login($scope.credentials, form)
+	.then(function(res){
+		$scope.user = res;
+		$scope.$emit('loggedIn');
+		$state.go('base.posts.content');
+	});
+	};
 
-			}]);
+
+
+$scope.guest = {"email": "", "firstName": "", "lastName": "", "username": "", "password": "", "password_confirmation": "", "challenge": "", "response": ""};
+$scope.register = function () {
+	var captcha = vcRecaptchaService.data();
+	var data = angular.extend($scope.guest, captcha);
+	AuthSvc.register(data);
+};
+$scope.recover = {"email": ""};
+$scope.reminder = function () {
+	AuthSvc.reminder($scope.recover);
+};
+
+
+}]);
 
 
 }());
