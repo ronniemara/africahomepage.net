@@ -48,60 +48,7 @@
         <base href="/">
     </head>
     <body >
-	<div class="container-fluid"  ng-controller="PanelCtrl">
-	    <header>
-		<div class="panel">
-		    <h1 class="col-md-offset-3">
-			<a href="#" style="text-decoration: none;">
-			    <span class="icon-africa"></span>AfricaHomepage
-			</a>
-		    </h1>
-		</div>
-		<nav class="navbar navbar-default " role="navigation" style="margin-top: -21px;">
-		    <div class="container-fluid">
-			<div class="navbar-header">
-			    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			    </button>
-			</div>
-			<div class="collapse navbar-collapse" id="navbar-collapse-1">
-			    <ul class="nav navbar-nav" >
-				<li ng-class="{active: $state.includes('posts')}"><a ui-sref="posts.content" >Posts</a></li>
-			    </ul>            
-			    <div class="pull-right">
-				<div class="navbar-right pull-right" ng-if="user.isLoggedIn" >
-                                    <p>
-					Logged in as <cite><a class="navbar-link">{{user.username}}</a></cite>
-                                    <a><button ng-click="logout()">Logout</button></a>
-				    </p>   
-
-				</div>                                
-				<ul class=" nav navbar-nav" ng-if="!user.isLoggedIn">
-				    <li ng-class="{active: $state.includes('login')}"><a ui-sref="login">Login</a></li> 
-				</ul>
-			    </div>
-			</div><!--/.nav-collapse -->
-		    </div>
-		</nav>
-	    </header>
-		<div class="row-fluid">
-                        <div class="col-md-9"  >
-                            <mc-messages></mc-messages>
-                            <div data-ui-view >
-                                Loading...
-                            </div>
-                        </div>
-			<aside class="col-md-3 well">
-			    <h3>Connect with Us</h3>
-				<a href="https://plus.google.com/+AfricahomepageNet" rel="publisher"> <i class="fa fa-google-plus fa-3x"></i></a>
-                                <a href="https://www.twitter.com/africahomepage">
-                                    <i class="fa fa-twitter-square fa-3x"></i>
-                                </a>	
-                        </aside>
-		</div>
+<div ui-view>Loading...</div>
 <footer class="panel">
     <p> <i class="fa fa-copyright"></i> 2014 Black Mirror Media</p>
 </footer>
