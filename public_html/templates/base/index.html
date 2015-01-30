@@ -19,17 +19,17 @@
 			</div>
 			<div class="collapse navbar-collapse" id="navbar-collapse-1">
 			    <ul class="nav navbar-nav" >
-				<li ng-class="{active: $state.includes('posts')}"><a ui-sref="base.posts" >Posts</a></li>
+				<li ng-class="{active: $state.includes('posts')}"><a ui-sref="base.posts.content" >Posts</a></li>
 			    </ul>            
-			    <div class="pull-right">
-				    <ul>
+			    <div class="pull-right-lg">
+				    <ul class="nav navbar-nav">
 					    <li class="navbar-right pull-right" ng-show="user" >
 						    <p>
 							    Logged in as <cite><a class="navbar-link">{{user.username}}</a></cite>
 							    <a><button ng-click="logout()">Logout</button></a>
 						    </p>   
 					    </li>                                
-					    <li ng-show="!user" ng-class="{active: $state.includes('login')}"><a ui-sref="base.login">Login</a></li> 
+					    <li ng-show="!user" ng-class="{active: $state.includes('base.login')}"><a ui-sref="base.login">Login</a></li> 
 				    </ul>
 			    </ul>
 			    </div>
