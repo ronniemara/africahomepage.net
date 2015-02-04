@@ -21,7 +21,7 @@ return {
 				'You are now logged in!',
 				{status: messageCenterService.status.next
 				});
-			defer.resolve(response);
+			defer.resolve();
 
 			})
 		.error(function (response) {
@@ -103,7 +103,8 @@ return {
 				{status: messageCenterService.status.next});
 			defer.reject();
 		});
-	}
+	},
+	user : null
 };
 		}]);
 	    
@@ -244,25 +245,22 @@ appControllers.controller('PostsCtrl',
 
 appControllers.controller('PanelCtrl',
 		['$scope', 'user', 'AuthSvc', 
-		'vcRecaptchaService', '$idle', '$rootScope',
+		'vcRecaptchaService', '$idle', 
 		'$state',
 		function ($scope, user, AuthSvc, 
 			vcRecaptchaService, $idle, $rootScope, $state) {
 				$scope.user = user;
-				$scope.$on('loggedIn', function(){
-					$scope.user = user;
-				});
 				//start watching for idling...
 				$idle.watch();
 				//event listener for when idle time out occurs
-				$scope.$on('$idleTimeout', function () {
-					// end their session and  logout
-					if(typeof(Object.getOwnPropertyNames($rootScope.user)) === 'undefined')
-				{
-					AuthSvc.logout();
-				}
-
-				});
+				// $scope.$on('$idleTimeout', function () {
+				// 	// end their session and  logout
+				// 	if(typeof(Object.getOwnPropertyNames(AuthSvc.user)) === 'undefined')
+				// {
+				// 	AuthSvc.logout();
+				// }
+                                //
+				// });
 				$scope.logout = function () {
 					AuthSvc.logout().then(function(){
 						$scope.user = false;
@@ -276,8 +274,6 @@ appControllers.controller('LoginCtrl', ['$scope','AuthSvc', '$state',
 	$scope.login = function (form) {
 		AuthSvc.login($scope.credentials, form)
 	.then(function(res){
-		$scope.user = res;
-		$scope.$emit('loggedIn');
 		$state.go('base.posts.content');
 	});
 	};

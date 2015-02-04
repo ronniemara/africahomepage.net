@@ -9,30 +9,23 @@
     app.config(['$stateProvider', '$urlRouterProvider',
         '$idleProvider', '$httpProvider', '$locationProvider',
         function ($stateProvider, $urlRouterProvider,
-            $idleProvider, $httpProvider, $locationProvider) {
-		
-             $locationProvider.html5Mode(true); 
+           $idleProvider, $httpProvider, $locationProvider) {
+	     $locationProvider.html5Mode(true); 
             $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
             //set the idle duration
             $idleProvider.idleDuration(300);
             // For any unmatched url, redirect to /posts
-            //$urlRouterProvider.otherwise('posts');
+            //$urlRouterProvider.otherwise('/posts');
             // Now set up the states
             $stateProvider
                 .state('base', {
                     url: "",
                     templateUrl: "/templates/base/index.html",
 			resolve: {
-				user : function(AuthSvc){
-				return AuthSvc.isLoggedIn().then(function(res){
-				return res;
-				},
-					function(res){
-					return res;
-					});
-				}
+				user : ["AuthSvc" , function(AuthSvc){
+				return AuthSvc.user;
+				 }]
 			},
-                    controller: 'PanelCtrl'
                 })
                 .state('base.login', {
                     url: "login",
@@ -79,12 +72,18 @@
 
     app.run(['$rootScope', 
         '$idle', '$state', '$stateParams',
-	'$window',
+	'$window', 'AuthSvc',
         function ($rootScope, 
-            $idle, $state, $stateParams
+            $idle, $state, $stateParams,
+	    $window ,AuthSvc
 	    ) {
+		    
 	    $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
+	    $rootScope.$on("$stateChangeStart", function(){
+	       AuthSvc.user = AuthSvc.isLoggedIn();
+	    });
+
             //start watching for idling...
             //$idle.watch();
             $state.transitionTo('base.posts.content');
