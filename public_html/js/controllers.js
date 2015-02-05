@@ -103,7 +103,8 @@ return {
 				{status: messageCenterService.status.next});
 			defer.reject();
 		});
-	}
+	},
+	user: null 
 };
 		}]);
 	    
@@ -254,14 +255,7 @@ appControllers.controller('PanelCtrl',
 				//start watching for idling...
 				$idle.watch();
 				//event listener for when idle time out occurs
-				$scope.$on('$idleTimeout', function () {
-					// end their session and  logout
-					if(typeof(Object.getOwnPropertyNames($rootScope.user)) === 'undefined')
-				{
-					AuthSvc.logout();
-				}
 
-				});
 				$scope.logout = function () {
 					AuthSvc.logout().then(function(){
 						$scope.user = false;

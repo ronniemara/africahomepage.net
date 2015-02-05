@@ -23,14 +23,9 @@
                     url: "",
                     templateUrl: "/templates/base/index.html",
 			resolve: {
-				user : function(AuthSvc){
-				return AuthSvc.isLoggedIn().then(function(res){
-				return res;
-				},
-					function(res){
-					return res;
-					});
-				}
+				user : ["AuthSvc", function(AuthSvc){
+				    return AuthSvc.user;
+					}]
 			},
                     controller: 'PanelCtrl'
                 })
@@ -77,20 +72,30 @@
 
 	}]);
 
-    app.run(['$rootScope', 
-        '$idle', '$state', '$stateParams',
-	'$window',
-        function ($rootScope, 
-            $idle, $state, $stateParams
-	    ) {
-	    $rootScope.$state = $state;
-            $rootScope.$stateParams = $stateParams;
-            //start watching for idling...
-            //$idle.watch();
-            $state.transitionTo('base.posts.content');
-	   
-            
-        }]);
+    app.run(['$rootScope', '$idle', '$state',
+	     '$stateParams', '$window', 'AuthSvc',
+		    function ($rootScope, $idle, $state,
+			      $stateParams, $window, AuthSvc
+			    ) {
+				    $rootScope.$state = $state;
+				    $rootScope.$stateParams = $stateParams;
+				    //start watching for idling...
+				    $idle.watch();
+				    $rootScope.$on('$stateChangeStart', 
+					    function(event, next, current){
+					    AuthSvc.user = AuthSvc.isLoggedIn();
+				    }); 
+				    $rootScope.$on('$idleTimeout',
+					    function () {
+					    // end their session and  logout
+						     if(typeof(Object.getOwnPropertyNames(AuthSvc.user)) === null)
+						     {
+						 AuthSvc.logout();
+						 }
+					    });
+				    $state.transitionTo('base.posts.content');
+
+				    }]);
 }());
 
 
