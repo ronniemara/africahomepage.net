@@ -69,6 +69,7 @@
     <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/lodash.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/restangular.min.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="//cdn.jsdelivr.net/satellizer/0.9.2/satellizer.min.js"></script>
     <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/directives.js?<?php echo time(); ?>" type="text/javascript"></script>

@@ -34,7 +34,7 @@ class AuthController extends BaseController {
 
         $check = Auth::check();
         if (!$check) {
-            return Response::make(["flash"=>"Please login!"], 401);
+            return Response::make(null, 401);
         }
        
         return Response::json(Auth::user());
