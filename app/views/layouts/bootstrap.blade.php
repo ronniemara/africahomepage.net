@@ -57,7 +57,7 @@
 
     <!-- Le javascript
     ================================================== -->
-    
+
     <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>

@@ -256,7 +256,9 @@ appControllers.controller('PanelCtrl',
 appControllers.controller('LoginCtrl', ['$scope','$auth', '$rootScope',
     function($scope, $auth, $rootScope){
         $scope.authenticate = function(provider) {
-            $auth.authenticate(provider);
+            $auth.authenticate(provider).then(function(res){
+                $rootScope.user = res;
+            });
         };
 
         $scope.login = function(){
