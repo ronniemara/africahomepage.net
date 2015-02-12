@@ -12,7 +12,10 @@
         "fzaninotto/faker": "v1.3.0",
         "doctrine/dbal": "2.4.*",
         "fzaninotto/faker": "1.5.*@dev",
-        "mockery/mockery": "~0.9@dev"        
+        "mockery/mockery": "~0.9@dev",
+      "guzzlehttp/guzzle": "4.2.1",
+      "firebase/php-jwt": "dev-master",
+      "guzzlehttp/oauth-subscriber": "0.1.2"
     },
     "autoload": {
         "classmap": [

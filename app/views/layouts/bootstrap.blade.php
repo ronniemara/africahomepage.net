@@ -57,7 +57,7 @@
 
     <!-- Le javascript
     ================================================== -->
-    <!--        Placed at the end of the document so the pages load faster  --> 
+    
     <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>
@@ -69,6 +69,7 @@
     <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/lodash.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/restangular.min.js?<?php echo time(); ?>" type="text/javascript"></script>
+    <script src="/js/satellizer.min.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
     <script src="/js/directives.js?<?php echo time(); ?>" type="text/javascript"></script>

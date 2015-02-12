@@ -1,42 +1,61 @@
 <?php
 
+use GuzzleHttp\Subscriber\Oauth\Oauth1;
 
-class AuthController extends BaseController {
+class AuthController extends \BaseController {
 
-    public function login() {
-        $rules = ["email" => "required|email",
-                        
-                        "password" => "required"];
-        $credentials = [
-                  "email" => Input::json('email'),
-                 "password" => Input::json('password'),
-                    
-                ];
-        $validator = Validator::make($credentials, $rules);
-        
-        if($validator->fails()){
-            return Response::make(['flash' => [$validator->messages()->all()]], 401);
+
+
+    public function login()
+    {
+        $email = Input::get('email');
+        $password = Input::get('password');
+
+        $user = User::where('email', '=', $email)->first();
+
+        if (!$user)
+        {
+            return Response::json(array('message' => 'Wrong email and/or password'), 401);
         }
-        $credentials['activated'] = 1;
-        if (Auth::attempt($credentials, Input::get('remember'))) {
-            return Response::json(Auth::user());
-        } else {
-            return Response::json(array('flash' => 'Invalid email or password!'), 401);
+
+        if (Hash::check($password, $user->password))
+        {
+            unset($user->password);
+            return Response::json(array('token' => $this->createToken($user)));
+        }
+        else
+        {
+            return Response::json(array('message' => 'Wrong email and/or password'), 401);
         }
     }
 
-    public function logout() {
-        Auth::logout();
-        Response::json(array('flash' => 'Logged Out!'));
-    }
+    public function signup()
+    {
+        $input['displayName'] = Input::get('displayName');
+        $input['email'] = Input::get('email');
+        $input['password'] = Input::get('password');
 
-    public function isLoggedIn() {
+        $rules = array('displayName' => 'required',
+                       'email' => 'required|email|unique:users,email',
+                       'password' => 'required');
 
-        $check = Auth::check();
-        if (!$check) {
-            return Response::make(["flash"=>"Please login!"], 401);
+        $validator = Validator::make($input, $rules);
+
+        if ($validator->fails()) {
+            return Response::json(array('message' => $validator->messages()), 400);
         }
-       
-        return Response::json(Auth::user());
+        else
+        {
+            $user = new User;
+            $user->displayName = Input::get('displayName');
+            $user->email = Input::get('email');
+            $user->password = Hash::make(Input::get('password'));
+            $user->save();
+            return Response::json(array('token' => $this->createToken($user)));
+
+        }
     }
+
+
+
 }
