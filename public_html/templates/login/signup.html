@@ -1,78 +1,50 @@
-<div class="panel">
-    <div class="row centered-form">
-        <div class="col-xs-12 col-sm-8 col-md-10 col-sm-offset-2 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title bariol-thin">Please sign up for Africahomepage.net</h3>
-                </div>
-                <div class="alert alert-success"ng-show="success" ng-model="message">{{$message}}</div>
-                <div class="panel-body">
-                    <form name="signupForm" ng-submit="signupForm.$valid && register()">
-                        <div class="row">
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" name="first_name" id="first_name" class="form-control" ng-model="guest.firstName" placeholder="First Name" autocomplete="off" required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-6 col-sm-6 col-md-6">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" name="last_name" class="form-control" ng-model="guest.lastName" placeholder="Last Name" autocomplete="off" required />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="email" id="email" ng-model="guest.email" class="form-control" placeholder="Email address" autocomplete="off" required />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
-                                <input type="text" name="username" ng-model="guest.username" id="username" class="form-control" placeholder="Username" autocomplete="off" required />
-                            </div>
-
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" name="password" ng-model="guest.password" id="password1" class="form-control" placeholder="Password" autocomplete="off" required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" name="password_confirmation" id="password2" ng-model="guest.password_confirmation" class="form-control" placeholder="Confirm password" autocomplete="off" required />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <div vc-recaptcha key="'6LfxjvcSAAAAAH1-msPbZ_hRRgnJ5aOt1zx_sUO-'"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <input type="submit" value="Register" class="btn btn-info btn-block">
-                            </div>
-                    </form>              
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12 margin-top-10">
-                            <a ui-sref="login">Already have an account? Login here</a>
+<div class="container">
+    <div class="row">
+        <div class="center-form panel">
+            <div class="panel-body">
+                <h2 class="text-center">Sign up</h2>
+                <form method="post" ng-submit="signup()" name="signupForm">
+                    <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.displayName.$invalid && signupForm.displayName.$dirty }">
+                        <input class="form-control input-lg" type="text" name="displayName" ng-model="displayName" placeholder="Username" required autofocus>
+                        <span class="ion-person form-control-feedback"></span>
+                        <div class="help-block text-danger" ng-if="signupForm.displayName.$dirty" ng-messages="signupForm.displayName.$error">
+                            <div ng-message="required">You must enter your name.</div>
                         </div>
                     </div>
-                </div>
+
+                    <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.email.$invalid && signupForm.email.$dirty }">
+                        <input class="form-control input-lg" type="email" id="email" name="email" ng-model="email" placeholder="Email" required
+                               ng-pattern="/^[A-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
+                        <span class="ion-at form-control-feedback"></span>
+                        <div class="help-block text-danger" ng-if="signupForm.email.$dirty" ng-messages="signupForm.email.$error">
+                            <div ng-message="required">Your email address is required.</div>
+                            <div ng-message="pattern">Your email address is invalid.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.password.$invalid && signupForm.password.$dirty }">
+                        <input password-strength class="form-control input-lg" type="password" name="password" ng-model="password" placeholder="Password" required>
+                        <span class="ion-key form-control-feedback"></span>
+                        <div class="help-block text-danger" ng-if="signupForm.password.$dirty" ng-messages="signupForm.password.$error">
+                            <div ng-message="required">Password is required.</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group has-feedback" ng-class="{ 'has-error' : signupForm.confirmPassword.$invalid && signupForm.confirmPassword.$dirty }">
+                        <input password-match="password" class="form-control input-lg" type="password" name="confirmPassword" ng-model="confirmPassword" placeholder="Confirm Password">
+                        <span class="ion-key form-control-feedback"></span>
+                        <div class="help-block text-danger" ng-if="signupForm.confirmPassword.$dirty" ng-messages="signupForm.confirmPassword.$error">
+                            <div ng-message="compareTo">Password must match.</div>
+                        </div>
+                    </div>
+
+                    <p class="text-center text-muted"><small>By clicking on Sign up, you agree to <a ui-sref="base.login.terms">terms & conditions</a> and <a ui-sref="base.login.policy">privacy policy</a></small></p>
+
+                    <button type="submit" ng-disabled="signupForm.$invalid" class="btn btn-lg btn-block btn-primary">Sign up</button>
+                    <br/>
+
+                    <p class="text-center text-muted">Already have an account? <a href="/#/login">Log in now</a></p>
+                </form>
             </div>
         </div>
     </div>

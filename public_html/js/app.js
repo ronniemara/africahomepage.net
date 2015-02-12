@@ -12,8 +12,6 @@
         '$authProvider',
         function ($stateProvider, $urlRouterProvider,
             $idleProvider, $httpProvider, $locationProvider, $authProvider) {
-
-
             $authProvider.google({
                 clientId: '748703416673-rs7stfqdso6ahb7s42hiac2rran263sn.apps.googleusercontent.com'
             });
@@ -30,20 +28,35 @@
             $stateProvider
                 .state('base', {
                     url: "",
-                    templateUrl: "/templates/base/index.html"
-
+                    templateUrl: "/templates/base/index.html",
+                    controller: 'PanelCtrl'
                 })
                 .state('base.login', {
-                    url: "/login",
+                    url: "",
                     templateUrl: "/templates/login/index.html",
+                    abstract: true
+                })
+                .state('base.login.login', {
+                    url: "/login",
+                    templateUrl: "/templates/login/login.html",
                     controller: 'LoginCtrl'
                 })
-                .state('base.signup', {
+                .state('base.login.terms', {
+                    url: "/terms",
+                    templateUrl: "/templates/login/terms.html",
+                    controller: 'LoginCtrl'
+                })
+                .state('base.login.policy', {
+                    url: "/policy",
+                    templateUrl: "/templates/login/policy.html",
+                    controller: 'LoginCtrl'
+                })
+                .state('base.login.signup', {
                     url: "/signup",
                     templateUrl: "/templates/login/signup.html",
                     controller: 'LoginCtrl'
                 })
-                .state('base.reminder', {
+                .state('base.login.reminder', {
                     url: "/reminder",
                     templateUrl: "/templates/login/reminder.html",
                     controller: 'LoginCtrl'
@@ -56,7 +69,7 @@
 		})
 		.state('base.posts.content',
 		    {
-			url: '',
+			url: "",
 			resolve: {	
 			    posts: function (PostsSvc) {
 						    return PostsSvc.getPosts();

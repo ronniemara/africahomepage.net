@@ -239,15 +239,9 @@ appControllers.controller('PostsCtrl',
 
 
 appControllers.controller('PanelCtrl',
-		['$scope', 'user', 'AuthSvc', 
-		'vcRecaptchaService', '$idle', '$rootScope',
-		'$state',
-		function ($scope, user, AuthSvc, 
-			vcRecaptchaService, $idle) {
-				$scope.user = user;
-				$scope.$on('loggedIn', function(){
-					$scope.user = user;
-				});
+		['$scope', '$idle',
+		function ($scope, $idle) {
+
 				//start watching for idling...
 				$idle.watch();
 				//event listener for when idle time out occurs
@@ -259,10 +253,29 @@ appControllers.controller('PanelCtrl',
 				};
 				}]);
 
-appControllers.controller('LoginCtrl', ['$scope','$auth',
-    function($scope, $auth){
+appControllers.controller('LoginCtrl', ['$scope','$auth', '$rootScope',
+    function($scope, $auth, $rootScope){
         $scope.authenticate = function(provider) {
             $auth.authenticate(provider);
+        };
+
+        $scope.login = function(){
+          $auth.login({
+              email: $scope.email,
+              password: $scope.password
+          }).then(function(res){
+              $rootScope.user = res;
+          });
+            //form.$setPristine();
+        };
+        $scope.logout = function(){
+            $auth.login({
+                email: $scope.email,
+                password: $scope.password
+            }).then(function(res){
+                $rootScope.user = res;
+            });
+            //form.$setPristine();
         };
 
 }]);
