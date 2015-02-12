@@ -253,11 +253,12 @@ appControllers.controller('PanelCtrl',
 				};
 				}]);
 
-appControllers.controller('LoginCtrl', ['$scope','$auth', '$rootScope',
+appControllers.controller('LoginCtrl', ['$scope','$auth', '$rootScope','$state',
     function($scope, $auth, $rootScope){
         $scope.authenticate = function(provider) {
             $auth.authenticate(provider).then(function(res){
                 $rootScope.user = res;
+                $state.go('base.posts.content');
             });
         };
 
