@@ -4,7 +4,7 @@
         'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource',
         'vcRecaptcha', 'MessageCenterModule', 'restangular',
         'com.htmlxprs.autocomplete.directives',
-        'satellizer'
+        'satellizer', 'ngMessages','mgcrea.ngStrap'
     ]);
     
     app.config(['$stateProvider', '$urlRouterProvider',
@@ -90,8 +90,8 @@
 	}]);
 
     app.run(['$rootScope', '$idle', '$state',
-	     '$stateParams', '$window', 'AuthSvc',
-		    function ($rootScope, $idle, $state,
+	         '$stateParams',
+		      function ($rootScope, $idle, $state,
 			      $stateParams
 			    ) {
 				    $rootScope.$state = $state;

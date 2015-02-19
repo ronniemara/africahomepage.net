@@ -1,116 +1,24 @@
 (function () {
 	var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource']);
 
-	appControllers
-	.factory("AuthSvc",
-		['$http', '$q',
-		'messageCenterService', '$rootScope',
-		'$state',
-		function ($http,$q,
-			messageCenterService,$rootScope,
-			$state) {
-			function GetUser() {
-			var d = $q.defer();
-			$http.get('api/auth/check').success(function(res){
-				d.resolve(res);
-			});
-			return d.promise;
-		}
-        return {
-	login: function (credentials, form) {
-		var defer = $q.defer();
-		$http.post('/api/auth/login', credentials)
-		.success(function () {
-			form.$setPristine();
-			messageCenterService.remove();
-			messageCenterService.add('success',
-				'You are now logged in!',
-				{status: messageCenterService.status.next
-				});
 
-			defer.resolve();
-
-			})
-		.error(function (response) {
-			messageCenterService.remove();
-			messageCenterService.add('danger',
-				response.flash,
-				{status: messageCenterService.status.unseen});
-			defer.reject();
-		});
-		return defer.promise;
-						},
-	logout: function () {
-		var defer = $q.defer();
-		$http.get('/api/auth/logout').success(function () {
-			messageCenterService.remove();
-			messageCenterService.add('warning',
-				'You are now logged out!',
-				{status: messageCenterService.status.next});
-
-			defer.resolve();
-
-		}).error(function () {
-			defer.reject();
-		});
-
-		return defer.promise;
-	},
-	isLoggedIn: GetUser,
-	reminder: function (email) {
-		var defer = $q.defer();
-		$http.post('api/remind/email', email)
-			.success(function (message) {
-				messageCenterService.remove();
-				messageCenterService.add('success',
-					'Password reset email sent!',
-					{status: messageCenterService.status.next});
-
-				$state.go('posts');
-				defer.resolve(message);
-			})
-		.error(function (response) {
-			messageCenterService.remove();
-			messageCenterService.add('danger',
-				response.flash,
-				{status: messageCenterService.status.next});
-
-			defer.reject();
-		});
-		return defer.promise;
-
-	},
-	register: function (data) {
-		var defer = $q.defer();
-		$http.post('api/users', data)
-			.success(function (res) {
-				messageCenterService.remove();
-				messageCenterService.add('success',
-					res.flash,
-					{status: messageCenterService.status.next});
-				$state.go('login');
-
-				defer.resolve();
-			})
-		.error(function (err) {
-			messageCenterService.remove();
-			messageCenterService.add('danger',
-				err.flash,
-				{status: messageCenterService.status.next});
-			defer.reject();
-		});
-	},
-	user: null 
-};
-		}]);
-	    
-	    
 	    appControllers.filter('page', function () {
 		
     return function (input, start, end) {
         return input.slice(start, end);
     };
 });
+    appControllers
+        .factory('Account', function($http) {
+            return {
+                getProfile: function() {
+                    return $http.get('/api/me');
+                },
+                updateProfile: function(profileData) {
+                    return $http.put('/api/me', profileData);
+                }
+            };
+        });
 	    
 appControllers.factory('PostsSvc', ['Restangular', '$q',
     function(Restangular, $q){
@@ -246,43 +154,194 @@ appControllers.controller('PanelCtrl',
 				$idle.watch();
 				//event listener for when idle time out occurs
 
-				$scope.logout = function () {
-					AuthSvc.logout().then(function(){
-						$scope.user = false;
-					});
-				};
+
 				}]);
 
-appControllers.controller('LoginCtrl', ['$scope','$auth', '$rootScope','$state',
-    function($scope, $auth, $rootScope){
-        $scope.authenticate = function(provider) {
-            $auth.authenticate(provider).then(function(res){
-                $rootScope.user = res;
-                $state.go('base.posts.content');
+    appControllers
+        .controller('LoginCtrl', ['$scope', '$alert', '$auth',
+        function($scope, $alert, $auth) {
+            $scope.login = function() {
+                    $auth.login({ email: $scope.email, password: $scope.password })
+                    .then(function() {
+                           $alert({
+                            content: 'You have successfully logged in',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    })
+                    .catch(function(response) {
+                        $alert({
+                            content: response.data.message,
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    });
+            };
+            $scope.authenticate = function(provider) {
+                $auth.authenticate(provider)
+                    .then(function() {
+                        $alert({
+                            content: 'You have successfully logged in',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    })
+                    .catch(function(response) {
+                        $alert({
+                            content: response.data ? response.data.message : response,
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    });
+            };
+        }]);
+    appControllers
+    .controller('LogoutCtrl', function($auth, $alert) {
+        if (!$auth.isAuthenticated()) {
+            return;
+        }
+        $auth.logout()
+            .then(function() {
+                $alert({
+                    content: 'You have been logged out',
+                    animation: 'fadeZoomFadeDown',
+                    type: 'material',
+                    duration: 3
+                });
             });
+    });
+    appControllers
+    .controller('NavbarCtrl', function($scope, $auth) {
+        $scope.isAuthenticated = function() {
+            return $auth.isAuthenticated();
         };
+    });
 
-        $scope.login = function(){
-          $auth.login({
-              email: $scope.email,
-              password: $scope.password
-          }).then(function(res){
-              $rootScope.user = res;
-          });
-            //form.$setPristine();
-        };
-        $scope.logout = function(){
-            $auth.login({
+    appControllers
+        .controller('ProfileCtrl', function($scope, $auth, $alert, Account) {
+
+            /**
+             * Get user's profile information.
+             */
+            $scope.getProfile = function() {
+                Account.getProfile()
+                    .success(function(data) {
+                        $scope.user = data;
+                    })
+                    .error(function(error) {
+                        $alert({
+                            content: error.message,
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    });
+            };
+
+
+            /**
+             * Update user's profile information.
+             */
+            $scope.updateProfile = function() {
+                Account.updateProfile({
+                    displayName: $scope.user.displayName,
+                    email: $scope.user.email
+                }).then(function() {
+                    $alert({
+                        content: 'Profile has been updated',
+                        animation: 'fadeZoomFadeDown',
+                        type: 'material',
+                        duration: 3
+                    });
+                });
+            };
+
+            /**
+             * Link third-party provider.
+             */
+            $scope.link = function(provider) {
+                $auth.link(provider)
+                    .then(function() {
+                        $alert({
+                            content: 'You have successfully linked ' + provider + ' account',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    })
+                    .then(function() {
+                        $scope.getProfile();
+                    })
+                    .catch(function(response) {
+                        $alert({
+                            content: response.data.message,
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    });
+            };
+
+            /**
+             * Unlink third-party provider.
+             */
+            $scope.unlink = function(provider) {
+                $auth.unlink(provider)
+                    .then(function() {
+                        $alert({
+                            content: 'You have successfully unlinked ' + provider + ' account',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    })
+                    .then(function() {
+                        $scope.getProfile();
+                    })
+                    .catch(function(response) {
+                        $alert({
+                            content: response.data ? response.data.message : 'Could not unlink ' + provider + ' account',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    });
+            };
+
+            $scope.getProfile();
+
+        });
+    appControllers.controller('SignupCtrl', function($scope, $alert, $auth) {
+        $scope.signup = function() {
+            $auth.signup({
+                displayName: $scope.displayName,
                 email: $scope.email,
                 password: $scope.password
-            }).then(function(res){
-                $rootScope.user = res;
+            }).catch(function(response) {
+                if (typeof response.data.message === 'object') {
+                    angular.forEach(response.data.message, function(message) {
+                        $alert({
+                            content: message[0],
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    });
+                } else {
+                    $alert({
+                        content: response.data.message,
+                        animation: 'fadeZoomFadeDown',
+                        type: 'material',
+                        duration: 3
+                    });
+                }
             });
-            //form.$setPristine();
         };
-
-}]);
-
+    });
 
 }());
 

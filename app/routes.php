@@ -32,11 +32,6 @@ Route::resource('posts.comments', 'CommentsController');
 
 Route::resource('tags', 'TagsController');
 
-
-Route::post('auth/login', 'AuthController@login');
-Route::get('auth/logout', 'AuthController@logout');
-Route::get('auth/check', 'AuthController@isLoggedIn');
-
 Route::post('remind/email', 'RemindersController@postRemind');
 Route::get('reset/{token}', 'RemindersController@getReset');
 Route::post('remind/password', 'RemindersController@postReset');
@@ -45,6 +40,10 @@ Route::get('activate/{confirmationCode}', 'UsersController@postActivate');
 
 Route::resource('users', 'UsersController');
 });
+
+Route::post('auth/login', 'AuthController@login');
+Route::get('auth/signup', 'AuthController@signup');
+
 
 // =============================================
 // CATCH ALL ROUTE =============================
