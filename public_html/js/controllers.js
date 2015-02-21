@@ -159,8 +159,8 @@ appControllers.controller('PanelCtrl',
 
     appControllers
         .controller('LoginCtrl', ['$scope', '$alert', '$auth',
-			'Account',
-        function($scope, $alert, $auth, Account) {
+			'Account', '$location',
+        function($scope, $alert, $auth, Account, $location) {
             $scope.login = function() {
                     $auth.login({ email: $scope.email, password: $scope.password })
                     .then(function() {
@@ -189,21 +189,8 @@ appControllers.controller('PanelCtrl',
             $scope.authenticate = function(provider) {
                 $auth.authenticate(provider)
                     .then(function() {
-                        $alert({
-                            content: 'You have successfully logged in',
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        })
+                     $location.url('/posts');   
 
-                    })
-                    .catch(function(response) {
-                        $alert({
-                            content: response.data ? response.data.message : response,
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
                     });
             };
         }]);
