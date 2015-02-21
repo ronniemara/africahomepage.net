@@ -43,6 +43,8 @@ Route::resource('users', 'UsersController');
 
 Route::post('auth/login', 'AuthController@login');
 Route::get('auth/signup', 'AuthController@signup');
+Route::get('api/me', array('before' => 'auth', 'uses' => 'UsersController@getUser'));
+Route::put('api/me', array('before' => 'auth', 'uses' => 'UsersController@updateUser'));
 
 
 // =============================================

@@ -20,16 +20,13 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
                     <ul class="nav navbar-nav" >
                         <li ng-class="{active: $state.includes('base.posts')}"><a ui-sref="base.posts.content" >Posts</a></li>
+                        <li ng-class="{active: $state.includes('base.profile')}" ng-if="isAuthenticated()"><a ui-sref="base.profile">Profile</a></li>
                     </ul>
-                    <ul class="nav navbar-right pull-right" ng-if="user">
-                        <li>
-                            <p>
-                                Logged in as <cite><a class="nav navbar-link">{{user.username}}</a></cite>
-                                <a><button ng-click="logout()">Logout</button></a>
-                            </p>
-                        </li>
+                    <ul class="nav navbar-nav pull-right" ng-if="isAuthenticated()">
+                        <li> <a href="" ng-click="logout()">Logout</a></li>
+
                         </ul>
-                   <ul class="nav navbar-nav pull-right" ng-if="!user">
+                   <ul class="nav navbar-nav pull-right" ng-if="!isAuthenticated()">
                         <li ng-class="{active: $state.includes('base.login')}"><a ui-sref="base.login.login">Login</a></li>
                     </ul>
                 </div><!--/.nav-collapse -->

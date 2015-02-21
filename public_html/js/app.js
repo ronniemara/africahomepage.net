@@ -29,7 +29,7 @@
                 .state('base', {
                     url: "",
                     templateUrl: "/templates/base/index.html",
-                    controller: 'PanelCtrl'
+                    controller: 'NavbarCtrl'
                 })
                 .state('base.login', {
                     url: "",
@@ -85,7 +85,12 @@
 					}
 			    }
 
-		    });
+		    })
+                .state('base.profile',{
+                    url: "/profile",
+                    controller: 'ProfileCtrl',
+                    templateUrl: '/templates/profile/index.html'
+                });
 
 	}]);
 

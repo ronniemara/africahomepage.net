@@ -159,15 +159,22 @@ appControllers.controller('PanelCtrl',
 
     appControllers
         .controller('LoginCtrl', ['$scope', '$alert', '$auth',
-        function($scope, $alert, $auth) {
+			'Account',
+        function($scope, $alert, $auth, Account) {
             $scope.login = function() {
                     $auth.login({ email: $scope.email, password: $scope.password })
                     .then(function() {
-                           $alert({
-                            content: 'You have successfully logged in',
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
+                            Account.getProfile()
+                                .success(function(data) {
+                                    $scope.user = data;
+                                })
+                                .error(function(error) {
+                                    $alert({
+                                        content: error.message,
+                                        animation: 'fadeZoomFadeDown',
+                                        type: 'material',
+                                        duration: 3
+                                    });
                         });
                     })
                     .catch(function(response) {
@@ -187,7 +194,8 @@ appControllers.controller('PanelCtrl',
                             animation: 'fadeZoomFadeDown',
                             type: 'material',
                             duration: 3
-                        });
+                        })
+
                     })
                     .catch(function(response) {
                         $alert({
@@ -199,26 +207,28 @@ appControllers.controller('PanelCtrl',
                     });
             };
         }]);
+
     appControllers
-    .controller('LogoutCtrl', function($auth, $alert) {
-        if (!$auth.isAuthenticated()) {
-            return;
-        }
-        $auth.logout()
-            .then(function() {
-                $alert({
-                    content: 'You have been logged out',
-                    animation: 'fadeZoomFadeDown',
-                    type: 'material',
-                    duration: 3
-                });
-            });
-    });
-    appControllers
-    .controller('NavbarCtrl', function($scope, $auth) {
+    .controller('NavbarCtrl', function($scope, $auth, $alert) {
         $scope.isAuthenticated = function() {
             return $auth.isAuthenticated();
         };
+
+            $scope.logout = function(){
+                if (!$auth.isAuthenticated()) {
+                    return;
+                }
+                $auth.logout()
+                    .then(function() {
+                        $alert({
+                            content: 'You have been logged out',
+                            animation: 'fadeZoomFadeDown',
+                            type: 'material',
+                            duration: 3
+                        });
+                    });
+
+            };
     });
 
     appControllers

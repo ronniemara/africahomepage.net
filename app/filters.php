@@ -38,8 +38,19 @@ App::after(function($request, $response)
 */
 
 Route::filter('auth', function()
+        
 {
-	if (Auth::guest()) return Redirect::guest('login');
+    if (!getallheaders()['Authorization'])
+	{
+        return Response::json(array('message' => 'Please make sure your request has an Authorization header'), 401);
+	}
+    $token = explode(' ', getallheaders()['Authorization'])[1];
+    $payloadObject = JWT::decode($token, Config::get('secrets.TOKEN_SECRET'));
+    $payload = json_decode(json_encode($payloadObject), true);
+    if ($payload['exp'] < time())
+    {
+        Response::json(array('message' => 'Token has expired'));
+    }
 });
 
 
