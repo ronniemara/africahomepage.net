@@ -159,8 +159,8 @@ appControllers.controller('PanelCtrl',
 
     appControllers
         .controller('LoginCtrl', ['$scope', '$alert', '$auth',
-			'Account', '$location',
-        function($scope, $alert, $auth, Account, $location) {
+			'Account', '$state',
+        function($scope, $alert, $auth, Account, $state) {
             $scope.login = function() {
                     $auth.login({ email: $scope.email, password: $scope.password })
                     .then(function() {
@@ -192,7 +192,7 @@ appControllers.controller('PanelCtrl',
 				    Account.getProfile()
 				    .success(function(data) {
 					    $scope.user = data;
-					    $location.url('/posts');   
+					    $state.go('posts');   
 				    });
 
 			    });
