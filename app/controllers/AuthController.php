@@ -88,7 +88,7 @@ class AuthController extends \BaseController {
             $payload = json_decode(json_encode($payloadObject), true);
             $user = User::find($payload['sub']);
             $user->google = $profile['sub'];
-            $user->displayName = $user->displayName || $profile['name'];
+            $user->username = $user->username || $profile['name'];
             $user->save();
             return Response::json(array('token' => $this->createToken($user)));
         }
@@ -102,7 +102,7 @@ class AuthController extends \BaseController {
             }
             $user = new User;
             $user->google = $profile['sub'];
-            $user->displayName = $profile['name'];
+            $user->username = $profile['name'];
             $user->save();
             return Response::json(array('token' => $this->createToken($user)));
         }
