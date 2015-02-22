@@ -189,6 +189,9 @@ appControllers.controller('PanelCtrl',
             $scope.authenticate = function(provider) {
                 $auth.authenticate(provider)
                     .then(function() {
+                            Account.getProfile()
+                                .success(function(data) {
+                                    $scope.user = data;
                      $location.url('/posts');   
 
                     });
