@@ -192,7 +192,7 @@ appControllers.controller('PanelCtrl',
 				    Account.getProfile()
 				    .success(function(data) {
 					    $scope.user = data;
-					    $state.go('posts');   
+					    $state.go('base.posts.content');   
 				    });
 
 			    });
