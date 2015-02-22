@@ -39,9 +39,12 @@ return {
 
 appControllers.controller('PostsCtrl',
 		['$scope', 'posts',
-		    '$location', '$anchorScroll',
+		    '$location', '$anchorScroll', '$auth',
 		    function ($scope, posts, $location,
 				$anchorScroll) {
+				    $scope.isAuthenticated = function() {
+            return $auth.isAuthenticated();
+        };
 				$scope.posts = posts;
 				$scope.predicate = 'rank';
 				$scope.reverse = false;

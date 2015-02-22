@@ -4,7 +4,7 @@
             <li ng-class="{ active: $state.includes('posts') }">
                 <h4>All Posts</h4>
             </li>
-            <li ng-if="user.isLoggedIn">
+            <li ng-if="isAunthenticated()">
                 <div data-ui-view="create"></div>
             </li>
             <li class="nav-header">
