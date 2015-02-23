@@ -11,7 +11,7 @@
         '$idleProvider', '$httpProvider', '$locationProvider',
         '$authProvider',
         function ($stateProvider, $urlRouterProvider,
-            $idleProvider, $httpProvider, $locationProvider, $authProvider) {
+            $idleProvider, $httpProvider, $locationProvider, $authProvider, $auth) {
             $authProvider.google({
                 clientId: '748703416673-rs7stfqdso6ahb7s42hiac2rran263sn.apps.googleusercontent.com'
             });
@@ -65,6 +65,8 @@
 				{   abstract: true,
 				    url: '/posts',
 				    templateUrl:  '/templates/posts/posts.html'
+				    
+				    
 				    
 		})
 		.state('base.posts.content',

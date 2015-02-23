@@ -4,9 +4,11 @@
             <li ng-class="{ active: $state.includes('posts') }">
                 <h4>All Posts</h4>
             </li>
-            <li ng-if="isAunthenticated()">
+            <li ng-if="isAuthenticated()">
                 <div data-ui-view="create"></div>
+            
             </li>
+                
             <li class="nav-header">
                 <ul class="nav nav-tabs">
                     <li><a href="" ng-click="predicate = 'created_at';
