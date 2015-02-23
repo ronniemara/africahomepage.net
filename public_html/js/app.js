@@ -4,7 +4,7 @@
         'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource',
         'vcRecaptcha', 'MessageCenterModule', 'restangular',
         'com.htmlxprs.autocomplete.directives',
-        'satellizer', 'ngMessages','mgcrea.ngStrap'
+        'satellizer', 'ngMessages'
     ]);
     
     app.config(['$stateProvider', '$urlRouterProvider',

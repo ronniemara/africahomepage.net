@@ -36,15 +36,24 @@ return {
   }  
 };	
 }]);
+appControllers.controller('ModalCtrl', function ($scope, $modalInstance, $http) {
+
+  $scope.post = function (form) {
+      $http.post('/api/posts', $scope.data).success();
+    $modalInstance.close();
+  };
+
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+});
 
 appControllers.controller('PostsCtrl',
-		['$scope', 'posts',
-		    '$location', '$anchorScroll', '$auth',
-		    function ($scope, posts, $location,
-				$anchorScroll) {
-				    $scope.isAuthenticated = function() {
-            return $auth.isAuthenticated();
-        };
+		['$scope', 'posts', '$location',
+		  '$anchorScroll', '$modal',
+		  function ($scope, posts, $location,
+			    $anchorScroll, $modal ) {
+				   
 				$scope.posts = posts;
 				$scope.predicate = 'rank';
 				$scope.reverse = false;
@@ -95,7 +104,15 @@ appControllers.controller('PostsCtrl',
 			};
 			//show form to create a post
 			$scope.trigger = function () {
-				$scope.create = {"form": true};
+			   var modalInstance = $modal.open({
+				  templateUrl: "/templates/posts/create-modal.html",
+				  controller: 'ModalCtrl'
+				  
+			      });
+			      
+			      modalInstance.result.then(function(data){
+				  
+			      });
 			};
 			//post a created post
 			$scope.data = {"title": "", "url": "", "tags": ""};
@@ -161,9 +178,9 @@ appControllers.controller('PanelCtrl',
 				}]);
 
     appControllers
-        .controller('LoginCtrl', ['$scope', '$alert', '$auth',
+        .controller('LoginCtrl', ['$scope',  '$auth',
 			'Account', '$state',
-        function($scope, $alert, $auth, Account, $state) {
+        function($scope,  $auth, Account, $state) {
             $scope.login = function() {
                     $auth.login({ email: $scope.email, password: $scope.password })
                     .then(function() {
@@ -172,21 +189,12 @@ appControllers.controller('PanelCtrl',
                                     $scope.user = data;
                                 })
                                 .error(function(error) {
-                                    $alert({
-                                        content: error.message,
-                                        animation: 'fadeZoomFadeDown',
-                                        type: 'material',
-                                        duration: 3
-                                    });
+                                 
+                                    
                         });
                     })
                     .catch(function(response) {
-                        $alert({
-                            content: response.data.message,
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
+                       
                     });
             };
             $scope.authenticate = function(provider) {
@@ -203,7 +211,7 @@ appControllers.controller('PanelCtrl',
         }]);
 
     appControllers
-    .controller('NavbarCtrl', function($scope, $auth, $alert) {
+    .controller('NavbarCtrl', function($scope, $auth ) {
         $scope.isAuthenticated = function() {
             return $auth.isAuthenticated();
         };
@@ -214,19 +222,14 @@ appControllers.controller('PanelCtrl',
                 }
                 $auth.logout()
                     .then(function() {
-                        $alert({
-                            content: 'You have been logged out',
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
+                       
                     });
 
             };
     });
 
     appControllers
-        .controller('ProfileCtrl', function($scope, $auth, $alert, Account) {
+        .controller('ProfileCtrl', function($scope, $auth, Account) {
 
             /**
              * Get user's profile information.
@@ -237,12 +240,7 @@ appControllers.controller('PanelCtrl',
                         $scope.user = data;
                     })
                     .error(function(error) {
-                        $alert({
-                            content: error.message,
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
+                        
                     });
             };
 
@@ -255,12 +253,7 @@ appControllers.controller('PanelCtrl',
                     username: $scope.user.username,
                     email: $scope.user.email
                 }).then(function() {
-                    $alert({
-                        content: 'Profile has been updated',
-                        animation: 'fadeZoomFadeDown',
-                        type: 'material',
-                        duration: 3
-                    });
+                   
                 });
             };
 
@@ -270,23 +263,13 @@ appControllers.controller('PanelCtrl',
             $scope.link = function(provider) {
                 $auth.link(provider)
                     .then(function() {
-                        $alert({
-                            content: 'You have successfully linked ' + provider + ' account',
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
+                      
                     })
                     .then(function() {
                         $scope.getProfile();
                     })
                     .catch(function(response) {
-                        $alert({
-                            content: response.data.message,
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
+                        
                     });
             };
 
@@ -296,30 +279,20 @@ appControllers.controller('PanelCtrl',
             $scope.unlink = function(provider) {
                 $auth.unlink(provider)
                     .then(function() {
-                        $alert({
-                            content: 'You have successfully unlinked ' + provider + ' account',
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
+                       
                     })
                     .then(function() {
                         $scope.getProfile();
                     })
                     .catch(function(response) {
-                        $alert({
-                            content: response.data ? response.data.message : 'Could not unlink ' + provider + ' account',
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
+                       
                     });
             };
 
             $scope.getProfile();
 
         });
-    appControllers.controller('SignupCtrl', function($scope, $alert, $auth) {
+    appControllers.controller('SignupCtrl', function($scope, $auth) {
         $scope.signup = function() {
             $auth.signup({
                 displayName: $scope.displayName,
@@ -328,20 +301,10 @@ appControllers.controller('PanelCtrl',
             }).catch(function(response) {
                 if (typeof response.data.message === 'object') {
                     angular.forEach(response.data.message, function(message) {
-                        $alert({
-                            content: message[0],
-                            animation: 'fadeZoomFadeDown',
-                            type: 'material',
-                            duration: 3
-                        });
+                       
                     });
                 } else {
-                    $alert({
-                        content: response.data.message,
-                        animation: 'fadeZoomFadeDown',
-                        type: 'material',
-                        duration: 3
-                    });
+                    
                 }
             });
         };

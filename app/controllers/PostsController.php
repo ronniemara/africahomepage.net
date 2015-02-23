@@ -1,6 +1,6 @@
 <?php
 use Myapp\Repositories\PostRepositoryInterface as PostRepositoryInterface;
-class PostsController extends BaseController {
+class PostsController extends \BaseController {
 
     /**
      * Post Repository
@@ -60,10 +60,8 @@ class PostsController extends BaseController {
 	    if ($validation->fails()) {
 		    return Response::make(["flash" => $validation->messages()], 412);
 	    } 
-	    // The user is logged in...
-	    if(Auth::check()){
-		    //get user
-		    $user = Auth::getUser();
+	   		    //get user
+		    $user = $this->getUser();
 		    $input = new Post($input);
 		    //insert post using user relationship
 		    $post = $user->posts()->save($input);
@@ -78,9 +76,7 @@ class PostsController extends BaseController {
                     
 		   
 		    return Response::make($data, 200);
-	    } else {
-		    return Response::make(["flash" => "Please log in"], 400);    
-	    }
+	   
     }
     
     public function check_tags($tags)
