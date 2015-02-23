@@ -252,7 +252,7 @@ appControllers.controller('PanelCtrl',
              */
             $scope.updateProfile = function() {
                 Account.updateProfile({
-                    displayName: $scope.user.displayName,
+                    username: $scope.user.username,
                     email: $scope.user.email
                 }).then(function() {
                     $alert({

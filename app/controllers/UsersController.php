@@ -16,12 +16,12 @@ class UsersController extends \BaseController {
 
 	public function updateUser()
 	{
-        $token = explode(' ', Request::header('Authorization'))[1];
+        $token = explode(' ', getallheaders()['Authorization'])[1];
         $payloadObject = JWT::decode($token, Config::get('secrets.TOKEN_SECRET'));
         $payload = json_decode(json_encode($payloadObject), true);
 
         $user = User::find($payload['sub']);
-        $user->displayName = Input::get('displayName', $user->displayName);
+        $user->username = Input::get('username', $user->username);
         $user->email = Input::get('email', $user->email);
         $user->save();
 
