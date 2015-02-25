@@ -1,9 +1,7 @@
 (function () {
 	var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource']);
 
-
-	    appControllers.filter('page', function () {
-		
+appControllers.filter('page', function () {
     return function (input, start, end) {
         return input.slice(start, end);
     };
@@ -163,152 +161,136 @@ appControllers.controller('PostsCtrl',
 
 		}]);
 
+appControllers.controller('LoginCtrl',  [
+    '$scope',  '$auth','Account','$state',
+     function($scope,  $auth, Account, $state) {
+        $scope.login = function() {
+            $auth.login({ email: $scope.email, password: $scope.password })
+            .then(function() {
+                    Account.getProfile()
+                        .success(function(data) {
+                            $scope.user = data;
+                        })
+                        .error(function(error) {
+                         
+                            
+                });
+            })
+            .catch(function(response) {
+               
+            });
+        };
+        $scope.authenticate = function(provider) {
+            $auth.authenticate(provider)
+            .then(function() {
+                Account.getProfile()
+                .success(function(data) {
+                    $scope.user = data;
+                    $state.go('base.posts.content');   
+                });
+            });
+        };
+    }]);
 
-
-
-appControllers.controller('PanelCtrl',
-		['$scope', '$idle',
-		function ($scope, $idle) {
-
-				//start watching for idling...
-				$idle.watch();
-				//event listener for when idle time out occurs
-
-
-				}]);
-
-    appControllers
-        .controller('LoginCtrl', ['$scope',  '$auth',
-			'Account', '$state',
-        function($scope,  $auth, Account, $state) {
-            $scope.login = function() {
-                    $auth.login({ email: $scope.email, password: $scope.password })
-                    .then(function() {
-                            Account.getProfile()
-                                .success(function(data) {
-                                    $scope.user = data;
-                                })
-                                .error(function(error) {
-                                 
-                                    
-                        });
-                    })
-                    .catch(function(response) {
-                       
-                    });
-            };
-            $scope.authenticate = function(provider) {
-		    $auth.authenticate(provider)
-			    .then(function() {
-				    Account.getProfile()
-				    .success(function(data) {
-					    $scope.user = data;
-					    $state.go('base.posts.content');   
-				    });
-
-			    });
-	    };
-        }]);
-
-    appControllers
-    .controller('NavbarCtrl', function($scope, $auth ) {
+appControllers.controller('NavbarCtrl',[
+    '$scope', '$auth',function($scope, $auth ) {
         $scope.isAuthenticated = function() {
             return $auth.isAuthenticated();
         };
 
-            $scope.logout = function(){
-                if (!$auth.isAuthenticated()) {
-                    return;
-                }
-                $auth.logout()
-                    .then(function() {
-                       
-                    });
-
-            };
-    });
-
-    appControllers
-        .controller('ProfileCtrl', function($scope, $auth, Account) {
-
-            /**
-             * Get user's profile information.
-             */
-            $scope.getProfile = function() {
-                Account.getProfile()
-                    .success(function(data) {
-                        $scope.user = data;
-                    })
-                    .error(function(error) {
-                        
-                    });
-            };
-
-
-            /**
-             * Update user's profile information.
-             */
-            $scope.updateProfile = function() {
-                Account.updateProfile({
-                    username: $scope.user.username,
-                    email: $scope.user.email
-                }).then(function() {
+        $scope.logout = function(){
+            if (!$auth.isAuthenticated()) {
+                return;
+            }
+            $auth.logout()
+                .then(function() {
                    
                 });
-            };
+        };
+}]);
 
-            /**
-             * Link third-party provider.
-             */
-            $scope.link = function(provider) {
-                $auth.link(provider)
-                    .then(function() {
-                      
-                    })
-                    .then(function() {
-                        $scope.getProfile();
-                    })
-                    .catch(function(response) {
-                        
-                    });
-            };
-
-            /**
-             * Unlink third-party provider.
-             */
-            $scope.unlink = function(provider) {
-                $auth.unlink(provider)
-                    .then(function() {
-                       
-                    })
-                    .then(function() {
-                        $scope.getProfile();
-                    })
-                    .catch(function(response) {
-                       
-                    });
-            };
-
-            $scope.getProfile();
-
-        });
-    appControllers.controller('SignupCtrl', function($scope, $auth) {
-        $scope.signup = function() {
-            $auth.signup({
-                displayName: $scope.displayName,
-                email: $scope.email,
-                password: $scope.password
-            }).catch(function(response) {
-                if (typeof response.data.message === 'object') {
-                    angular.forEach(response.data.message, function(message) {
-                       
-                    });
-                } else {
+appControllers.controller('ProfileCtrl',[
+    '$scope', '$auth', 'Account',
+    function($scope, $auth, Account) {
+        /**
+         * Get user's profile information.
+         */
+        $scope.getProfile = function() {
+            Account.getProfile()
+                .success(function(data) {
+                    $scope.user = data;
+                })
+                .error(function(error) {
                     
-                }
+                });
+        };
+
+
+        /**
+         * Update user's profile information.
+         */
+        $scope.updateProfile = function() {
+            Account.updateProfile({
+                username: $scope.user.username,
+                email: $scope.user.email
+            }).then(function() {
+               
             });
         };
-    });
+
+        /**
+         * Link third-party provider.
+         */
+        $scope.link = function(provider) {
+            $auth.link(provider)
+                .then(function() {
+                  
+                })
+                .then(function() {
+                    $scope.getProfile();
+                })
+                .catch(function(response) {
+                    
+                });
+        };
+
+        /**
+         * Unlink third-party provider.
+         */
+        $scope.unlink = function(provider) {
+            $auth.unlink(provider)
+                .then(function() {
+                   
+                })
+                .then(function() {
+                    $scope.getProfile();
+                })
+                .catch(function(response) {
+                   
+                });
+        };
+
+        $scope.getProfile();
+
+    }]);
+
+appControllers.controller('SignupCtrl', function($scope, $auth) {
+    $scope.signup = function() {
+        $auth.signup({
+            displayName: $scope.displayName,
+            email: $scope.email,
+            password: $scope.password
+        }).catch(function(response) {
+            if (typeof response.data.message === 'object') {
+                angular.forEach(response.data.message, function(message) {
+                   
+                });
+            } else {
+                
+            }
+        });
+    };
+});
 
 }());
 

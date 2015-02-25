@@ -49,40 +49,40 @@
         <base href="/">
     </head>
     <body >
-<div ui-view>Loading...</div>
-<footer class="panel">
-    <p> <i class="fa fa-copyright"></i> 2014 Black Mirror Media</p>
-</footer>
+        <div class="container">
+            <div ui-view>Loading...</div>
+            <footer class="panel">
+                <p> <i class="fa fa-copyright"></i> 2014 Black Mirror Media</p>
+            </footer>
+        </div><!--/.fluid-container-->
 
-    </div><!--/.fluid-container-->
+        <!-- Le javascript
+        ================================================== -->
 
-    <!-- Le javascript
-    ================================================== -->
+        <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular-ui-router.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular-resource.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular-idle.js?<?php echo time(); ?>" type="text/javascript"></script>
 
-    <script src="/js/jquery-1.11.0.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/bootstrap.min.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-ui-router.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-resource.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-idle.js?<?php echo time(); ?>" type="text/javascript"></script>
-    
-    <script src="/js/angular-animate.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-messages.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/angular-mocks.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script type="text/javascript" src="/js/message-center.js?<?php echo time(); ?>" ></script>
-    
-    <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/lodash.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/restangular.min.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/satellizer.min.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script src="/js/directives.js?<?php echo time(); ?>" type="text/javascript"></script>
-<script src="/js/posts/posts.js?<?php echo time(); ?>" type="text/javascript"></script>
-<script src="/js/posts/posts-service.js?<?php echo time(); ?>" type="text/javascript"></script>
-<script src="/js/utils-service.js?<?php echo time(); ?>" type="text/javascript"></script>
-    <script type="text/javascript" src="//www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
-    <script type="text/javascript" src="/js/angular-recaptcha.js?<?php echo time(); ?>"></script>
-</body>
+        <script src="/js/angular-animate.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular-messages.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/angular-mocks.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script type="text/javascript" src="/js/message-center.js?<?php echo time(); ?>" ></script>
+            
+        <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/lodash.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/restangular.min.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/satellizer.min.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/app.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/controllers.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/directives.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/posts/posts.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/posts/posts-service.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script src="/js/utils-service.js?<?php echo time(); ?>" type="text/javascript"></script>
+        <script type="text/javascript" src="//www.google.com/recaptcha/api/js/recaptcha_ajax.js"></script>
+        <script type="text/javascript" src="/js/angular-recaptcha.js?<?php echo time(); ?>"></script>
+    </body>
 </html>
