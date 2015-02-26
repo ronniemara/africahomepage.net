@@ -4,7 +4,7 @@
         'appControllers', 'ui.bootstrap', 'ngIdle', 'ngResource',
         'vcRecaptcha', 'MessageCenterModule', 'restangular',
         'com.htmlxprs.autocomplete.directives',
-        'satellizer', 'ngMessages'
+        'satellizer', 'ngMessages','angularUtils.directives.dirPagination' 
     ]);
     
     app.config(['$stateProvider', '$urlRouterProvider',
