@@ -87,11 +87,7 @@
                         url: "/profile",
                         controller: 'ProfileCtrl',
                         templateUrl: '/templates/profile/index.html'
-                      })
-                     .state('googlef794d24211d683ed.html', {
-                         url: "googlef794d24211d683ed.html",
-                         templateUrl: "/googlef794d24211d683ed.html"
-                     });
+                      });
 
 	}]);
 
