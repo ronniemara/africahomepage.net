@@ -67,13 +67,9 @@ class PostsController extends \BaseController {
 		    $post = $user->posts()->save($input);
 		    //get tags input
 		    $tags = Input::get('tags');
-                    
-                    $checked_tags = $this->check_tags($tags);
-                    
-                    $post->tags()->attach($checked_tags['tags']);
-                    
-                    $data = $this->post->find($post->id)->with('author', 'tags')->get();
-                    
+            $checked_tags = $this->check_tags($tags);
+            $post->tags()->attach($checked_tags['tags']);
+            $data = $this->post->find($post->id)->with('author', 'tags')->get();
 		   
 		    return Response::make($data, 200);
 	   

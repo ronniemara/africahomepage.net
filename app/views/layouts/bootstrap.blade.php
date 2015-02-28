@@ -49,7 +49,7 @@
 
         <base href="/">
     </head>
-    <body >
+    <body>
         <div class="container">
             <div ui-view>Loading...</div>
             <footer class="panel">
@@ -68,12 +68,10 @@
         <script src="/js/angular-timeago.js?<?php echo time(); ?>" type="text/javascript"></script>
         <script src="/js/angular-idle.js?<?php echo time(); ?>" type="text/javascript"></script>
         <script src="/js/dirPagination.js?<?php echo time(); ?>" type="text/javascript"></script>
-
         <script src="/js/angular-animate.js?<?php echo time(); ?>" type="text/javascript"></script>
         <script src="/js/angular-messages.js?<?php echo time(); ?>" type="text/javascript"></script>
         <script src="/js/angular-mocks.js?<?php echo time(); ?>" type="text/javascript"></script>
         <script type="text/javascript" src="/js/message-center.js?<?php echo time(); ?>" ></script>
-            
         <script src="/js/ui-bootstrap-tpls-0.11.2.js?<?php echo time(); ?>" type="text/javascript"></script>
         <script src="/js/lodash.js?<?php echo time(); ?>" type="text/javascript"></script>
         <script src="/js/restangular.min.js?<?php echo time(); ?>" type="text/javascript"></script>

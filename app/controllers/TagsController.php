@@ -11,7 +11,7 @@ use Myapp\Repositories\TagRepositoryInterface as TagsRepositoryInterface;
  *
  * @author ron
  */
-class TagsController extends BaseController{
+class TagsController extends \BaseController{
     
     protected $tags;
     
