@@ -17,6 +17,10 @@
                     clientId: '748703416673-rs7stfqdso6ahb7s42hiac2rran263sn.apps.googleusercontent.com'
                 });
 
+                $authProvider.live({
+                    clientId: '000000004014A429'
+                });
+
                 $locationProvider.html5Mode(true); 
                 $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
                 //set the idle duration
