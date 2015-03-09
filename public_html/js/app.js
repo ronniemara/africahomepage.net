@@ -21,7 +21,16 @@
                     clientId: '000000004014A429'
                 });
 
-                $locationProvider.html5Mode(true); 
+
+                $authProvider.facebook({
+                  clientId: '348768225333299'
+                });
+
+                // $authProvider.twitter({
+                  // url: '/auth/twitter'
+                // });
+                
+                locationProvider.html5Mode(true); 
                 $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
                 //set the idle duration
                 $idleProvider.idleDuration(300);

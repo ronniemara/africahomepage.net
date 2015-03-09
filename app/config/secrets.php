@@ -2,7 +2,7 @@
 
 
 return ['TOKEN_SECRET' => $_ENV['JWT_SECRET_KEY'],
-    //'FACEBOOK_SECRET' => 'Facebook App Secret',
+    'FACEBOOK_SECRET' => $_ENV['FACEBOOK_CLIENT_SECRET'],
     //'FOURSQUARE_SECRET' => 'Foursquare Client Secret',
     'GOOGLE_SECRET' => $_ENV['GOOGLE_CLIENT_SECRET'],
     //'GITHUB_SECRET' => 'GitHub Client Secret',
