@@ -130,7 +130,7 @@ class AuthController extends \BaseController {
         // Step 3a. If user is already signed in then link accounts.
         if (Request::header('Authorization'))
         {
-            $user = User::where('live', '=', $profile['sub']);
+            $user = User::where('live', '=', $profile['id']);
             if ($user->first())
             {
                 return Response::json(array('message' => 'There is already a Windows Live account that belongs to you'), 409);
@@ -138,8 +138,8 @@ class AuthController extends \BaseController {
             $token = explode(' ', Request::header('Authorization'))[1];
             $payloadObject = JWT::decode($token, Config::get('secrets.TOKEN_SECRET'));
             $payload = json_decode(json_encode($payloadObject), true);
-            $user = User::find($payload['sub']);
-            $user->live = $profile['sub'];
+            $user = User::find($payload['id']);
+            $user->live = $profile['id'];
             $user->username = $user->username || $profile['name'];
             $user->save();
             return Response::json(array('token' => $this->createToken($user)));
@@ -147,13 +147,13 @@ class AuthController extends \BaseController {
         // Step 3b. Create a new user account or return an existing one.
         else
         {
-            $user = User::where('live', '=', $profile['sub']);
+            $user = User::where('live', '=', $profile['id']);
             if ($user->first())
             {
                 return Response::json(array('token' => $this->createToken($user->first())));
             }
             $user = new User;
-            $user->live = $profile['sub'];
+            $user->live = $profile['id'];
             $user->username = $profile['name'];
             $user->save();
             return Response::json(array('token' => $this->createToken($user)));
