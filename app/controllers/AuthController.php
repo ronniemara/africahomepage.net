@@ -160,4 +160,68 @@ class AuthController extends \BaseController {
         }
     }
 
+    public function facebook()
+    {
+        $accessTokenUrl = 'https://graph.facebook.com/oauth/access_token';
+        $graphApiUrl = 'https://graph.facebook.com/me';
+
+        $params = array(
+            'code' => Input::get('code'),
+            'client_id' => Input::get('clientId'),
+            'redirect_uri' => Input::get('redirectUri'),
+            'client_secret' => Config::get('secrets.FACEBOOK_SECRET')
+        );
+
+        $client = new GuzzleHttp\Client();
+
+        // Step 1. Exchange authorization code for access token.
+        $accessTokenResponse = $client->get($accessTokenUrl, ['query' => $params]);
+
+        $accessToken = array();
+        parse_str($accessTokenResponse->getBody(), $accessToken);
+
+        // Step 2. Retrieve profile information about the current user.
+        $graphiApiResponse = $client->get($graphApiUrl, ['query' => $accessToken]);
+        $profile = $graphiApiResponse->json();
+
+        // Step 3a. If user is already signed in then link accounts.
+        if (Request::header('Authorization'))
+        {
+            $user = User::where('facebook', '=', $profile['id']);
+
+            if ($user->first())
+            {
+                return Response::json(array('message' => 'There is already a Facebook account that belongs to you'), 409);
+            }
+
+            $token = explode(' ', Request::header('Authorization'))[1];
+            $payloadObject = JWT::decode($token, Config::get('secrets.TOKEN_SECRET'));
+            $payload = json_decode(json_encode($payloadObject), true);
+
+            $user = User::find($payload['sub']);
+            $user->facebook = $profile['id'];
+            $user->displayName = $user->displayName || $profile['name'];
+            $user->save();
+
+            return Response::json(array('token' => $this->createToken($user)));
+        }
+        // Step 3b. Create a new user account or return an existing one.
+        else
+        {
+            $user = User::where('facebook', '=', $profile['id']);
+
+            if ($user->first())
+            {
+                return Response::json(array('token' => $this->createToken($user->first())));
+            }
+
+            $user = new User;
+            $user->facebook = $profile['id'];
+            $user->displayName = $profile['name'];
+            $user->save();
+
+            return Response::json(array('token' => $this->createToken($user)));
+        }
+    }
+
 }

@@ -45,6 +45,7 @@ Route::post('auth/login', 'AuthController@login');
 Route::get('auth/signup', 'AuthController@signup');
 Route::post('auth/google', 'AuthController@google');
 Route::post('auth/live', 'AuthController@live');
+Route::post('auth/facebook', 'AuthController@facebook');
 Route::get('api/me', array('before' => 'auth', 'uses' => 'UsersController@getUser'));
 Route::put('api/me', array('before' => 'auth', 'uses' => 'UsersController@updateUser'));
 
