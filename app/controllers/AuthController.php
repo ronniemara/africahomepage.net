@@ -108,4 +108,56 @@ class AuthController extends \BaseController {
         }
     }
 
+    public function live ()
+    {
+        $accessTokenUrl = 'https://login.live.com/oauth20_token.srf';
+        $peopleApiUrl = 'https://apis.live.net/v5.0/me';
+        $params = array(
+            'code' => Input::get('code'),
+            'client_id' => Input::get('clientId'),
+            'redirect_uri' => Input::get('redirectUri'),
+            'grant_type' => 'authorization_code',
+            'client_secret' => Config::get('secrets.WINDOWS_LIVE_SECRET')
+        );
+        $client = new GuzzleHttp\Client();
+        // Step 1. Exchange authorization code for access token.
+        $accessTokenResponse = $client->post($accessTokenUrl, ['body' => $params]);
+        $accessToken = $accessTokenResponse->json()['access_token'];
+        $headers = array('Authorization' => 'Bearer ' . $accessToken);
+        // Step 2. Retrieve profile information about the current user.
+        $profileResponse = $client->get($peopleApiUrl, ['headers' => $headers]);
+        $profile = $profileResponse->json();
+        // Step 3a. If user is already signed in then link accounts.
+        if (Request::header('Authorization'))
+        {
+            $user = User::where('live', '=', $profile['sub']);
+            if ($user->first())
+            {
+                return Response::json(array('message' => 'There is already a Windows Live account that belongs to you'), 409);
+            }
+            $token = explode(' ', Request::header('Authorization'))[1];
+            $payloadObject = JWT::decode($token, Config::get('secrets.TOKEN_SECRET'));
+            $payload = json_decode(json_encode($payloadObject), true);
+            $user = User::find($payload['sub']);
+            $user->live = $profile['sub'];
+            $user->username = $user->username || $profile['name'];
+            $user->save();
+            return Response::json(array('token' => $this->createToken($user)));
+        }
+        // Step 3b. Create a new user account or return an existing one.
+        else
+        {
+            $user = User::where('live', '=', $profile['sub']);
+            if ($user->first())
+            {
+                return Response::json(array('token' => $this->createToken($user->first())));
+            }
+            $user = new User;
+            $user->live = $profile['sub'];
+            $user->username = $profile['name'];
+            $user->save();
+            return Response::json(array('token' => $this->createToken($user)));
+        }
+    }
+
 }
