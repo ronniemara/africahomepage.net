@@ -217,7 +217,7 @@ class AuthController extends \BaseController {
 
             $user = new User;
             $user->facebook = $profile['id'];
-            $user->displayName = $profile['name'];
+            $user->username = $profile['name'];
             $user->save();
 
             return Response::json(array('token' => $this->createToken($user)));
