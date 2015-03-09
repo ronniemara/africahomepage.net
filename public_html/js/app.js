@@ -30,7 +30,7 @@
                   // url: '/auth/twitter'
                 // });
                 
-                locationProvider.html5Mode(true); 
+                $locationProvider.html5Mode(true); 
                 $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
                 //set the idle duration
                 $idleProvider.idleDuration(300);
