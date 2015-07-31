@@ -5,3 +5,4 @@ Homestead.json
 .env*
 /nbproject
 *~
+_ide_helper.php
