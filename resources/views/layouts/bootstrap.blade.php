@@ -9,7 +9,7 @@
         <meta name="author" content="">
 
         <!-- Le styles -->
-	<link src="<% elixir("css/app.css") %>" rel="stylesheet">
+	<link src="{{ elixir("css/app.css") }}" rel="stylesheet" type="text/css">
 
         <style type="text/css">
             body {
@@ -34,7 +34,7 @@
     </head>
     <body>
         <div class="container">
-            <div>Loading...</div>
+<div ui-view></div>
             <footer class="panel">
                 <p> <i class="fa fa-copyright"></i> 2014 Black Mirror Media</p>
             </footer>
@@ -43,6 +43,6 @@
         <!-- Le javascript
         ================================================== -->
 
-	<link  src="<% elixir("js/all.js") %>">
+	<script type="text/javascript"  src="{{ elixir("js/all.js") }}" ></script>
     </body>
 </html>
