@@ -1,1 +1,68 @@
-home.posts
+<section>
+	<h3>Posts</h3>
+	<ul>
+		<li class="list-group-item">
+			<div class="row-fluid">
+				<form>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+					       	<input type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1">
+			</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Email address</label>
+					    <input type="text" class="form-control" placeholder="Link" aria-describedby="basic-addon1">
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>	
+				</form>
+				ki
+				<div>
+					<a href="#" ng-click="voteUp(post)"> <i class="fa fa-angle-up"></i></a> <br />
+					<small> 30 votes</small> <br />			
+					<a href="#" ng-click="voteDown(post)"> <i class="fa fa-angle-down"></i></a>
+				</div>
+				<div>
+					<h4><a href="#">The world is ending</a></h4>
+					<div>
+						<ul class="list-inline">
+							<li ng-repeat="tag in post.tags">
+								<span class="fa fa-tag"></span>
+								<button ng-click="getTags(tag.id)">{{tag.name}}</button>
+							</li>
+						</ul>
+						<div>
+							<em>{{ post.created_at | timeAgo}}</em> 
+							by <cite>{{post.author.username}}</cite> 
+
+						</div>
+						<div>
+							<a href="" ng-click="select(post)">
+								<span class="fa-stack fa-2x">
+									<i class="fa fa-comment fa-stack-2x"></i>
+									<strong class="fa-stack-1x fa-stack-text fa-inverse">
+										{{post.comments.length}}
+									</strong>
+								</span>
+							</a>
+						</div>
+					</div>
+					<div class="panel" ng-show="isSelected(post)">
+						<ul class="nav nav-list" ng-repeat="comment in post.comments">
+							<li class="list-group-item">
+								<strong><cite>{{comment.author.username}}</cite></strong> 
+								{{comment.updated_at | timeAgo }}
+								<p>{{comment.message}}</p>
+							</li>
+						</ul>
+						<form name="CommentForm" novalidate role="form" ng-if="isAuthenticated()" ng-submit="CommentForm.$valid && comment(post)">
+							<label for="InputComment">Add a Comment</label>
+							<textarea ng-model="newComment.message" class="form-control" id="InputComment" rows="3" required></textarea>
+							<button type="submit" class="btn btn-default">Submit</button>
+						</form>
+					</div>
+				</div><!-- end of col-sm-8 -->
+			</div><!-- end of row-fluid -->
+		</li>
+	</ul>
+	<dir-pagination-controls template-url="/js/dirPagination.tpl.html"></dir-pagination-controls>
+
+</section>

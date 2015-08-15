@@ -42,7 +42,7 @@ class Handler extends ExceptionHandler
         //send all NotFoundExceptions to AngularJS to deal with
         if($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException)
         {
-		return \App::abort(404);
+		return response()->view('layouts.bootstrap');
 	}
         
         return parent::render($request, $e);

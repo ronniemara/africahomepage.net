@@ -292,6 +292,24 @@ appControllers.controller('SignupCtrl', function($scope, $auth) {
     };
 });
 
+appControllers.controller('MusicCtrl', function($scope) {
+	$scope.songs = [
+	{
+		"name" : "Malaika",
+		"artist" : "Davido",
+		"thumbnail" :"http://placehold.it/242x200"
+	},
+
+	{
+		"name" : "Happiness",
+		"artist" : "Mafikizolo",
+		"thumbnail" :"http://placehold.it/242x200"
+	}
+
+	];
+
+});
+
 }());
 
 

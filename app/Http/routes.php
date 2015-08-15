@@ -12,10 +12,6 @@
 	 */
 
 
-	//main-page
-	Route::get('/', function() {
-	    return View::make('layouts.bootstrap');
-	});
 
 	// =============================================
 	// API ROUTES ==================================
@@ -51,14 +47,6 @@
 	Route::put('api/me', array('before' => 'auth', 'uses' => 'UsersController@updateUser'));
 
 
-	// =============================================
-	// CATCH ALL ROUTE =============================
-	// =============================================
-	// all routes that are not home or api will be redirected to the frontend
-	// this allows angular to route th
-        
-		//return View::make('layouts.bootstrap');
-	
 
 
 
