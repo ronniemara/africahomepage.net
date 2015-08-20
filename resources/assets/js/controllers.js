@@ -1,5 +1,5 @@
 (function () {
-	var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource']);
+	var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource', 'yaru22.angular-timeago']);
 
 appControllers.filter('page', function () {
     return function (input, start, end) {
@@ -47,12 +47,28 @@ appControllers.controller('ModalCtrl', function ($scope, $modalInstance, $http) 
 });
 
 appControllers.controller('PostsCtrl',
-		['$scope', 'posts', '$location',
+		['$scope', //'posts',
+	       	'$location',
 		  '$anchorScroll', '$modal',
 		  function ($scope, posts, $location,
 			    $anchorScroll, $modal ) {
 				   
-				$scope.posts = posts;
+//				$scope.posts = posts;
+				$scope.posts = [
+	{
+		"title" : "The world is ending",
+		"created_at" : "August 18, 2015",
+		"author" :{ "username" : "ronmara"}
+	},
+
+	{
+		"title" : "The world is ending2",
+		"created_at" : "August 18, 2015",
+		"author" :{ "username" : "ronmara2"}
+	},
+
+	];
+
 				$scope.predicate = 'rank';
 				$scope.reverse = false;
 				$scope.itemsPerPage = 10;
@@ -66,10 +82,10 @@ appControllers.controller('PostsCtrl',
 					    var begin = (($scope.currentPage - 1) * $scope.itemsPerPage),
 					end = begin + $scope.itemsPerPage;
 				
-				$location.hash('top');
+				//$location.hash('top');
 
 				// call $anchorScroll()
-				$anchorScroll();
+//				$anchorScroll();
 					});
 			
 			//voting up and down

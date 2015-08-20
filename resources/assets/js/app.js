@@ -13,6 +13,11 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		})
 		.state("home.posts", {
 			url : "posts",
+			templateUrl: "partials/home.posts.html",
+			controller: "PostsCtrl"
+		})
+		.state("home.posts.post", {
+			url : "posts",
 			templateUrl: "partials/home.posts.html"
 		})
 		.state("home.music", {
