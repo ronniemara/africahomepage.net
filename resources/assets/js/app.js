@@ -1,13 +1,9 @@
-(function() {
-var app = angular.module('myapp', 
+(function () {
+'use strict' 
+    var app = angular.module('myapp', 
 		['ui.router','appControllers']);
 
-
-
-
-
-
-app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
 	$urlRouterProvider.otherwise("/");
 
@@ -25,13 +21,10 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		});
 		
 		
-});
-
-
+    });
 
 })();
 
-var init = function() {
-
+function init() {
 	  window.initGapi();
-};
+}

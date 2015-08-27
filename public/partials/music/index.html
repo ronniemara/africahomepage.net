@@ -3,31 +3,20 @@
 		<div class="panel-header">
 			<h3>Music</h3>
 		</div>
-
-		<div class="panel-body">
-		<div class="row">
-
-
-
-			
-
-				<div class="col-sm-12
-">
-
-{{songs}}
-
-					<div class="thumbnail">
-						<a href="#" ng-click="open()" >
-							<img  alt="image">
-						</a>
-						<div class="caption">
-									
+		<div class="panel-body" ng-show="is_backend_ready">
+			<div class="row" ng-repeat="song in songs">
+				<div class="col-sm-3">
+						<div class="thumbnail">
+						
+						       	<a href="#" ng-click="open()" >
+								<img  src={{song.snippet.thumbnails.medium.url}} alt="image">
+							</a>
+							<div class="caption">
+										
+							</div>
 						</div>
-					</div>
 				</div>
-
-
-		</div>
+			</div>
 		</div>
 	</div>
 </section>
