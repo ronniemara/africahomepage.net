@@ -1,5 +1,7 @@
+'use strict'
+
 (function () {
-	var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource', 'yaru22.angular-timeago']);
+    var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource', 'yaru22.angular-timeago']);
 
 appControllers.filter('page', function () {
     return function (input, start, end) {
@@ -17,15 +19,15 @@ appControllers.filter('page', function () {
                 }
             };
         });
-	    
+ 
 appControllers.factory('PostsSvc', ['Restangular', '$q',
     function(Restangular, $q){
 return {
   getPosts:function(){
      var defer = $q.defer();
-     Restangular.all('api/posts')
-	 .getList()
-	 .then(function (posts) {
+     Restangular.all('api/posts'
+        .getList()
+        .then(function (posts) {
 	     defer.resolve(posts);
      });
      return defer.promise;
@@ -308,23 +310,59 @@ appControllers.controller('SignupCtrl', function($scope, $auth) {
     };
 });
 
-appControllers.controller('MusicCtrl', function($scope) {
-	$scope.songs = [
-	{
-		"name" : "Malaika",
-		"artist" : "Davido",
-		"thumbnail" :"http://placehold.it/242x200"
-	},
+appControllers.service('gapiService', function() {
 
-	{
-		"name" : "Happiness",
-		"artist" : "Mafikizolo",
-		"thumbnail" :"http://placehold.it/242x200"
-	}
+	this.initGapi = function(postInitiation) {
 
-	];
+		gapi.client.setApiKey('AIzaSyD1byX4xggRphU4hFqJ7NyDBI0Q3LY14Ok');
+
+		gapi.client.load('youtube', 'v3', postInitiation);
+
+		}
 
 });
+
+appControllers.controller('MusicCtrl', function($window, gapiService, $modal, $scope ) {
+	
+	
+	var postInitiation = function() {		
+		
+		var request =	gapi.client.youtube.search.list({
+			q: 'afrobeat',
+			part: 'snippet'
+		});
+
+		request.execute(function(response) {
+			$scope.songs = response.result.items;
+$scope.$apply();
+				
+		});		
+
+	};
+
+
+	$window.initGapi = function() {
+		gapiService.initGapi(postInitiation);
+	};
+	
+	$scope.open = function(videoId) {
+		var ModalInstance = $modal.open({
+			templateUrl : "partials/modals/music.html",
+			controller : "MusicModalCtrl"	
+		});
+
+	}
+});
+appControllers.controller('MusicModalCtrl', function($modalInstance, $scope) {
+	$scope.ok = function() {
+		$modalInstance.close();
+	}
+	$scope.cancel = function() {
+		$modalInstance.dismiss();	
+	}
+});
+
+
 
 }());
 

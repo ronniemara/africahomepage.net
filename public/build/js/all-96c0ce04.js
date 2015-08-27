@@ -47970,8 +47970,10 @@ angular.module('yaru22.angular-timeago', []).directive('timeAgo', [
     };
   }
 ]);
+'use strict'
+
 (function () {
-	var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource', 'yaru22.angular-timeago']);
+    var appControllers = angular.module('appControllers', ['ui.bootstrap', 'ngResource', 'yaru22.angular-timeago']);
 
 appControllers.filter('page', function () {
     return function (input, start, end) {
@@ -47989,15 +47991,15 @@ appControllers.filter('page', function () {
                 }
             };
         });
-	    
+ 
 appControllers.factory('PostsSvc', ['Restangular', '$q',
     function(Restangular, $q){
 return {
   getPosts:function(){
      var defer = $q.defer();
-     Restangular.all('api/posts')
-	 .getList()
-	 .then(function (posts) {
+     Restangular.all('api/posts'
+        .getList()
+        .then(function (posts) {
 	     defer.resolve(posts);
      });
      return defer.promise;
@@ -48280,23 +48282,59 @@ appControllers.controller('SignupCtrl', function($scope, $auth) {
     };
 });
 
-appControllers.controller('MusicCtrl', function($scope) {
-	$scope.songs = [
-	{
-		"name" : "Malaika",
-		"artist" : "Davido",
-		"thumbnail" :"http://placehold.it/242x200"
-	},
+appControllers.service('gapiService', function() {
 
-	{
-		"name" : "Happiness",
-		"artist" : "Mafikizolo",
-		"thumbnail" :"http://placehold.it/242x200"
-	}
+	this.initGapi = function(postInitiation) {
 
-	];
+		gapi.client.setApiKey('AIzaSyD1byX4xggRphU4hFqJ7NyDBI0Q3LY14Ok');
+
+		gapi.client.load('youtube', 'v3', postInitiation);
+
+		}
 
 });
+
+appControllers.controller('MusicCtrl', function($window, gapiService, $modal, $scope ) {
+	
+	
+	var postInitiation = function() {		
+		
+		var request =	gapi.client.youtube.search.list({
+			q: 'afrobeat',
+			part: 'snippet'
+		});
+
+		request.execute(function(response) {
+			$scope.songs = response.result.items;
+$scope.$apply();
+				
+		});		
+
+	};
+
+
+	$window.initGapi = function() {
+		gapiService.initGapi(postInitiation);
+	};
+	
+	$scope.open = function(videoId) {
+		var ModalInstance = $modal.open({
+			templateUrl : "partials/modals/music.html",
+			controller : "MusicModalCtrl"	
+		});
+
+	}
+});
+appControllers.controller('MusicModalCtrl', function($modalInstance, $scope) {
+	$scope.ok = function() {
+		$modalInstance.close();
+	}
+	$scope.cancel = function() {
+		$modalInstance.dismiss();	
+	}
+});
+
+
 
 }());
 
@@ -48306,6 +48344,12 @@ appControllers.controller('MusicCtrl', function($scope) {
 (function() {
 var app = angular.module('myapp', 
 		['ui.router','appControllers']);
+
+
+
+
+
+
 app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
 	$urlRouterProvider.otherwise("/");
@@ -48316,52 +48360,23 @@ app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 			url : "/",
 			templateUrl: "partials/home.html"
 		})
-		.state("home.posts", {
-			url : "posts",
-			templateUrl: "partials/home.posts.html",
-			controller: "PostsCtrl"
-		})
-		.state("home.posts.post", {
-			url : "posts",
-			templateUrl: "partials/home.posts.html"
-		})
+		
 		.state("home.music", {
 			url : "music",
-			templateUrl: "partials/home.music.html",
+			templateUrl: "partials/music/index.html",
 			controller: "MusicCtrl"
-		})
-		.state("home.movies", {
-			url : "movies",
-			templateUrl: "partials/home.movies.html"
-		})
-		.state("home.sports", {
-			url : "sports",
-			templateUrl: "partials/home.sports.html"
-		})
-		.state("home.sports.football", {
-			url : "sports/football",
-			templateUrl: "partials/home.sports.football.html"
-		})
-		.state("home.sports.cricket", {
-			url : "sports/cricket",
-			templateUrl: "partials/home.sports.cricket.html"
-		})
-		.state("home.sports.athletics", {
-			url : "sports/athletics",
-			templateUrl: "partials/home.sports.athletics.html"
-		})
-		.state("home.sports.rugby", {
-			url : "sports/rugby",
-			templateUrl: "partials/home.sports.rugby.html"
-		})
-		.state("home.sports.bball", {
-			url : "sports/bball",
-			templateUrl: "partials/home.sports.bball.html"
 		});
+		
+		
 });
 
 
 
 })();
+
+var init = function() {
+
+	  window.initGapi();
+};
 
 //# sourceMappingURL=all.js.map
