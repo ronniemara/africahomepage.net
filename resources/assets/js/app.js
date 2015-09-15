@@ -1,7 +1,7 @@
 (function () {
-'use strict' 
+'use strict'; 
     var app = angular.module('myapp', 
-		['ui.router','appControllers']);
+		['ui.router', 'angular-google-gapi','appControllers']);
 
     app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 
@@ -23,8 +23,11 @@
 		
     });
 
+    app.run(['GApi', 'GAuth', 
+		    function(GApi, GAuth) {
+			    GApi.load('youtube', 'v3');
+GAuth.setScope("https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/youtube.readonly");
+		    }]);
+
 })();
 
-function init() {
-	  window.initGapi();
-}

@@ -23,7 +23,7 @@
 
         <!-- Le javascript
         ================================================== -->
+        <script type="text/javascript" src="https://www.youtube.com/iframe_api"</script>
 	<script type="text/javascript"  src="{{ elixir("js/all.js") }}" ></script>
-	<script src="https://apis.google.com/js/client.js?onload=init"></script>
     </body>
 </html>

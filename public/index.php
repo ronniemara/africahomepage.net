@@ -1,4 +1,4 @@
-<?php
+<?PHP
 
 /**
  * Laravel - A PHP Framework For Web Artisans
