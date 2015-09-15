@@ -17,6 +17,7 @@ elixir(function(mix) {
 			   "ui-router0.2.15.js", 
 			   "ui-bootstrap-tpls-0.11.2.js","angular-resource.js",
 			   'angular-google-gapi.js',
+			   'angular-youtube-embed.js',
 			  "angular-timeago.js", 
 			   "controllers.js",
 			   "app.js"])
