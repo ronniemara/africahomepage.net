@@ -13,3 +13,4 @@ nbproject/
 .env.local.php
 _ide_helper.php
 *~
+/node_modules

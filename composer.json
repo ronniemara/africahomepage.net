@@ -7,7 +7,6 @@
         "toddish/verify": "2.2",
         "way/generators": "~2.0",
         "laravelbook/ardent": "dev-master",
-        "twbs/bootstrap": "*",      
         "way/generators": "~2.0",
         "fzaninotto/faker": "v1.3.0",
         "doctrine/dbal": "2.4.*",
