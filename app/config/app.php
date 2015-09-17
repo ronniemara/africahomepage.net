@@ -29,7 +29,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://africahomepage.net',
+	'url' => 'http://localhost:8000', //http://africahomepage.net',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -69,6 +69,7 @@ return array(
 	*/
             
 	'key' => $_ENV['APPLICATION_KEY'],
+	
 
 	/*
 	|--------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 (function () {
 'use strict'; 
     var app = angular.module('myapp', 
-		['ui.router', 'angular-google-gapi','youtube-embed', 'appControllers']);
+		['ui.router', 'ngAnimate', 'angular-google-gapi','youtube-embed', 'appControllers']);
 
     app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 

@@ -27,7 +27,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('ron-Aspire-V5-561G'),
+	'local' => array('ron-ThinkCentre-A61E'),
 
 ));
 

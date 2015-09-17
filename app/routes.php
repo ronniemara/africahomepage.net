@@ -10,12 +10,11 @@
   | and give it the Closure to execute when that URI is requested.
   |
  */
-Blade::setContentTags('<%', '%>');   // for variables and all things Blade
-Blade::setEscapedContentTags('<%%', '%%>');  // for escaped data
+
 //main-page
-Route::get('/', function() {
-    return View::make('layouts.bootstrap');
-});
+//Route::get('/', function() {
+ //   return View::make('layouts.bootstrap');
+//});
 
 
 

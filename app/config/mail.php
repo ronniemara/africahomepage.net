@@ -28,7 +28,8 @@ return array(
 	| 'smtp.mailgun.org'
 	*/
 
-	'host' => $_ENV['EMAIL_HOST'],
+	//'host' => $_ENV['EMAIL_HOST'],
+	'host' => '',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +42,7 @@ return array(
 	|587
 	*/
 
-	'port' => $_ENV['EMAIL_PORT'],
+	'port' => '', //$_ENV['EMAIL_PORT'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +55,8 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => $_ENV['EMAIL_ADDRESS'], 'name' => null),
+	'from' => array('address' => '', //$_ENV['EMAIL_ADDRESS'], 
+'name' => null),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -67,7 +69,7 @@ return array(
 	|
 	*/
 
-	'encryption' => $_ENV['EMAIL_ENCRYPTION'],
+	'encryption' => '', //$_ENV['EMAIL_ENCRYPTION'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -80,7 +82,7 @@ return array(
 	|
 	*/
 
-	'username' => $_ENV['EMAIL_USERNAME'],
+	'username' => '', //$_ENV['EMAIL_USERNAME'],
 
 	/*
 	|--------------------------------------------------------------------------
@@ -93,7 +95,7 @@ return array(
 	|
 	*/
 
-	'password' =>  $_ENV['EMAIL_PASSWORD'],
+	'password' =>  '', //$_ENV['EMAIL_PASSWORD'],
 
 	/*
 	|--------------------------------------------------------------------------

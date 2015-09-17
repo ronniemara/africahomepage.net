@@ -14,10 +14,10 @@
 App::before(function($request)
 {
 	//
-	if( ! Request::secure())
-    {
-        return Redirect::secure(Request::path());
-    }
+	//if( ! Request::secure())
+    //{
+      //  return Redirect::secure(Request::path());
+    //}
 });
 
 
@@ -109,17 +109,4 @@ Route::filter('ngcsrf',function($route,$request) {
 
 
 
-Route::filter('captcha', function(){
-    $privatekey = $_ENV['RECAPTCHA_KEY'];
-    
-    $resp = Recaptcha::recaptcha_check_answer ($privatekey,
-        Request::getClientIp(),
-        Input::get("challenge"),
-        Input::get("response"));
-    if (!$resp->is_valid) {
-    // What happens when the CAPTCHA was entered incorrectly
-    return Response::make(['flash' => "The reCAPTCHA wasn't entered correctly. Please try it again."], 401); 
-         
-} 
 
-});

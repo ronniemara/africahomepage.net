@@ -8,7 +8,7 @@
         <meta name="keywords" content="africa, african, afrobeat">
         <meta name="author" content="">
 
-       <link rel="stylesheet" href="{{ elixir("css/app.css") }}">
+       <link rel="stylesheet" href="css/app.css">
 
         
         <base href="/">
@@ -23,7 +23,7 @@
 
         <!-- Le javascript
         ================================================== -->
-	<script src="{{ elixir("js/app.js") }}"></script>
+	<script src="js/app.js"></script>
      
     </body>
 </html>
