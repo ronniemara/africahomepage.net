@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Africahomepage</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/css/app.css" rel="stylesheet" type="text/css">
+        <style> 
+            body { padding-bottom: 70px; }
+        </style>
+
+        <script data-main="js/main" src="js/require.js"></script>        
+    </head>
+    <body>
+        <div class="container">
+              <nav class="navbar navbar-light bg-faded">
+                <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header">
+                  &#9776;
+                </button>
+                <div class="collapse navbar-toggleable-xs" id="navbar-header">
+                  <a class="navbar-brand" href="#">Africahomepage</a>
+                  <ul class="nav navbar-nav">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Music</a>
+                    </li>
+
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">About</a>
+                    </li>
+                  </ul>
+                  <form class="form-inline pull-xs-right">
+                    <input class="form-control" type="text" placeholder="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
+                </div>
+            </nav>
+            <div class="row">                
+               <div class="col-xs-8">
+               <!--Body content-->
+                    <h1>Latest Music</h1>
+
+
+                            <div class="card">
+                            <ul class="list-group list-group-flash">
+                            <li class="list-group-item">
+                                <div class="card-block">
+                                    <h4 class="card-title">P-Square</h4>
+                                    <h5>Personally</h3>
+                                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                                </div>
+                                <img src="/images/p-square.jpg" class="img-fluid" alt="Responsive image">
+                                 </li>
+                                 </ul>
+                            </div>
+
+
+                    </ul>
+               </div>
+               <div class="col-xs-4">
+                <!--Sidebar content-->
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-xs-12 footer">
+                Footer
+            </div>
+            </div>
+        </div>
+    </body>    
+</html>
+

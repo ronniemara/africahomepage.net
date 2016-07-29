@@ -1,2 +1,9 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "font-awesome";
+[class*="col-"] {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background-color: rgba(86,61,124,.15);
+  border: 1px solid rgba(86,61,124,.2);
+}
 
