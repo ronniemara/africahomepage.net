@@ -1,33 +1,21 @@
 window.Tether = function (){};
+console.log(1);
+// requirejs.config({
+//     shim: {
+//         'bootstrap' : {
+//             deps : ['jquery']
+//         },
+//         'aws': {
+//             exports:  'aws'
+//         }
+//     }
+// });
 
-requirejs.config({
-shim: {
-'bootstrap' : {
-deps : ['jquery']
-}
-}
-});
-
-
-require(['jquery', 'bootstrap'], function($){
-    // DOM ready
-    $(function(){
-      
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//
+// require(['jquery', 'bootstrap', 'aws'], function($){
+//     // DOM ready
+//     $(function(){
+//
+//
+//     });
+// });

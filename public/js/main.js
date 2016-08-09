@@ -1,35 +1,6 @@
-window.Tether = function (){};
 
-requirejs.config({
-shim: {
-'bootstrap' : {
-deps : ['jquery']
-}
-}
-});
+window.Tether = {};
+require("./jquery.js");
+require('bootstrap-loader');
+require("./aws.js");
 
-
-require(['jquery', 'bootstrap'], function($){
-    // DOM ready
-    $(function(){
-      
-    });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//# sourceMappingURL=main.js.map
