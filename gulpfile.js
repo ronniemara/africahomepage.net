@@ -1,4 +1,8 @@
 var elixir = require('laravel-elixir');
+elixir.config.js.browserify.transformers.push({
+    name: 'brfs',
+    options: {}
+});
 
 /*
  |--------------------------------------------------------------------------
@@ -12,7 +16,6 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss')
-       .scripts('main.js', 'public/js/main.js')
-       .browserSync();
+    mix.sass('app.scss');
+
 });

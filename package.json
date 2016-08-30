@@ -8,11 +8,16 @@
     "bootstrap": "^4.0.0-alpha.2",
     "bootstrap-loader": "^1.2.0-beta.1",
     "bootstrap-sass": "^3.0.0",
+    "brfs": "^1.4.3",
+    "browserify-shim": "^3.8.12",
     "css-loader": "^0.23.1",
+    "domify": "^1.4.0",
+    "exports-loader": "^0.6.3",
     "expose-loader": "^0.7.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "gulp": "^3.9.1",
+    "imports-loader": "^0.6.5",
     "laravel-elixir": "^5.0.0",
     "node-http-proxy": "^0.2.3",
     "node-sass": "^3.8.0",
@@ -24,5 +29,11 @@
     "url-loader": "^0.5.7",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "aws-api-gateway-client": "^0.1.8",
+    "aws-cloudfront-sign": "^2.1.2",
+    "aws-sdk": "^2.5.4",
+    "http-browserify": "^1.7.0"
   }
 }
