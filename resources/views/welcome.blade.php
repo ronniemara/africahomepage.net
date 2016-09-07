@@ -1,19 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Africahomepage</title>
+  <title>Mp3AfricaMusic.com</title>
 
   <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="css/app.css" rel="stylesheet" type="text/css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link href="{{ elixir('css/app.css') }}" rel="stylesheet" type="text/css">
   <style>
   body { padding-bottom: 70px; }
   </style>
 
 </head>
 <body>
-
+    <div class="jumbotron banner-ad">
+      <h1 class="display-3">Advertise here!</h1>
+      <p class="lead">Advertise on the premier site for African music to reach a wide African audience</p>
+      <hr class="m-y-2">
+      <p class="lead">
+        Please send an email to <b>mp3africamusic@gmail.com</b> to
+        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+      </p>
+    </div>
     <nav class="navbar navbar-light bg-faded">
       <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header">
         &#9776;
@@ -72,6 +81,6 @@
           </div>
         </footer>
   </div><!-- end container -->
-  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="{{ elixir('js/main.js') }}"></script>
 </body>
 </html>

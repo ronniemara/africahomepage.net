@@ -3,8 +3,7 @@
 composer.phar
 composer.lock
 .DS_Store
-*.swo
-*.swp
+*.sw*
 /nbproject/private/
 .project
 .settings/
@@ -16,3 +15,4 @@ _ide_helper.php
 /node_modules
 /.env
 /storage/logs/laravel.log
+/npm-debug.log
