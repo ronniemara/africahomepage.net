@@ -16,3 +16,4 @@ _ide_helper.php
 /.env
 /storage/logs/laravel.log
 /npm-debug.log
+/projects

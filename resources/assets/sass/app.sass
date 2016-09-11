@@ -1,10 +1,14 @@
-@import "node_modules/bootstrap/scss/bootstrap-flex"
+@import "node_modules/bootstrap/scss/bootstrap"
 @import "font-awesome"
 [class*="col-"] 
 	padding-top: 1rem
 	padding-bottom: 1rem
 	background-color: rgba(86,61,124,.15)
 	border: 1px solid rgba(86,61,124,.2)
+
+html 
+	background : url(./bg.jpg) no-repeat center center fixed
+	background-size: cover
 
 
 
@@ -17,6 +21,8 @@ $ad-banner-bg-color : #FFC0CB
 .artist-card 
 	cursor: pointer
 
+.thumb 
+    margin-bottom: 30px
 
 .thumbnail 
 	position: relative
@@ -24,17 +30,9 @@ $ad-banner-bg-color : #FFC0CB
 	height: 200px
 	overflow: hidden
 
-	img 
-		position: absolute
-		left: 50%
-		top: 50%
-		height: 100%
-		width: auto
-		transform: translate(-50%,-50%)
-
-		.portrait 
-			width: 100%
-			height: auto
+	.potrait
+		max-width: 100%
+		height: auto
 
 .gradient 
     border: 1px solid black
@@ -59,11 +57,12 @@ $ad-banner-bg-color : #FFC0CB
     transition-delay: .5s
 
 .player\-wrapper 
+	max-width: 400px
     transition: all .7s ease
     border-radius: 10px
     box-shadow: 0px 0px 13px rgba(0,0,0,.3),inset 0 1px 0px rgba(255,255,255,.2)
     top: 50%
     left: 50%
-//    margin: -214px 0px 0px -214px
+    margin: 10px auto
     padding: 10px
     box-sizing: border-box

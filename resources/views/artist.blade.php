@@ -12,17 +12,11 @@
   </style>
 
 </head>
-<body>
-	<div class="jumbotron banner-ad">
-	  <h1 class="display-3">Advertise here!</h1>
-	  <p class="lead">Advertise on the premier site for African music to reach a wide African audience</p>
-	  <hr class="m-y-2">
-	  <p class="lead">
-		Please send an email to <b>mp3africamusic@gmail.com</b> to
-		<a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-	  </p>
-	</div>
-	<nav class="navbar navbar-light bg-faded">
+<body  style="max-width: 800px;" class="m-x-auto"	data-title="artist">
+	
+	
+    <div class="container">
+<nav class="navbar navbar-light bg-faded">
 	  <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header">
 		&#9776;
 	  </button>
@@ -53,29 +47,15 @@
 		</form>
 	  </div>
 	</nav>
-    <div class="container">
-<div class="service-container" data-service="{{ $tracks }}">
         <div class="row">
-          <h1 class="text-xs-center"><?php echo $artist; ?></h1>
+          <h1 class="text-xs-center"></h1>
         </div>
           <!--Body content-->
-        <div class="row artist-page">
-            <div class="col-xs">
-				<h3> {{ $artist }} </h3> 
-				<div class="tracks">
-					<ul class="list-group">
-						@foreach ((json_decode($tracks)) as $track)
-						<li class="list-group-item">
-							<h4> {{ $track->SongTitle }} </h4>
-							<p> {{ $track->Description }} </p>
-						</li>
-					@endforeach
-					</ul>
-				</div>
-			 </div>
-            <div class="col-xs">
-                <div class="player-wrapper flex">
-                    <img class="cover" src="{{ $thumbnail }}" alt="artist image" >
+        <div class="row artist-page">            
+         
+                <div class="player-wrapper m-x-auto">
+					<h4><?php echo $artist; ?> - <span class="song-name"></span></h4>
+                    <img class="cover"  alt="artist image" >
                     <div class="player gradient">
                         <a class="gradient" id="play" href="" title=""><i class="fa fa-play"></i></a>
                         <a class="gradient" id="mute" href="" title=""><i class="fa fa-volume-off"></i></a>
@@ -83,8 +63,9 @@
                         <output for="seek" id="volume">50</output>
                         <a class="gradient" id="close" href="" title=""><i class="fa fa-stop"></i></a>
                     </div><!-- / player -->
+                    <div class="playlist list-group"></div>
                 </div><!-- player-wrapper -->
-            </div><!-- end col-xs -->
+          
         </div><!-- end row -->
 
 		 <footer class="footer">
