@@ -147,33 +147,7 @@ AWS.config.credentials.get(function(){
 						
 						myAudio.play();
 					}		
-												
-				
-						
-				
-						
-						
-						
-
-                $("#play-button-" + i).click(function() {
-                    var source =  document.getElementById("mp3-source-" + i);
-                    source.load();
-
-                    var player  =  document.getElementById("mp3-player-" + i);
-                    if (player.paused == false) {
-                        player.pause();
-                        alert('music paused');
-                    } else {
-                        player.play();
-                        alert('music playing');
-                    }
-                });
-                
-			       
-
-
-
-
+			
         }).catch( function(result){
             //This is where you would put an error callback
             console.log(result.stack);
