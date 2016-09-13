@@ -1,5 +1,5 @@
 window.Tether = {};
-require('./jquery.js');
+var $ = require('./jquery.js');
 require('bootstrap');
 
 var fs = require('fs');
@@ -17,7 +17,7 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
 
 // Make the call to obtain credentials
 AWS.config.credentials.get(function(){
-
+	console.log('in get credentails');
     // Credentials will be available when this function is called.
     var accessKeyId = AWS.config.credentials.accessKeyId;
     var secretAccessKey = AWS.config.credentials.secretAccessKey;

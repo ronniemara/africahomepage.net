@@ -19,5 +19,8 @@ elixir.config.js.browserify.transformers.push({
 elixir(function(mix) {
     mix.sass('app.sass')
         .browserify('main.js')
-        .version(['css/app.css', 'js/main.js']);
+        .version(['css/app.css', 'js/main.js'])
+        .browserSync({
+            proxy: 'http://192.168.10.10/'
+        });
 });

@@ -3,12 +3,13 @@
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['dataTitle' => 'main']);
 });
 
 Route::get('artist/{artist}', function(Request $request, $artist) {
     $uppercase = ucwords(str_replace('-', ' ', $artist));     
-  	return view('artist', ['artist'=> $uppercase]);
+    return view('artist', ['artist'=> $uppercase,
+                            'dataTitle' => 'artist']);
 				 });
 
 function getTracksByArtist($tracks, $artist) {
