@@ -1,2 +1,111 @@
+h1 
+  font-family: 'Lobster', Georgia, Times, serif
+  font-size: 70px
+  line-height: 100px
+  p, body 
+    font-family: 'Cabin', Helvetica, Arial, sans-serif
+    font-size: 15px
+    line-height: 25px
+h6
+  font-family: 'Lobster', Georgia, Times, serif
+
+body
+    background: #999999
+
+a
+    text-decoration: none
+    background:  transparent 
+    :hover
+        background-color: #fffdb9
+
+
+
+
 .wrapper
     display: flex
+    flex-direction: column
+.header-banner
+    width: 100%
+    background-color: black
+    header
+        display: flex
+        flex-direction: row
+        align-content: center
+        nav
+          flex-grow: 1
+          display: flex
+          ul.nav-items
+            display: flex
+            list-style: none
+            align-content: center
+            li.nav-item
+              display: flex
+              align-items: center
+              margin: 0 20px 
+              a
+                background: transparent
+                color: white
+        .user-tools
+              display: flex
+              align-items: center
+
+.container
+    display: flex
+    flex-direction: row
+    .col-1
+        background: fff
+        border: 1px solid tomato
+
+.positioner
+    margin: 0 auto
+    max-width: 900px
+
+.navigation
+    width: 100%
+    background-color: peachpuff
+    cursor: pointer
+    ul
+      list-style: none
+      display: flex
+      align-items: stretch
+      justify-content: space-between
+
+.col-2
+    display: flex
+    background-color: #666666
+    flex-grow: 1
+    .row
+        display: flex
+        flex-wrap: wrap
+        flex-direction: column
+        width: 100%
+
+
+.mp3africa-list-group
+    background: PaleGoldenRod 
+    .artist-card-list
+        list-style: none
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-around
+        li
+          width: 200px
+          padding: 0.5vh
+          .artist-card-wrapper
+              background: white
+              border: 1px solid black
+              .thumbnail
+                width: 100%
+                .potrait
+                    width: 100%
+                    height: auto
+    
+.player-wrapper
+    display: flex
+    flex-direction: column
+    border: 1px solid #BC6A72
+    align-items: center
+    .playlist-wrapper
+        ul.playlist
+            display: flex
+            flex-direction: column

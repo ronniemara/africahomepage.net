@@ -3,7 +3,8 @@
     <head>
       <title>Mp3AfricaMusic.com</title>
 
-      <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Cabin' rel='stylesheet' type='text/css'>
 
       <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
       <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,9 +19,15 @@
             @include('header')
             @include('nav')
             <div class="container">
-                    @include('leftsidebar')
-                    @yield('content')     
-                    @include('rightsidebar')
+                    <div class="col-1">
+                        @include('leftsidebar')
+                    </div>
+                    <div class="col-2 positioner">
+                        @yield('content')     
+                    </div>
+                    <div class="col-3">
+                        @include('rightsidebar')
+                    </div>
             </div><!-- end container -->
         </div> <!--wrapper  -->
       <script type="text/javascript" src="{{ elixir('js/main.js') }}"></script>

@@ -61,7 +61,7 @@ AWS.config.credentials.get(function(){
 
 					dom.querySelector(".potrait").src = signedUrl;
 
-					$(".mp3africa-list-group").append(dom);
+					$(".artist-card-list").append(dom);
 					
 					let noSpace = artist.Artist.toLowerCase().replace(" ", "-");
 					

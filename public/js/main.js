@@ -82145,7 +82145,7 @@ AWS.config.credentials.get(function () {
   apigClient.invokeApi(params, pathTemplate, method, additionalParams, body).then(function (result) {
 
     if ($("body").data("title") == "main") {
-      var html = "<div class=\"col-lg-3 col-md-4 col-xs-6\">\n    <li class=\"artist-card-list-item list-group-item artist-card\">\n    \n            <div class=\"thumb\">\n\t\t\t\t<h6 class=\"artist-name\"></h6>\n\t\t\t\t<a class=\"thumbnail\" href=\"#\">\n                  <img class=\"img-responsive potrait\" alt=\"Responsive image\">\n                  </a>\n            </div>\n        </div><!-- end card -->\n    </li>\n</div><!--\n";
+      var html = "    <li class=\"artist-card-list-item artist-card\">\n        <div class=\"artist-card-wrapper\">\n\t\t\t\t<h6 class=\"artist-name\"></h6>\n\t\t\t\t<a class=\"thumbnail\" href=\"#\">\n                  <img class=\"img-responsive potrait\" alt=\"Responsive image\">\n                  </a>\n        </div><!-- end card -->\n    </li>\n";
 
       var data = result.data.tracks;
       saveData(data);
@@ -82167,7 +82167,7 @@ AWS.config.credentials.get(function () {
 
           dom.querySelector(".potrait").src = signedUrl;
 
-          $(".mp3africa-list-group").append(dom);
+          $(".artist-card-list").append(dom);
 
           var noSpace = artist.Artist.toLowerCase().replace(" ", "-");
 
