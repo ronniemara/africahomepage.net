@@ -42,38 +42,38 @@ AWS.config.credentials.get(function(){
 
     apigClient.invokeApi(params, pathTemplate, method, additionalParams, body)
         .then(function(result){
-			
+
 			if($("body").data("title") == "main") {
 				var html = fs.readFileSync(__dirname + '/artist.html', 'utf8');
-				
-				var data = result.data.tracks;   
+
+				var data = result.data.tracks;
 				saveData(data);
 				var unique = _.uniqBy(data, 'Artist');
-			   
-					  
+
+
 				for(let artist of unique) {
 					var dom = domify(html);
-					dom.querySelector(".artist-name").textContent = artist.Artist;  
-						  
+					dom.querySelector(".artist-name").textContent = artist.Artist;
+
 					var origUrl = "https://doyvfpldm7c3l.cloudfront.net/Thumbnails/" + artist.IconUrl;
 					var signedUrl = createSignedUrl(origUrl);
-			 
+
 
 					dom.querySelector(".potrait").src = signedUrl;
 
 					$(".artist-card-list").append(dom);
-					
+
 					let noSpace = artist.Artist.toLowerCase().replace(" ", "-");
-					
+
 					let link = '/artist/' + noSpace;
 
 					let current = $('.artist-card:last');
-					addEvent(current, link);              
+					addEvent(current, link);
 
-					}				
+					}
 			}
-				
-			if($("body").data("title") == "artist") {			
+
+			if($("body").data("title") == "artist") {
 					let tracks = JSON.parse(localStorage.getItem('tracks'));
 					let path = window.location.pathname;
 					let splitPath = path.split('/');
@@ -82,25 +82,25 @@ AWS.config.credentials.get(function(){
 					let signedImgUrl = null;
 					let  signedTrackUrl = null;
 					let myAudio = null;
-					
+
 					let artistTracks = tracks.filter(function(item){
 						return item.Artist.toUpperCase() == artist.toUpperCase()
 						});
-					
-					if(artistTracks != null ) {						  
-						  signedImgUrl = createSignedImgUrl(artistTracks[0].IconUrl);							  
-						  signedTrackUrl = createSignedTrackUrl(artistTracks[0].SongUrl);	
-						  myAudio = new Audio(signedTrackUrl);		
+
+					if(artistTracks != null ) {
+						  signedImgUrl = createSignedImgUrl(artistTracks[0].IconUrl);
+						  signedTrackUrl = createSignedTrackUrl(artistTracks[0].SongUrl);
+						  myAudio = new Audio(signedTrackUrl);
 						}
 						$(".song-name").text(artistTracks[0].SongTitle);
 						$(".cover").attr("src", signedImgUrl);
 						$.each(artistTracks, function(item) {
-							let a = $('<a>').addClass('list-group-item list-group-item-action song')
+							$(".playlist").append($('<li>', {'class': 'list-group-item'})
+              .append( $('<a>').addClass('list-group-item list-group-item-action song')
 							.attr('href', '#')
-							.text(artistTracks[item].SongTitle)
-							.appendTo($(".playlist"));
+							.text(artistTracks[item].SongTitle)));
 						});
-						
+
 						$(".song").click({myAudio : myAudio, artistTracks : artistTracks},function (e) {
 							e.preventDefault();
 							let index = $(this).closest('.playlist').find('.song').index(this);
@@ -114,15 +114,15 @@ AWS.config.credentials.get(function(){
 							$(this).addClass('active');
 						});
 
-						
+
 						$(".song:first").addClass('active');
-				
+
 						let play = $("#play"),
-							mute = $("#mute"),
 							close = $("#close");
-							
-											
-						
+                            seek = $("#seek");
+
+
+
 						play.click(function(e){
 							e.preventDefault();
 							//check if track is already set and if expired resign track
@@ -131,23 +131,25 @@ AWS.config.credentials.get(function(){
 							if(Date.now() >= expires) {
 								signedTrackUrl = createSignedTrackUrl(artistTracks[0].SongUrl);
 							}
-				
+
 							myAudio.play();
 						});
-							
-						mute.click(function(e){
+
+							 $("#toggle-vol").click(function(e){
 							e.preventDefault();
-							myAudio.volume = 0;
+							// myAudio.volume = 0;
+                            seek.removeClass("hide");
+
 						});
-							
+
 						close.click(function(e){
 							e.preventDefault();
 							myAudio.pause();
 						});
-						
+
 						myAudio.play();
-					}		
-			
+					}
+
         }).catch( function(result){
             //This is where you would put an error callback
             console.log(result.stack);
@@ -189,13 +191,13 @@ AWS.config.credentials.get(function(){
   window.fbAsyncInit = function() {
   FB.init({
     appId      : '348768225333299',
-    cookie     : true,  // enable cookies to allow the server to access 
+    cookie     : true,  // enable cookies to allow the server to access
                         // the session
     xfbml      : true,  // parse social plugins on this page
     version    : 'v2.5' // use graph api version 2.5
   });
 
-  // Now that we've initialized the JavaScript SDK, we call 
+  // Now that we've initialized the JavaScript SDK, we call
   // FB.getLoginStatus().  This function gets the state of the
   // person visiting this page and can return one of three states to
   // the callback you provide.  They can be:
@@ -241,7 +243,7 @@ function addEvent(elem, link) {
 }
 
 function saveData(data) {
-			localStorage.tracks = JSON.stringify(data);       
+			localStorage.tracks = JSON.stringify(data);
 }
 
 function createSignedImgUrl(origUrl) {
@@ -254,7 +256,7 @@ function createSignedTrackUrl(origUrl) {
 }
 
 function createSignedUrl(origUrl) {
-	
+
 	   var signingParams = {
                     keypairId: 'APKAJGMF5S4BA6LURESA',
 
@@ -312,7 +314,7 @@ function createSignedUrl(origUrl) {
                     '-----END RSA PRIVATE KEY-----',
                     expireTime: Date.now() + 6000000
                 };
-                
+
                 // Generating a signed URL
                 let signedUrl = cfsign.getSignedUrl( origUrl, signingParams);
                 return signedUrl;
@@ -365,11 +367,3 @@ function setSong(elem, audioList, audioObject) {
 		this.addClass('active');
 	});
 }
-		
-		
-		
-		
-	
-
-
-

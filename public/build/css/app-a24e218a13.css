@@ -131,11 +131,56 @@ a {
   flex-direction: column;
   border: 1px solid #BC6A72;
   -ms-flex-align: center;
-  align-items: center; }
-  .player-wrapper .playlist-wrapper ul.playlist {
+  align-items: center;
+  max-width: 320px; }
+  .player-wrapper img.cover {
+    width: 100%;
+    height: auto; }
+  .player-wrapper .player {
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column; }
+    width: 100%; }
+    .player-wrapper .player .seek {
+      position: absolute;
+      top: 40%;
+      transform: rotate(270deg); }
+
+.playlist-wrapper ul.playlist {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column; }
+
+.volume-wrapper {
+  width: 25px;
+  position: relative;
+  z-index: 1; }
+
+.controls {
+  display: block;
+  background-image: url(/img/sprites.png); }
+
+#toggle-vol {
+  background-position: 5px 5px;
+  width: 110px;
+  height: 80px; }
+
+#play {
+  background-position: 100px 80px;
+  width: 40px;
+  height: 40px; }
+
+#seek {
+  transform: rotate(270deg);
+  z-index: 1;
+  position: absolute;
+  left: -57px;
+  bottom: 67px; }
+
+#volout {
+  display: block; }
+
+.hide {
+  display: none; }
 
 /*# sourceMappingURL=app.css.map */

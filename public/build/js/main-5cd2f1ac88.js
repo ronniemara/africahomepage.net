@@ -82215,7 +82215,7 @@ AWS.config.credentials.get(function () {
         $(".song-name").text(artistTracks[0].SongTitle);
         $(".cover").attr("src", signedImgUrl);
         $.each(artistTracks, function (item) {
-          var a = $('<a>').addClass('list-group-item list-group-item-action song').attr('href', '#').text(artistTracks[item].SongTitle).appendTo($(".playlist"));
+          $(".playlist").append($('<li>', { 'class': 'list-group-item' }).append($('<a>').addClass('list-group-item list-group-item-action song').attr('href', '#').text(artistTracks[item].SongTitle)));
         });
 
         $(".song").click({ myAudio: myAudio, artistTracks: artistTracks }, function (e) {
@@ -82234,8 +82234,8 @@ AWS.config.credentials.get(function () {
         $(".song:first").addClass('active');
 
         var play = $("#play"),
-            mute = $("#mute"),
             close = $("#close");
+        seek = $("#seek");
 
         play.click(function (e) {
           e.preventDefault();
@@ -82249,9 +82249,10 @@ AWS.config.credentials.get(function () {
           myAudio.play();
         });
 
-        mute.click(function (e) {
+        $("#toggle-vol").click(function (e) {
           e.preventDefault();
-          myAudio.volume = 0;
+          // myAudio.volume = 0;
+          seek.removeClass("hide");
         });
 
         close.click(function (e) {
@@ -82301,13 +82302,13 @@ function checkLoginState() {
 window.fbAsyncInit = function () {
   FB.init({
     appId: '348768225333299',
-    cookie: true, // enable cookies to allow the server to access 
+    cookie: true, // enable cookies to allow the server to access
     // the session
     xfbml: true, // parse social plugins on this page
     version: 'v2.5' // use graph api version 2.5
   });
 
-  // Now that we've initialized the JavaScript SDK, we call 
+  // Now that we've initialized the JavaScript SDK, we call
   // FB.getLoginStatus().  This function gets the state of the
   // person visiting this page and can return one of three states to
   // the callback you provide.  They can be:
