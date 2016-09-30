@@ -83,13 +83,12 @@ AWS.config.credentials.get(function(){
 
                 var subscription = subject.subscribe(
                     function (x) {
-                        console.log('Next:' + x.data);
                         window.$('.artist-card-list').append(
                         '<li class="artist-card-list-item artist-card">\n' +
                             '<div class="artist-card-wrapper">\n' +
                                 '<h6 class="artist-name"></h6>\n' +
                                 '<a class="thumbnail" href="#">\n' +
-                                    '<img class="img-responsive potrait" ' + 'src=' + x.data + 'alt="Responsive image">\n' +
+                                    '<img class="img-responsive potrait" ' + 'src=' + x.data + ' alt="Responsive image">\n' +
                                 '</a>\n' +
                             '</div><!-- end card -->\n' +
                         '</li>'); 
@@ -103,32 +102,6 @@ AWS.config.credentials.get(function(){
                     });
 
                 subject.onNext(fullUrls);
-
-				// for(let artist of unique) {
-				// 	var dom = domify(html);
-				// 	dom.querySelector(".artist-name").textContent = artist.Artist;
-
-				// 	var origUrl = "https://doyvfpldm7c3l.cloudfront.net/Thumbnails/" + artist.IconUrl;
-
-				// 	var signedUrl = [];
-                    // if (window.Worker) {
-                        // var w = worker(require('./worker.js'));
-                        // w.addEventListener('message', function (ev) {
-                          // signedUrl.push(ev.data);                            
-                        // });
-
-                        // w.postMessage(origUrl);
-                        // } else {
-                            // alert("Please update your browser");
-                        // }
-                   
-				// 	    }
-					    
-				// 	for(let url of signedUrl) {
-				// 	console.log(url);
-				// 	 addTo(url);
-				// 	}
-				   
 			}
 
 			if($("body").data("title") == "artist") {
@@ -315,7 +288,6 @@ function createSignedUrl(origUrl) {
     if (window.Worker) {
         var w = worker(require('./worker.js'));
         w.addEventListener('message', function (ev) {
-          console.log(ev.data);
           return ev.data;
         });
 

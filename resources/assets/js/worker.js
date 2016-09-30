@@ -65,7 +65,6 @@ var signingParams = {
 
  module.exports = function(self) {
     self.onmessage = function(ev) {
-                    console.log(ev.data);
         for (var i = 0; i < ev.data.length; i++) {
                   let url = ev.data[i];
                   let signed = sign(url);
